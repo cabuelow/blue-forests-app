@@ -26,3 +26,11 @@ Web application to inform blue forest conservation.
 
 - [ ] Map individual layers at fine-scale resolution, but hotspots at coarse scale? 
 
+#### Data/Analysis updates 
+
+- [ ] Use Duarte 2022 seaweed distribution (will involve reprocessing all seaweed layers to this distribution, including threats :( )
+- [ ] Get updated TNC mang fisheries enhancement layer when ready
+- [ ] Get final seaweed farming layer when published
+- [ ] Get final Eger kelp data when published
+- [ ] Cyclone tracks - buffer by gale force wind radius
+
