@@ -22,6 +22,8 @@ Web application to inform blue forest conservation.
 
 7. - [ ] Ideally, select different combinations of ecosystems and criteria, and get top locations
 
+8. - [ ] Update final master dataframe from remote server
+
 #### Decisions decisions
 
 - [ ] Map individual layers at fine-scale resolution, but hotspots at coarse scale? 
