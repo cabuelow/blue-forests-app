@@ -7,6 +7,7 @@ Web application to inform blue forest conservation.
 1. - [ ] Fix glitches
       - [ ]	Map projection
               - Try with different polygon layer, same issues?
+              -* Update: seems to be a problem with the HydroAtlas database specifically. Other polygon layers work fine. Perhaps can't solve for mapdeck
       - [ ] Timing out issue – increase server ‘instance’ period, greater than 15 minutes
       - [ ] Double clicking on radio buttons
  
