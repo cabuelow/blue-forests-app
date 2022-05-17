@@ -1,3 +1,5 @@
+# code adapted from: https://github.com/molly-williams/deltaSLR_map
+
 # user interface
 
 library(shiny)
@@ -5,6 +7,10 @@ library(shinyjs)
 library(dplyr)
 library(sf)
 library(leaflet)
+
+# load and wrangle all required components for app
+
+source("wrangling.R")
 
 # navigation panel
 
@@ -44,9 +50,9 @@ navbarPage(
                              tags$br(),
                              tags$br(),
                              
-                             #selectInput("var1", label = h4(tags$b("2. Choose country or territory"), 
-                             #           choices = terr, 
-                             #          selected = 'Global')),
+                             selectInput("var1", label = h4(tags$b("2. Choose country or territory")), 
+                                        choices =  terr, 
+                                       selected = 'Global')
                ), #end absolute panel
            ), #end div
            
