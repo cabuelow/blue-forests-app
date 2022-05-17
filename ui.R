@@ -48,7 +48,6 @@ navbarPage(
                                          selected=FALSE),
                              
                              tags$br(),
-                             tags$br(),
                              
                              selectInput("var1", label = h4(tags$b("2. Choose country or territory")), 
                                         choices =  terr, 
