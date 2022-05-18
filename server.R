@@ -35,8 +35,7 @@ function(input, output, session) {
     if(cterr == 'Global'){ # complex if-else series that filters for polygons to map depending on if global & BF type
       
     if(forest == 0){
-      filtdata <- rbind(select(units2, unit_ID, TERRITORY1, PROVINC, REALM, geom), 
-                        select(unitsNA, unit_ID, TERRITORY1, PROVINC, REALM, geom))
+      filtdata <- unitsall
       zz <- unname(st_bbox(filtdata))
       cpal <-"#FFFFFF"
     }else if(forest == 1){
@@ -81,8 +80,7 @@ function(input, output, session) {
       cpal <- '#20b2aa'
     }}else{
       if(forest == 0){
-        filtdata <- rbind(select(units2, unit_ID, TERRITORY1, PROVINC, REALM, geom), 
-                          select(unitsNA, unit_ID, TERRITORY1, PROVINC, REALM, geom)) %>% 
+        filtdata <- unitsall %>% 
           filter(TERRITORY1 == input$ct)
         zz <- unname(st_bbox(filtdata))
         cpal <-"#FFFFFF"
@@ -142,8 +140,7 @@ function(input, output, session) {
       clearShapes() %>% 
       flyToBounds(zz[1], zz[2], zz[3], zz[4]) %>% 
       addPolygons(
-        data = rbind(select(units2, unit_ID, TERRITORY1, PROVINC, REALM, geom), 
-                     select(unitsNA, unit_ID, TERRITORY1, PROVINC, REALM, geom)),
+        data = unitsall,
         color = "#FFFFFF",
         weight = 0.4,
         popup = T) %>% 
@@ -157,8 +154,7 @@ function(input, output, session) {
         clearShapes() %>% 
         flyToBounds(zz[1], zz[2], zz[3], zz[4]) %>% 
         addPolygons(
-         data = rbind(select(units2, unit_ID, TERRITORY1, PROVINC, REALM, geom), 
-                    select(unitsNA, unit_ID, TERRITORY1, PROVINC, REALM, geom)),
+         data = unitsall,
         color = "#FFFFFF",
         weight = 0.4,
         popup = T) %>% 

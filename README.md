@@ -41,4 +41,3 @@ Web application to inform blue forest conservation.
 - [ ] Get final seaweed farming layer when published
 - [ ] Get final Eger kelp data when published
 - [ ] Cyclone tracks - buffer by gale force wind radius
-
