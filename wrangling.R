@@ -2,6 +2,7 @@
 
 library(sf)
 library(dplyr)
+library(tidyr)
 
 units1 <- st_read('data/units-attributes_wgs84-simp.gpkg') %>% mutate(HYBAS_ID = ifelse(is.na(HYBAS_ID), 1, HYBAS_ID)) %>% mutate(Unit = as.character(HYBAS_ID)) %>% mutate(prop_vul_pop = lecz_pop_count_sum/pop_count_sum, mangrove_carbon_mgC_ha = mangrove_abg_mgC_ha + mangrove_soil_mgC_ha)
 units2 <- st_read('data/units-attributes_wgs84-L4-simp.gpkg') %>% mutate(HYBAS_ID = ifelse(is.na(HYBAS_ID), 1, HYBAS_ID)) %>% mutate(Unit = as.character(HYBAS_ID)) %>% mutate(prop_vul_pop = lecz_pop_count_sum/pop_count_sum, mangrove_carbon_mgC_ha = mangrove_abg_mgC_ha + mangrove_soil_mgC_ha)
@@ -15,3 +16,17 @@ df <- data.frame(units2) %>%
   dplyr::select(unit_ID, mangrove, seagrass, saltmarsh, kelp, seafarm) %>% 
   tidyr::pivot_longer(-unit_ID, names_to = 'eco')
 df$eco <- recode(df$eco, mangrove = 1, seagrass = 2, saltmarsh = 3, kelp = 4, seafarm = 5)
+
+my_popups <- st_drop_geometry(wwf) %>% 
+  #pivot_longer(cols = mangrove:seaweed, names_to = 'blueforest', values_to = 'val') %>% 
+  #filter(val == 1) %>% 
+  mutate(mangrove = ifelse(mangrove == 1, 'Mangroves', NA),
+         seagrass = ifelse(seagrass == 1, 'Seagrass', NA), 
+         saltmarsh = ifelse(saltmarsh == 1, 'Saltmarsh', NA), 
+         seaweed = ifelse(seaweed == 1, 'Seaweed', NA)) %>% 
+  unite('blueforest', mangrove:seaweed, na.rm = T, sep = ' & ') %>% 
+  mutate(popup = paste0("<span style='font-size: 120%'><strong>",wwf_office,"</strong></span><br/>",
+                        "<strong>", "Site: ", "</strong>", site, 
+                        "<br/>", 
+                        "<strong>", "Blue Forest focus: ", "</strong>", blueforest)) %>% 
+  pull(popup)

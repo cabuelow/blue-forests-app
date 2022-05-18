@@ -41,17 +41,25 @@ navbarPage(
                              
                              tags$em("Allow a moment for layers to load."),
                              
-                             selectInput("radio1", 
+                             selectInput("bf", 
                                          #label=NULL,
                                          label=h4(tags$b("1. Select blue forest:")), 
                                          choices = list("None" = 0, "Mangrove" = 1, "Seagrass" = 2, "Saltmarsh" = 3, "Kelp" = 4, 'All' = 5, 'Number of forests' = 6),
-                                         selected=FALSE),
+                                         selected = FALSE),
                              
                              tags$br(),
                              
-                             selectInput("var1", label = h4(tags$b("2. Choose country or territory")), 
+                             selectInput("ct", label = h4(tags$b("2. Choose country or territory")), 
                                         choices =  terr, 
-                                       selected = 'Global')
+                                       selected = 'Global'),
+                             
+                             tags$br(),
+                             
+                             h4(tags$b("3. Show WWF Blue Forest projects")),
+                           
+                             checkboxInput("bfproj", label = NULL,
+                                          value = FALSE)
+                             
                ), #end absolute panel
            ), #end div
            
