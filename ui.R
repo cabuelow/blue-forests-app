@@ -44,7 +44,7 @@ navbarPage(
                              selectInput("bf", 
                                          #label=NULL,
                                          label=h4(tags$b("1. Select blue forest:")), 
-                                         choices = list("None" = 0, "Mangrove" = 1, "Seagrass" = 2, "Saltmarsh" = 3, "Kelp" = 4, 'All' = 5, 'Number of forests' = 6),
+                                         choices = list("None" = 0, "Mangrove" = 1, "Seagrass" = 2, "Saltmarsh" = 3, "Kelp" = 4, 'All' = 5),
                                          selected = FALSE),
                              
                              tags$br(),
