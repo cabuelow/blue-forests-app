@@ -13,13 +13,13 @@ library(RColorBrewer)
 
 function(input, output, session) {
   
-  # Create basemap
+  # create basemap
   
   output$map <- renderLeaflet({
     leaflet() %>% 
       addProviderTiles(providers$CartoDB.Positron)})
   
-  # Change polygons based on blue forest and country/territory selection
+  # change polygons based on blue forest and country/territory selection
   
   observe({
     
@@ -32,7 +32,7 @@ function(input, output, session) {
       domain = wwf$site_type
     )
     
-    if(cterr == 'Global'){ # complex if-else series filters for polygons to map depending on if global & BF type
+    if(cterr == 'Global'){ # complex if-else series that filters for polygons to map depending on if global & BF type
       
     if(forest == 0){
       filtdata <- rbind(select(units2, unit_ID, TERRITORY1, PROVINC, REALM, geom), 
@@ -134,19 +134,19 @@ function(input, output, session) {
       }
       }
     
-    # Create reactive map
+    # create reactive map
     
-    if(proj == FALSE){
+    if(proj == FALSE){ # if-else to define whether wwf projects are on or off
     leafletProxy("map") %>%
       clearControls() %>% 
       clearShapes() %>% 
       flyToBounds(zz[1], zz[2], zz[3], zz[4]) %>% 
-      #addPolygons(
-       # data = rbind(select(units2, unit_ID, TERRITORY1, PROVINC, REALM, geom), 
-         #            select(unitsNA, unit_ID, TERRITORY1, PROVINC, REALM, geom)),
-        #color = "#FFFFFF",
-        #weight = 0.4,
-        #popup = T) %>% 
+      addPolygons(
+        data = rbind(select(units2, unit_ID, TERRITORY1, PROVINC, REALM, geom), 
+                     select(unitsNA, unit_ID, TERRITORY1, PROVINC, REALM, geom)),
+        color = "#FFFFFF",
+        weight = 0.4,
+        popup = T) %>% 
       addPolygons(data = filtdata,
                   color = cpal,
                   weight = 0.4,
@@ -156,12 +156,12 @@ function(input, output, session) {
         clearControls() %>% 
         clearShapes() %>% 
         flyToBounds(zz[1], zz[2], zz[3], zz[4]) %>% 
-        #addPolygons(
-        # data = rbind(select(units2, unit_ID, TERRITORY1, PROVINC, REALM, geom), 
-        #            select(unitsNA, unit_ID, TERRITORY1, PROVINC, REALM, geom)),
-        #color = "#FFFFFF",
-        #weight = 0.4,
-        #popup = T) %>% 
+        addPolygons(
+         data = rbind(select(units2, unit_ID, TERRITORY1, PROVINC, REALM, geom), 
+                    select(unitsNA, unit_ID, TERRITORY1, PROVINC, REALM, geom)),
+        color = "#FFFFFF",
+        weight = 0.4,
+        popup = T) %>% 
         addPolygons(data = filtdata,
                     color = cpal,
                     weight = 0.4,
