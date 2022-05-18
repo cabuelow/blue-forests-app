@@ -12,21 +12,23 @@ Web application to inform blue forest conservation.
       - [ ] Timing out issue – increase server ‘instance’ period, greater than 15 minutes
       - [X] Double clicking on radio buttons
 
-2. - [ ] Re-write app in leaflet
+2. - [ ] Re-write app in leaflet (lose some speed compared to mapdeck, trade-off for features)
+            - ** In progress - have first page up, can model the rest off this
+            - NEXT: Figure out how to clear wwf projects when toggle 'off'
 
-3. - [ ] On-click pop-ups
+3. - [X] On-click pop-ups
 
 4. - [ ] Allow to switch on or off enabling constraint layer
 
 5. - [ ] Incorporate data gap-filling information as layers to switch on/off
 
-6. - [ ] Have WWF projects and investment feasibility as a switch on or off in every tab
+6. - [X] Have WWF projects and investment feasibility as a switch on or off in every tab
 
 7. - [ ] Remove area suitable for seaweed farming, TNC fisheries layer, and Eger data for now.
 
 8. - [ ] Ideally, select different combinations of ecosystems and criteria, and get top locations
 
-9. - [ ] Update final master dataframe from remote server
+9. - [ ] Update with final master dataframe from remote server
 
 #### Decisions decisions
 
