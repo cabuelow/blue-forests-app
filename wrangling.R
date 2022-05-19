@@ -18,8 +18,8 @@ unitsall <- st_read('data/units-all_wgs84-simp.gpkg')
 wwf <- st_read('data/wwf-bf-projects.gpkg')
 profile1 <- st_read('data/enabling-profiles.gpkg') %>% st_drop_geometry() %>%filter(Enabling.profile == 1)
 profile1.sf <- st_read('data/UIA_World_Countries_Boundaries/UIA_World_Countries_Boundaries.shp') %>% filter(Country %in% profile1$name)
-#scores <- read.csv('data/blue-forest-scores-L4_area-standardised.csv') %>%  # choose scores to plot
- # left_join(select(data.frame(st_drop_geometry(units2)), unit_ID, mangrove:seagrass))
+scores <- read.csv('data/scores/blue-forest-scores-L2_area-standardised.csv') %>%  # choose scores to plot
+  left_join(select(data.frame(st_drop_geometry(units2)), unit_ID, mangrove:seagrass))
 
 terr <- c('Global', sort(unique(as.character(units2$TERRITORY1))))
 df <- data.frame(units2) %>% 
@@ -49,7 +49,7 @@ pal <- colorFactor( # colour palette for blue forest projects
   palette = "Spectral",
   domain = wwf$site_type)
 
-# input filtering function
+# input filtering functions
 
 input_filter <- function(x, bf){
   sub <- x %>% 
@@ -71,3 +71,31 @@ input_filter2 <- function(x, bf, country){
   zz <<- unname(st_bbox(filtdata))
   cpal <<- '#20b2aa'
 }
+
+filt_hotspots <- function(x, forest2, percentile){
+  if(forest2 == 1){
+    scores.sub <- x %>% filter(mangrove == 1)
+    top1 <- scores.sub %>% 
+      filter(mang_extent >= quantile(mang_extent, probs = percentile))
+    top2 <- scores.sub %>% 
+      filter(mang_threat >= quantile(mang_threat, probs = percentile))
+    top3 <- scores.sub %>% 
+      filter(mang_carbon >= quantile(mang_carbon, probs = percentile))
+    top4 <- scores.sub %>% 
+      filter(mang_biodiversity >= quantile(mang_biodiversity, probs = percentile))
+    top5 <- scores.sub %>% 
+      filter(mang_cobenefit >= quantile(mang_cobenefit, probs = percentile))
+    
+    p1 <<- units2 %>% 
+      filter(mangrove == 1 & unit_ID %in% top1$unit_ID)
+    p2 <<- units2 %>% 
+      filter(mangrove == 1 & unit_ID %in% top2$unit_ID)
+    p3 <<- units2 %>% 
+      filter(mangrove == 1 & unit_ID %in% top3$unit_ID)
+    p4 <<- units2 %>% 
+      filter(mangrove == 1 & unit_ID %in% top4$unit_ID)
+    p5 <<- units2 %>% 
+      filter(mangrove == 1 & unit_ID %in% top5$unit_ID)
+
+  }
+} 
