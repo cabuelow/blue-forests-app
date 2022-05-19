@@ -27,7 +27,7 @@ Web application to inform blue forest conservation.
 
 8. - [ ] Ideally, select different combinations of ecosystems and criteria, and get top locations
 
-9. - [ ] Update with final master dataframe from remote server
+9. - [X] Update with final master dataframe from remote server
 
 10. - [ ] Fix Fiji zoom problem
 
