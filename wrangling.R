@@ -26,6 +26,8 @@ df <- data.frame(units2) %>%
   tidyr::pivot_longer(-unit_ID, names_to = 'eco')
 df$eco <- recode(df$eco, mangrove = 1, seagrass = 2, saltmarsh = 3, kelp = 4, seafarm = 5)
 
+# pop-ups
+
 my_popups <- st_drop_geometry(wwf) %>% 
   #pivot_longer(cols = mangrove:seaweed, names_to = 'blueforest', values_to = 'val') %>% 
   #filter(val == 1) %>% 
@@ -39,3 +41,9 @@ my_popups <- st_drop_geometry(wwf) %>%
                         "<br/>", 
                         "<strong>", "Blue Forest focus: ", "</strong>", blueforest)) %>% 
   pull(popup)
+
+# colour palette
+
+pal <- colorFactor( # colour palette for blue forest projects
+  palette = "Spectral",
+  domain = wwf$site_type)
