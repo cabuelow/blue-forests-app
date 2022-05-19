@@ -13,7 +13,7 @@ Web application to inform blue forest conservation.
       - [X] Double clicking on radio buttons
 
 2. - [ ] Re-write app in leaflet (lose some speed compared to mapdeck, trade-off for features)
-        -* In progress: write a module for each tab panel
+        -* In progress: Figure out why second tabPanel won' work
         
 3. - [X] On-click pop-ups
 
