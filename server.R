@@ -138,6 +138,7 @@ function(input, output, session) {
     leafletProxy("map") %>%
       clearControls() %>% 
       clearShapes() %>% 
+      clearMarkers() %>% 
       flyToBounds(zz[1], zz[2], zz[3], zz[4]) %>% 
       addPolygons(
         data = unitsall,

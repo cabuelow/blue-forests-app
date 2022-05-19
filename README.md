@@ -13,9 +13,8 @@ Web application to inform blue forest conservation.
       - [X] Double clicking on radio buttons
 
 2. - [ ] Re-write app in leaflet (lose some speed compared to mapdeck, trade-off for features)
-            - ** In progress - have first page up, can model the rest off this
-            - NEXT: Figure out how to clear wwf projects when toggle 'off'
-
+        -* In progress: write a module for each tab panel
+        
 3. - [X] On-click pop-ups
 
 4. - [ ] Allow to switch on or off enabling constraint layer
