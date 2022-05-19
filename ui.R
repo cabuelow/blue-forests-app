@@ -58,7 +58,14 @@ navbarPage(
                              h4(tags$b("3. Show WWF Blue Forest projects")),
                            
                              checkboxInput("bfproj", label = NULL,
-                                          value = FALSE)
+                                          value = FALSE),
+                             
+                             tags$br(),
+                             
+                             h4(tags$b("4. Turn on enabling constraint layer")),
+                             
+                             checkboxInput("profile", label = NULL,
+                                           value = FALSE)
                              
                ), #end absolute panel
            ), #end div

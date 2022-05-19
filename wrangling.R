@@ -6,19 +6,20 @@ library(tidyr)
 
 # simplify geopackages so app is faster
 #library(rmapshaper)
-#uni <- st_read('data/units-attributes_wgs84-L4.gpkg')
+#uni <- st_read('data/units-attributes_wgs84-L2.gpkg')
 #s <- ms_simplify(uni, keep_shapes = T)
 #ss <- s %>% mutate(seafarm = ifelse(seafarm_area_ha > 0, 1, 0))
-#st_write(ss, 'data/units-attributes_wgs84-L4-simp.gpkg', overwrite = T, append = F)
+#st_write(ss, 'data/units-attributes_wgs84-L2-simp.gpkg', overwrite = T, append = F)
 
 # load data 
 
-#units1 <- st_read('data/units-attributes_wgs84-simp.gpkg') %>% mutate(HYBAS_ID = ifelse(is.na(HYBAS_ID), 1, HYBAS_ID)) %>% mutate(Unit = as.character(HYBAS_ID)) %>% mutate(prop_vul_pop = lecz_pop_count_sum/pop_count_sum, mangrove_carbon_mgC_ha = mangrove_abg_mgC_ha + mangrove_soil_mgC_ha)
-units2 <- st_read('data/units-attributes_wgs84-L4-simp.gpkg') %>% mutate(HYBAS_ID = ifelse(is.na(HYBAS_ID), 1, HYBAS_ID)) %>% mutate(Unit = as.character(HYBAS_ID)) %>% mutate(prop_vul_pop = lecz_pop_count_sum/pop_count_sum, mangrove_carbon_mgC_ha = mangrove_abg_mgC_ha + mangrove_soil_mgC_ha)
+units2 <- st_read('data/units-attributes_wgs84-L2-simp.gpkg') %>% mutate(HYBAS_ID = ifelse(is.na(HYBAS_ID), 1, HYBAS_ID)) %>% mutate(Unit = as.character(HYBAS_ID)) %>% mutate(prop_vul_pop = lecz_pop_count_sum/pop_count_sum, mangrove_carbon_mgC_ha = mangrove_abg_mgC_ha + mangrove_soil_mgC_ha)
 unitsall <- st_read('data/units-all_wgs84-simp.gpkg')
 wwf <- st_read('data/wwf-bf-projects.gpkg')
-scores <- read.csv('data/blue-forest-scores-L4_area-standardised.csv') %>%  # choose scores to plot
-  left_join(select(data.frame(st_drop_geometry(units2)), unit_ID, mangrove:seagrass))
+profile1 <- st_read('data/enabling-profiles.gpkg') %>% st_drop_geometry() %>%filter(Enabling.profile == 1)
+profile1.sf <- st_read('data/UIA_World_Countries_Boundaries/UIA_World_Countries_Boundaries.shp') %>% filter(Country %in% profile1$name)
+#scores <- read.csv('data/blue-forest-scores-L4_area-standardised.csv') %>%  # choose scores to plot
+ # left_join(select(data.frame(st_drop_geometry(units2)), unit_ID, mangrove:seagrass))
 
 terr <- c('Global', sort(unique(as.character(units2$TERRITORY1))))
 df <- data.frame(units2) %>% 
@@ -47,3 +48,26 @@ my_popups <- st_drop_geometry(wwf) %>%
 pal <- colorFactor( # colour palette for blue forest projects
   palette = "Spectral",
   domain = wwf$site_type)
+
+# input filtering function
+
+input_filter <- function(x, bf){
+  sub <- x %>% 
+    filter(eco == bf) %>% 
+    filter(value == 1)
+  filtdata <<- units2 %>% 
+    filter(unit_ID %in% unique(sub$unit_ID))
+  zz <<- unname(st_bbox(filtdata))
+  cpal <<- '#20b2aa'
+}
+
+input_filter2 <- function(x, bf, country){
+  sub <- x %>% 
+    filter(eco == bf) %>% 
+    filter(value == 1)
+  filtdata <<- units2 %>% 
+    filter(unit_ID %in% unique(sub$unit_ID)) %>% 
+    filter(TERRITORY1 == country)
+  zz <<- unname(st_bbox(filtdata))
+  cpal <<- '#20b2aa'
+}

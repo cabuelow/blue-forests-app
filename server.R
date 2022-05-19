@@ -12,128 +12,40 @@ library(RColorBrewer)
 # server logic
 
 function(input, output, session) {
-  
+
   # create basemap
   
   output$map <- renderLeaflet({
     leaflet() %>% 
       addProviderTiles(providers$CartoDB.Positron)})
   
-  # change polygons based on blue forest and country/territory selection
-  
   observe({
     
     forest <- input$bf # forest type
     cterr <- input$ct # country/territory
     proj <- input$bfproj # wwf blue forest projects
-    
-    pal <- colorFactor( # colour palette for blue forest projects
-      palette = "Spectral",
-      domain = wwf$site_type
-    )
-    
-    if(cterr == 'Global'){ # complex if-else series that filters for polygons to map depending on if global & BF type
-      
+    prof <- input$profile # enabling profile constraint layer
+
+    if(cterr == 'Global'){ #if-else series that filters for polygons to map depending on if global & BF type
     if(forest == 0){
       filtdata <- unitsall
       zz <- unname(st_bbox(filtdata))
       cpal <-"#FFFFFF"
-    }else if(forest == 1){
-      sub <- df %>% 
-        filter(eco == 1) %>% 
-        filter(value == 1)
-      filtdata <- units2 %>% 
-        filter(unit_ID %in% unique(sub$unit_ID))
-      zz <- unname(st_bbox(filtdata))
-      cpal <- '#20b2aa'
-    }else if(forest == 2){
-      sub <- df %>% 
-        filter(eco == 2) %>% 
-        filter(value == 1)
-      filtdata <- units2 %>% 
-        filter(unit_ID %in% unique(sub$unit_ID))
-      zz <- unname(st_bbox(filtdata))
-      cpal <- '#20b2aa'
-    }else if(forest == 3){
-      sub <- df %>% 
-        filter(eco == 3) %>% 
-        filter(value == 1)
-      filtdata <- units2 %>% 
-        filter(unit_ID %in% unique(sub$unit_ID))
-      zz <- unname(st_bbox(filtdata))
-      cpal <- '#20b2aa'
-    }else if(forest == 4){
-      sub <- df %>% 
-        filter(eco == 4) %>% 
-        filter(value == 1)
-      filtdata <- units2 %>% 
-        filter(unit_ID %in% unique(sub$unit_ID))
-      zz <- unname(st_bbox(filtdata))
-      cpal <- '#20b2aa'
-    }else if(forest == 5){
-      sub <- df %>% 
-        filter(eco %in% c(1,2,3,4)) %>% 
-        filter(value == 1)
-      filtdata <- units2 %>% 
-        filter(unit_ID %in% unique(sub$unit_ID))
-      zz <- unname(st_bbox(filtdata))
-      cpal <- '#20b2aa'
-    }}else{
+    }else{
+      input_filter(df, forest)
+    }}else{ # if not global
       if(forest == 0){
         filtdata <- unitsall %>% 
           filter(TERRITORY1 == input$ct)
         zz <- unname(st_bbox(filtdata))
         cpal <-"#FFFFFF"
-      }else if(forest == 1){
-        sub <- df %>% 
-          filter(eco == 1) %>% 
-          filter(value == 1)
-        filtdata <- units2 %>% 
-          filter(unit_ID %in% unique(sub$unit_ID)) %>% 
-          filter(TERRITORY1 == input$ct)
-        zz <- unname(st_bbox(filtdata))
-        cpal <- '#20b2aa'
-      }else if(forest == 2){
-        sub <- df %>% 
-          filter(eco == 2) %>% 
-          filter(value == 1)
-        filtdata <- units2 %>% 
-          filter(unit_ID %in% unique(sub$unit_ID)) %>% 
-          filter(TERRITORY1 == input$ct)
-        zz <- unname(st_bbox(filtdata))
-        cpal <- '#20b2aa'
-      }else if(forest == 3){
-        sub <- df %>% 
-          filter(eco == 3) %>% 
-          filter(value == 1)
-        filtdata <- units2 %>% 
-          filter(unit_ID %in% unique(sub$unit_ID)) %>% 
-          filter(TERRITORY1 == input$ct)
-        zz <- unname(st_bbox(filtdata))
-        cpal <- '#20b2aa'
-      }else if(forest == 4){
-        sub <- df %>% 
-          filter(eco == 4) %>% 
-          filter(value == 1)
-        filtdata <- units2 %>% 
-          filter(unit_ID %in% unique(sub$unit_ID)) %>% 
-          filter(TERRITORY1 == input$ct)
-        zz <- unname(st_bbox(filtdata))
-        cpal <- '#20b2aa'
-      }else if(forest == 5){
-        sub <- df %>% 
-          filter(eco %in% c(1,2,3,4)) %>% 
-          filter(value == 1)
-        filtdata <- units2 %>% 
-          filter(unit_ID %in% unique(sub$unit_ID)) %>% 
-          filter(TERRITORY1 == input$ct)
-        zz <- unname(st_bbox(filtdata))
-        cpal <- '#20b2aa'
-      }
-      }
+      }else{
+        input_filter2(df, forest, input$ct)
+      }}
     
     # create reactive map
     
+    if(prof == FALSE){ # if-else to define whether enabling constraints are on or off
     if(proj == FALSE){ # if-else to define whether wwf projects are on or off
     leafletProxy("map") %>%
       clearControls() %>% 
@@ -171,9 +83,55 @@ function(input, output, session) {
         addLegend("bottomright", data = wwf,
                   pal = pal, values = ~site_type,
                   title = "Project type",
-                  opacity = 1
-        )
-      }
+                  opacity = 1)
+    }}else{
+      if(proj == FALSE){ # if-else to define whether wwf projects are on or off
+        leafletProxy("map") %>%
+          clearControls() %>% 
+          clearShapes() %>% 
+          clearMarkers() %>% 
+          addPolygons(
+            data = profile1.sf,
+            color = "#FFFFCC",
+            weight = 0.4) %>% 
+          flyToBounds(zz[1], zz[2], zz[3], zz[4]) %>% 
+          addPolygons(
+            data = unitsall,
+            color = "#FFFFFF",
+            weight = 0.4,
+            popup = T) %>% 
+          addPolygons(data = filtdata,
+                      color = cpal,
+                      weight = 0.4,
+                      popup = T)
+      }else{
+        leafletProxy("map") %>%
+          clearControls() %>% 
+          clearShapes() %>% 
+          addPolygons(
+            data = profile1.sf,
+            color = "#FFFFCC",
+            weight = 0.4) %>% 
+          flyToBounds(zz[1], zz[2], zz[3], zz[4]) %>% 
+          addPolygons(
+            data = unitsall,
+            color = "#FFFFFF",
+            weight = 0.4,
+            popup = T) %>% 
+          addPolygons(data = filtdata,
+                      color = cpal,
+                      weight = 0.4,
+                      popup = T) %>% 
+          addCircleMarkers(data = wwf,
+                           color = ~pal(site_type),
+                           weight = 1,
+                           radius = 5,
+                           popup= my_popups) %>% 
+          addLegend("bottomright", data = wwf,
+                    pal = pal, values = ~site_type,
+                    title = "Project type",
+                    opacity = 1)
+      }}# end if-else
   }) # end observe 
   
 } #end server

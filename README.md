@@ -17,7 +17,7 @@ Web application to inform blue forest conservation.
         
 3. - [X] On-click pop-ups
 
-4. - [ ] Allow to switch on or off enabling constraint layer
+4. - [X] Allow to switch on or off enabling constraint layer
 
 5. - [ ] Incorporate data gap-filling information as layers to switch on/off
 
@@ -28,6 +28,8 @@ Web application to inform blue forest conservation.
 8. - [ ] Ideally, select different combinations of ecosystems and criteria, and get top locations
 
 9. - [ ] Update with final master dataframe from remote server
+
+10. - [ ] Fix Fiji zoom problem
 
 #### Decisions decisions
 
