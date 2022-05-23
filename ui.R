@@ -74,7 +74,7 @@ navbarPage(
                     tags$em('This map was created in support of the Blue Forests Initiative, a project supported by WWF and the Global Wetlands Project'))
            
   ), # end tabpanel
-  tabPanel('Explore Blue Forest Hotspots',
+  tabPanel('Explore Mangroves',
            div(class="outer",
                tags$head(
                  includeCSS("styles.css")
@@ -99,15 +99,15 @@ navbarPage(
                              
                              tags$em("Allow a moment for layers to load."),
                              
-                             checkboxGroupInput("bfcheck", 
+                             radioButtons("bfcheck", 
                                          #label=NULL,
-                                         label=h4(tags$b("1. Select blue forest(s):")), 
-                                         choices = list("Mangrove" = 1, "Seagrass" = 2, "Saltmarsh" = 3, "Kelp" = 4),
-                                         selected = 1),
+                                         label=h4(tags$b("1. Select criteria:")), 
+                                         choices = list("Extent" = 'extent', "Threat" = 'threat', "Carbon" = 'carbon', "Co-benefit" = 'cobenefit', "Biodiversity" = 'biodiversity', 'All' = 'all'),
+                                         selected = 'extent'),
                              
                              tags$br(),
                              
-                             sliderInput("perc", label = h4(tags$b("2. Set hotspot threshold (percentile)")), 
+                             sliderInput("perc", label = h4(tags$b("2. Find places above threshold (percentile) on individual or combined criteria")), 
                                          min = 0, max = 100, value = 0),
                              
                              tags$br(),

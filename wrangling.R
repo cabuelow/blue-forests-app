@@ -19,14 +19,15 @@ wwf <- st_read('data/wwf-bf-projects.gpkg')
 profile1 <- st_read('data/enabling-profiles.gpkg') %>% st_drop_geometry() %>%filter(Enabling.profile == 1)
 profile1.sf <- st_read('data/UIA_World_Countries_Boundaries/UIA_World_Countries_Boundaries.shp') %>% filter(Country %in% profile1$name)
 scores <- read.csv('data/scores/blue-forest-scores-L2_area-standardised.csv') %>%  # choose scores to plot
-  left_join(select(data.frame(st_drop_geometry(units2)), unit_ID, mangrove:seagrass))
+  left_join(select(data.frame(st_drop_geometry(units2)), unit_ID, mangrove:seagrass)) %>% 
+  rename(mang = mangrove, seag = seagrass, salt = saltmarsh)
 
 terr <- c('Global', sort(unique(as.character(units2$TERRITORY1))))
 df <- data.frame(units2) %>% 
   dplyr::select(unit_ID, mangrove, seagrass, saltmarsh, kelp, seafarm) %>% 
   tidyr::pivot_longer(-unit_ID, names_to = 'eco')
 df$eco <- recode(df$eco, mangrove = 1, seagrass = 2, saltmarsh = 3, kelp = 4, seafarm = 5)
-
+hot_pal <- c('#66CC33','#CC3300', '#9966CC', '#FFCC00', '#00CCCC')
 # pop-ups
 
 my_popups <- st_drop_geometry(wwf) %>% 
@@ -72,30 +73,80 @@ input_filter2 <- function(x, bf, country){
   cpal <<- '#20b2aa'
 }
 
-filt_hotspots <- function(x, forest2, percentile){
-  if(forest2 == 1){
-    scores.sub <- x %>% filter(mangrove == 1)
-    top1 <- scores.sub %>% 
-      filter(mang_extent >= quantile(mang_extent, probs = percentile))
-    top2 <- scores.sub %>% 
-      filter(mang_threat >= quantile(mang_threat, probs = percentile))
-    top3 <- scores.sub %>% 
-      filter(mang_carbon >= quantile(mang_carbon, probs = percentile))
-    top4 <- scores.sub %>% 
-      filter(mang_biodiversity >= quantile(mang_biodiversity, probs = percentile))
-    top5 <- scores.sub %>% 
-      filter(mang_cobenefit >= quantile(mang_cobenefit, probs = percentile))
+filt_hotspots <- function(x, criteria, foresttype, perc){
+  
+  if(foresttype == 'mang' | foresttype == 'kelp'){
+  if(criteria != 'all'){
+    criteria.sub <<- x %>%
+      filter_at(which(colnames(x) == foresttype), all_vars(. == 1)) %>% 
+      filter_at(which(colnames(x) == paste0(foresttype, '_', criteria)), 
+                all_vars(. >= quantile(x[,which(colnames(x) == paste0(foresttype, '_',criteria))], probs = perc/100))) 
+  }else{
+    criteria.sub1 <- x %>%
+      filter_at(which(colnames(x) == foresttype), all_vars(. == 1)) %>% 
+      filter_at(which(colnames(x) == paste0(foresttype, '_extent')), 
+                all_vars(. >= quantile(x[,which(colnames(x) == paste0(foresttype, '_extent'))], probs = perc/100))) %>% 
+      mutate(criteria = extent)
     
-    p1 <<- units2 %>% 
-      filter(mangrove == 1 & unit_ID %in% top1$unit_ID)
-    p2 <<- units2 %>% 
-      filter(mangrove == 1 & unit_ID %in% top2$unit_ID)
-    p3 <<- units2 %>% 
-      filter(mangrove == 1 & unit_ID %in% top3$unit_ID)
-    p4 <<- units2 %>% 
-      filter(mangrove == 1 & unit_ID %in% top4$unit_ID)
-    p5 <<- units2 %>% 
-      filter(mangrove == 1 & unit_ID %in% top5$unit_ID)
+    criteria.sub2 <- x %>%
+      filter_at(which(colnames(x) == foresttype), all_vars(. == 1)) %>% 
+      filter_at(which(colnames(x) == paste0(foresttype, '_threat')), 
+                all_vars(. >= quantile(x[,which(colnames(x) == paste0(foresttype, '_threat'))], probs = perc/100))) %>% 
+      mutate(criteria = threat)
+    
+    criteria.sub3 <- x %>%
+      filter_at(which(colnames(x) == foresttype), all_vars(. == 1)) %>% 
+      filter_at(which(colnames(x) == paste0(foresttype, '_carbon')), 
+                all_vars(. >= quantile(x[,which(colnames(x) == paste0(foresttype, '_carbon'))], probs = perc/100))) %>% 
+      mutate(criteria = carbon)
+  
+    criteria.sub4 <- x %>%
+      filter_at(which(colnames(x) == foresttype), all_vars(. == 1)) %>% 
+      filter_at(which(colnames(x) == paste0(foresttype, '_cobenefit')), 
+                all_vars(. >= quantile(x[,which(colnames(x) == paste0(foresttype, '_cobenefit'))], probs = perc/100))) %>% 
+      mutate(criteria = cobenefit)
+    
+    criteria.sub5 <- x %>%
+      filter_at(which(colnames(x) == foresttype), all_vars(. == 1)) %>% 
+      filter_at(which(colnames(x) == paste0(foresttype, '_biodiversity')), 
+                all_vars(. >= quantile(x[,which(colnames(x) == paste0(foresttype, '_biodiversity'))], probs = perc/100))) %>% 
+      mutate(criteria = biodiversity)
+    
+    criteria.sub <<- rbind(criteria.sub1, criteria.sub2,criteria.sub3,criteria.sub4,criteria.sub5)
+    
+  }}else{
+    if(criteria != 'all'){
+      criteria.sub <<- x %>%
+        filter_at(which(colnames(x) == foresttype), all_vars(. == 1)) %>% 
+        filter_at(which(colnames(x) == paste0(foresttype, '_', criteria)), 
+                  all_vars(. >= quantile(x[,which(colnames(x) == paste0(foresttype, '_',criteria))], probs = perc/100)))
+    }else{
+      criteria.sub1 <- x %>%
+        filter_at(which(colnames(x) == foresttype), all_vars(. == 1)) %>% 
+        filter_at(which(colnames(x) == paste0(foresttype, '_extent')), 
+                  all_vars(. >= quantile(x[,which(colnames(x) == paste0(foresttype, '_extent'))], probs = perc/100))) %>% 
+        mutate(criteria = threat)
+      
+      criteria.sub2 <- x %>%
+        filter_at(which(colnames(x) == foresttype), all_vars(. == 1)) %>% 
+        filter_at(which(colnames(x) == paste0(foresttype, '_threat')), 
+                  all_vars(. >= quantile(x[,which(colnames(x) == paste0(foresttype, '_threat'))], probs = perc/100))) %>% 
+        mutate(criteria = threat)
+      
+      criteria.sub3 <- x %>%
+        filter_at(which(colnames(x) == foresttype), all_vars(. == 1)) %>% 
+        filter_at(which(colnames(x) == paste0(foresttype, '_carbon')), 
+                  all_vars(. >= quantile(x[,which(colnames(x) == paste0(foresttype, '_carbon'))], probs = perc/100))) %>% 
+        mutate(criteria = carbon)
 
+      criteria.sub4 <- x %>%
+        filter_at(which(colnames(x) == foresttype), all_vars(. == 1)) %>% 
+        filter_at(which(colnames(x) == paste0(foresttype, '_biodiversity')), 
+                  all_vars(. >= quantile(x[,which(colnames(x) == paste0(foresttype, '_biodiversity'))], probs = perc/100))) %>% 
+        mutate(criteria = biodiversity)
+      
+      criteria.sub <<- rbind(criteria.sub1, criteria.sub2,criteria.sub3,criteria.sub4)
+    }
   }
-} 
+} # end filt hotspots function
+

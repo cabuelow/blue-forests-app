@@ -5,15 +5,10 @@ Web application to inform blue forest conservation.
 #### TODO for first end-user consultation
 
 1. - [X] Fix glitches
-      - [X]	Map projection
-              - Try with different polygon layer, same issues?
-              -* Update: seems to be a problem with the HydroAtlas database specifically. Other polygon layers work fine. Perhaps can't solve for mapdeck
-              - Works okay in leaflet - try writing app in leaflet
       - [ ] Timing out issue – increase server ‘instance’ period, greater than 15 minutes
-      - [X] Double clicking on radio buttons
 
 2. - [ ] Re-write app in leaflet (lose some speed compared to mapdeck, trade-off for features)
-        -* In progress: Figure out why second tabPanel won' work
+  - In progress
         
 3. - [X] On-click pop-ups
 
