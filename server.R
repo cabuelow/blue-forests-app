@@ -112,13 +112,18 @@ function(input, output, session) {
   values <- reactiveValues(inDir = NULL)
   observeEvent(input$perc, {values$inDir <- input$perc})
   
-  # reactive expression
+  # reactive expressions based on whether enabling constrain layer is on or off
   
+  bindEvent( # enabling constraint off
   comb_output1 <- reactive({
     req(values$inDir);
+    if(input$profile2 == FALSE){
     filt_hotspots(scores, input$bfcheck, 'mang', values$inDir)
-  })
-  
+    }else{
+      filt_hotspots(scores2, input$bfcheck, 'mang', values$inDir)
+    }
+  }), input$profile2, ignoreInit = TRUE)
+
   # observe the reactive
   
   observe({

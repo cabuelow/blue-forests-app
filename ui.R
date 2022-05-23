@@ -100,8 +100,8 @@ navbarPage(
                              
                              tags$br(),
                              
-                             sliderInput("perc", label = h4(tags$b("2. Find places in top percent of criteria")), 
-                                         min = 0, max = 100, value = 0),
+                             sliderInput("perc", label = h4(tags$b("2. Find manageent units in top percent of criteria")), 
+                                         min = 0, max = 100, value = 100),
                              
                              tags$br(),
                              

@@ -8,29 +8,25 @@ Web application to inform blue forest conservation.
       - [ ] Timing out issue – increase server ‘instance’ period, greater than 15 minutes
 
 2. - [ ] Re-write app in leaflet (lose some speed compared to mapdeck, trade-off for features)
-  - In progress - follow mangrove tab template and repeat for rest of blue forests,best to modularise
-        
-3. - [X] On-click pop-ups
+  - **In progress - follow mangrove tab template and repeat for rest of blue forests, probs best to modularise**
 
-4. - [X] Allow to switch on or off enabling constraint layer
+3. - [ ] Incorporate data gap-filling information as layers to switch on/off
 
-5. - [ ] Incorporate data gap-filling information as layers to switch on/off
+4. - [ ] Fix Fiji zoom problem
 
-6. - [X] Have WWF projects and investment feasibility as a switch on or off in every tab
+5. - [ ] Write an instructions tab
 
-7. - [ ] Remove area suitable for seaweed farming, TNC fisheries layer, and Eger data for now.
-
-8. - [ ] Ideally, select different combinations of ecosystems and criteria, and get top locations
-
-9. - [X] Update with final master dataframe from remote server
-
-10. - [ ] Fix Fiji zoom problem
-
-11. Write an instructions tab
+6. - [ ] Remove area suitable for seaweed farming, TNC fisheries layer, and Eger data for now.
 
 #### Decisions decisions
 
-- [ ] Map individual layers at fine-scale resolution, but hotspots at coarse scale? 
+- [ ] Map at fine scale or coarse-scale?
+
+- [ ] Include all individual indicator layers? e.g. land vs. climate threats, spp. richness, etc.? Could show both prototypes at consultation and see if its necessary?
+
+#### Wish List
+
+- [ ] Pick your own threats indicators (e.g., land vs climate, prob of decline, etc)
 
 #### Data/Analysis updates 
 
