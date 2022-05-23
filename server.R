@@ -150,10 +150,16 @@ function(input, output, session) {
         weight = 0.4)
   })
   
+  # observe input from slider and store value to use in reactive expression
+  
+  values <- reactiveValues(inDir = NULL)
+  observeEvent(input$perc, {values$inDir <- input$perc})
+  
   # reactive expression
   
   comb_output1 <- reactive({
-    filt_hotspots(scores, input$bfcheck, 'mang', input$perc/100)
+    req(values$inDir);
+    filt_hotspots(scores, input$bfcheck, 'mang', values$inDir)
   })
   
   # observe the reactive

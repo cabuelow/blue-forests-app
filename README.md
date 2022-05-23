@@ -8,7 +8,7 @@ Web application to inform blue forest conservation.
       - [ ] Timing out issue – increase server ‘instance’ period, greater than 15 minutes
 
 2. - [ ] Re-write app in leaflet (lose some speed compared to mapdeck, trade-off for features)
-  - In progress
+  - In progress - slider isn't working
         
 3. - [X] On-click pop-ups
 
@@ -25,6 +25,8 @@ Web application to inform blue forest conservation.
 9. - [X] Update with final master dataframe from remote server
 
 10. - [ ] Fix Fiji zoom problem
+
+11. Write an instructions tab
 
 #### Decisions decisions
 

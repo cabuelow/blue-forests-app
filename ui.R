@@ -107,7 +107,7 @@ navbarPage(
                              
                              tags$br(),
                              
-                             sliderInput("perc", label = h4(tags$b("2. Find places above threshold (percentile) on individual or combined criteria")), 
+                             sliderInput("perc", label = h4(tags$b("2. Find places in top percent of criteria")), 
                                          min = 0, max = 100, value = 0),
                              
                              tags$br(),
