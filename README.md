@@ -8,7 +8,7 @@ Web application to inform blue forest conservation.
       - [ ] Timing out issue – increase server ‘instance’ period, greater than 15 minutes
 
 2. - [ ] Re-write app in leaflet (lose some speed compared to mapdeck, trade-off for features)
-  - In progress - slider isn't working
+  - In progress - follow mangrove tab template and repeat for rest of blue forests,best to modularise
         
 3. - [X] On-click pop-ups
 
