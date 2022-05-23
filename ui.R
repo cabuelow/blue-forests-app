@@ -100,21 +100,21 @@ navbarPage(
                              
                              tags$br(),
                              
-                             sliderInput("perc", label = h4(tags$b("2. Find manageent units in top percent of criteria")), 
+                             sliderInput("perc", label = h4(tags$b("2. Find management units in top percent of criteria")), 
                                          min = 0, max = 100, value = 100),
                              
                              tags$br(),
                              
-                             h4(tags$b("3. Show WWF Blue Forest projects")),
+                             h4(tags$b("3. Turn on enabling constraint layer")),
                              
-                             checkboxInput("bfproj2", label = NULL,
+                             checkboxInput("profile2", label = NULL,
                                            value = FALSE),
                              
                              tags$br(),
                              
-                             h4(tags$b("4. Turn on enabling constraint layer")),
+                             h4(tags$b("4. Show WWF Blue Forest projects")),
                              
-                             checkboxInput("profile2", label = NULL,
+                             checkboxInput("bfproj2", label = NULL,
                                            value = FALSE)
                              
                ), #end absolute panel
