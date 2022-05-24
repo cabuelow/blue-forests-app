@@ -17,12 +17,13 @@ source("wrangling.R")
 navbarPage(
   title = 'Blue Forests', id = 'nav',
   tabPanel('Explore Blue Forest Distributions',
+           textOutput("selected_var"),
            div(class="outer",
                tags$head(
                  includeCSS("styles.css")
                ),
                
-               leafletOutput("map", width="100%", height="100%"),
+               leafletOutput("mymap", width="100%", height="100%"),
                
                tags$style(".leaflet-control-layers-overlays{color: blue}"),
                
@@ -41,7 +42,7 @@ navbarPage(
                              
                              tags$em("Allow a moment for layers to load."),
                              
-                             checkboxGroupInput("bf", 
+                             checkboxGroupInput("blue_forest", 
                                          #label=NULL,
                                          label=h4(tags$b("1. Select blue forest:")), 
                                          choices = list("Mangrove" = 1, "Seagrass" = 2, "Saltmarsh" = 3, "Kelp" = 4),
@@ -49,17 +50,9 @@ navbarPage(
                              
                              tags$br(),
                              
-                             selectInput("ct", label = h4(tags$b("2. Choose country or territory")), 
+                             selectInput("country", label = h4(tags$b("2. Choose country or territory")), 
                                         choices =  terr, 
-                                       selected = 'Global'),
-                             
-                             tags$br(),
-                             
-                             h4(tags$b("3. Show WWF Blue Forest projects")),
-                           
-                             checkboxInput("bfproj", label = NULL,
-                                          value = FALSE)
-                             
+                                       selected = 'Global')
                ), #end absolute panel
            ), #end div
            
@@ -121,7 +114,23 @@ navbarPage(
            ), #end div
            
            tags$div(id="cite",
-                    tags$em('This map was created in support of the Blue Forests Initiative, a project supported by WWF and the Global Wetlands Project'))
+                    tags$em('This map was created in support of the
+                            Blue Forests Initiative, a project supported by 
+                            WWF and the Global Wetlands Project'))
            
   ), # end tabpanel
+  tabPanel('Dashboard',
+           div(class="outer",
+               tags$head(
+                 includeCSS("styles.css")
+               ),
+          tableOutput("unit_ID_dashboard")
+              
+           ), #end div
+           
+           tags$div(id="cite",
+                    tags$em('This dashboard was created in support of the Blue Forests Initiative, a project supported by WWF and the Global Wetlands Project'))
+           
+  ) # end tabpanel
+  
 ) # end nav bar

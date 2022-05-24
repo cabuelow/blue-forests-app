@@ -4,21 +4,26 @@ Web application to inform blue forest conservation.
 
 #### TODO for first end-user consultation
 
-1. - [X] Fix glitches
+- [X] Fix glitches
       - [ ] Timing out issue – increase server ‘instance’ period, greater than 15 minutes
 
-2. - [ ] Re-write app in leaflet (lose some speed compared to mapdeck, trade-off for features)
-  - **In progress - follow mangrove tab template and repeat for rest of blue forests, probs best to modularise**
+- [ ] Add data to second tab 
 
-3. - [ ] Incorporate data gap-filling information as layers to switch on/off
 
-4. - [ ] Fix Fiji zoom problem
+- [ ] Modify loading of layers so it only plots what is neccessary
 
-5. - [ ] Write an instructions tab
+- [  ] highlight clicked cell and add message to tell user it was clicked
 
-6. - [ ] Remove area suitable for seaweed farming, TNC fisheries layer, and Eger data for now.
 
-7. - [ ] Make data wrangling a pre-process step, so the app loads final datasets, will save
+- [ ] Incorporate data gap-filling information as layers to switch on/off
+
+- [ ] Fix Fiji zoom problem
+
+- [ ] Write an instructions tab
+
+- [ ] Remove area suitable for seaweed farming, TNC fisheries layer, and Eger data for now.
+
+- [ ] Make data wrangling a pre-process step, so the app loads final datasets, will save
 compute time
 
 #### Decisions decisions
