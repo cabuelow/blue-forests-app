@@ -41,11 +41,11 @@ navbarPage(
                              
                              tags$em("Allow a moment for layers to load."),
                              
-                             selectInput("bf", 
+                             checkboxGroupInput("bf", 
                                          #label=NULL,
                                          label=h4(tags$b("1. Select blue forest:")), 
-                                         choices = list("None" = 0, "Mangrove" = 1, "Seagrass" = 2, "Saltmarsh" = 3, "Kelp" = 4, 'All' = 5),
-                                         selected = FALSE),
+                                         choices = list("Mangrove" = 1, "Seagrass" = 2, "Saltmarsh" = 3, "Kelp" = 4),
+                                         selected = NULL),
                              
                              tags$br(),
                              

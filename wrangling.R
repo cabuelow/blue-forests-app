@@ -56,24 +56,32 @@ pal <- colorFactor( # colour palette for blue forest projects
 # input filtering functions
 
 input_filter <- function(x, bf){
+ tmp <- list()
+  for(i in bf){
   sub <- x %>% 
-    filter(eco == bf) %>% 
+    filter(eco == i) %>% 
     filter(value == 1)
-  filtdata <<- units2 %>% 
+  tmp[[i]] <- units2 %>% 
     filter(unit_ID %in% unique(sub$unit_ID))
-  zz <<- unname(st_bbox(filtdata))
-  cpal <<- '#20b2aa'
+  }
+ filtdata <<- do.call(rbind, tmp)
+ zz <<- unname(st_bbox(filtdata))
+ cpal <<- '#20b2aa'
 }
 
 input_filter2 <- function(x, bf, country){
-  sub <- x %>% 
-    filter(eco == bf) %>% 
-    filter(value == 1)
-  filtdata <<- units2 %>% 
-    filter(unit_ID %in% unique(sub$unit_ID)) %>% 
-    filter(TERRITORY1 == country)
-  zz <<- unname(st_bbox(filtdata))
-  cpal <<- '#20b2aa'
+    tmp <- list()
+    for(i in bf){
+      sub <- x %>% 
+        filter(eco == i) %>% 
+        filter(value == 1)
+      tmp[[i]] <- units2 %>% 
+        filter(unit_ID %in% unique(sub$unit_ID)) %>% 
+        filter(TERRITORY1 == country)
+    }
+    filtdata <<- do.call(rbind, tmp)
+    zz <<- unname(st_bbox(filtdata))
+    cpal <<- '#20b2aa'
 }
 
 filt_hotspots <- function(x, criteria, foresttype, perc){

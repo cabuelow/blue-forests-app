@@ -31,17 +31,17 @@ function(input, output, session) {
   comb_output <- reactive({
     
     if(input$ct == 'Global'){ #if-else series that filters for polygons to map depending on if global & BF type
-      if(input$bf == 0){
+      if(is.null(input$bf)){
         filtdata <- unitsall
         zz <- unname(st_bbox(filtdata))
-        cpal <-"#FFFFFF"
-      }else{
-        input_filter(df, input$bf)
-      }}else{ # if not global
-        if(input$bf == 0){
-          filtdata <- unitsall %>% filter(TERRITORY1 == input$ct)
+        cpal <- "#FFFFFF"
+      } else{
+       input_filter(df, input$bf)
+      }}else{
+        if(is.null(input$bf)){
+          filtdata <- unitsall
           zz <- unname(st_bbox(filtdata))
-          cpal <-"#FFFFFF"
+          cpal <- "#FFFFFF"
         }else{
           input_filter2(df, input$bf, input$ct)
         }}
