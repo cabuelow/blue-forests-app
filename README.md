@@ -18,6 +18,9 @@ Web application to inform blue forest conservation.
 
 6. - [ ] Remove area suitable for seaweed farming, TNC fisheries layer, and Eger data for now.
 
+7. - [ ] Make data wrangling a pre-process step, so the app loads final datasets, will save
+compute time
+
 #### Decisions decisions
 
 - [ ] Map at fine scale or coarse-scale?
