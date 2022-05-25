@@ -43,7 +43,7 @@ function(input, output, session) {
   #
   # Filter data for ticked blue forests 
   #
-  newdat <- reactive({
+  update_forest_dat <- reactive({
     x <- filter(df, eco %in% as.numeric(input$blue_forest) &
                        value ==1) 
     x <- units2[units2$unit_ID %in% x$unit_ID, ]
@@ -61,12 +61,67 @@ function(input, output, session) {
       clearGroup(c('forest')) %>%
       addPolygons(
         group = 'forest',
-        data = newdat(),
+        data = update_forest_dat(),
         layerId=~unit_ID,
         weight = 0.4)
     #note popups block shape_click events
     
     })
+  
+  # ------------ 
+  # Single forest pages
+  # ------------ 
+  #GET WORKING THEN REPEAT AS A MODULE
+  
+    output$mangrove_map <- renderLeaflet({
+    leaflet() %>% 
+      addProviderTiles(providers$CartoDB.Positron) %>% 
+      addPolygons(
+        group = 'basepoly',
+        data = unitsall,
+        color = "#FFFFFF",
+        weight = 0.4) %>%
+        addPolygons(
+          data = mangrove_dat,
+          layerId=~unit_ID,
+          weight = 0.4) %>%
+      addCircleMarkers(group = "Blue Forest projects",
+                       data = wwf,
+                       color = ~pal(site_type),
+                       weight = 1,
+                       radius = 5,
+                       popup= my_popups) %>%
+      addLegend("bottomright", data = wwf,
+                pal = pal, values = ~site_type,
+                title = "Project type",
+                opacity = 1) %>%
+      addLayersControl(
+        overlayGroups = c("Blue Forest projects"),
+        options = layersControlOptions(collapsed = FALSE)
+      )
+  })
+
+  update_top_sites_dat <- reactive({
+    x <- filter(df, eco %in% as.numeric(input$blue_forest) &
+                  value ==1) 
+    mangrove_2016_area_ha
+    x <- units2[units2$unit_ID %in% x$unit_ID, ]
+    return(x)
+  })
+    
+  observe({
+    leafletProxy("mangrove_map") %>%
+      # # clearControls() %>%
+       clearGroup(c('top_forest')) %>%
+      addPolygons(
+        group = 'top_forest',
+        color = "red",
+        data = update_top_sites_dat(),
+        layerId=~unit_ID,
+        weight = 0.4)
+    #note popups block shape_click events
+    
+  })
   
   #
   # Render dashboard

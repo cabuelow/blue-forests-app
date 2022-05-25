@@ -66,7 +66,7 @@ navbarPage(
                  includeCSS("styles.css")
                ),
                
-               leafletOutput("map1", width="100%", height="100%"),
+               leafletOutput("mangrove_map", width="100%", height="100%"),
                
                tags$style(".leaflet-control-layers-overlays{color: blue}"),
                
