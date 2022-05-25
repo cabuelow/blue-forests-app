@@ -54,6 +54,7 @@ forestUI <- function(id) {
 forestServer <- function(id, forest_type) {
   #forest_type is the name of the columns in 
   # the scores dataframe for each forest type
+  ns <- NS(id)
   moduleServer(
     id,
     function(input, output, session) {
@@ -86,7 +87,8 @@ forestServer <- function(id, forest_type) {
       })
       
       update_top_sites_dat <- reactive({
-        scores <- scores[scores[,forest_type]==1]
+        # browser()
+        scores <- scores[scores[,forest_type]==1,]
         
           filter(scores, mang == 1)
         varname <- paste0(forest_type,"_", input$criteria)
@@ -100,7 +102,7 @@ forestServer <- function(id, forest_type) {
       observe({
         #can add and remove by layer ID, so should be able to speed this
         # up by just changing polygons that need to be changed. 
-        browser()
+        
         leafletProxy(ns("forest_map")) %>%
           # # clearControls() %>%
           clearGroup(c('top_forest')) %>%
