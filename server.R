@@ -82,8 +82,8 @@ function(input, output, session) {
         color = "#FFFFFF",
         weight = 0.4) %>%
         addPolygons(
+          group = "mangroves",
           data = mangrove_dat,
-          layerId=~unit_ID,
           weight = 0.4) %>%
       addCircleMarkers(group = "Blue Forest projects",
                        data = wwf,
@@ -102,14 +102,17 @@ function(input, output, session) {
   })
 
   update_top_sites_dat <- reactive({
-    x <- filter(df, eco %in% as.numeric(input$blue_forest) &
-                  value ==1) 
-    mangrove_2016_area_ha
+    scores <- filter(scores, mang == 1)
+    q <- quantile(scores$mang_extent, probs = 1-(input$perc)/100,
+                  names = FALSE)
+    x <- filter(scores, mang_extent > q) 
     x <- units2[units2$unit_ID %in% x$unit_ID, ]
     return(x)
   })
     
   observe({
+    #can add and remove by layer ID, so should be able to speed this
+    # up by just changing polygons that need to be changed. 
     leafletProxy("mangrove_map") %>%
       # # clearControls() %>%
        clearGroup(c('top_forest')) %>%
@@ -118,9 +121,8 @@ function(input, output, session) {
         color = "red",
         data = update_top_sites_dat(),
         layerId=~unit_ID,
-        weight = 0.4)
-    #note popups block shape_click events
-    
+        weight = 0.4) 
+      
   })
   
   #
