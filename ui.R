@@ -124,8 +124,16 @@ navbarPage(
                tags$head(
                  includeCSS("styles.css")
                ),
-          tableOutput("unit_ID_dashboard")
-              
+               tags$br(),
+               tags$br(),
+               
+          tableOutput("unit_ID_dashboard"),
+          
+          tags$br(),
+          tags$br(),
+          
+          plotOutput('indicator_plot')
+          
            ), #end div
            
            tags$div(id="cite",

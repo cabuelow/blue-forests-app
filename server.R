@@ -86,4 +86,13 @@ function(input, output, session) {
     }
   })
   
+  output$indicator_plot <- renderPlot({
+    if(!is.null(unit_ID_clicked())){
+      
+      
+    }else{
+      
+    }
+  })
+  
 } #end server
