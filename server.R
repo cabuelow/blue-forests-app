@@ -69,9 +69,10 @@ function(input, output, session) {
   # ------------ 
   # Single forest pages
   # ------------ 
-  forestServer("mangroves", "mang")
-  forestServer("seagrass", "seag")
-  forestServer("saltmarsh", "salt")
+  forestServer("mangroves", "mangrove")
+  forestServer("seagrass", "seagrass")
+  forestServer("saltmarsh", "saltmarsh")
+  forestServer("kelp", "kelp")
   
   #
   # Render dashboard

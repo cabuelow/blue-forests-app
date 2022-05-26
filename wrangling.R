@@ -19,11 +19,9 @@ wwf <- st_read('data/wwf-bf-projects.gpkg')
 profile1 <- st_read('data/enabling-profiles.gpkg') %>% st_drop_geometry() %>%filter(Enabling.profile == 1)
 profile1.sf <- st_read('data/UIA_World_Countries_Boundaries/UIA_World_Countries_Boundaries.shp') %>% filter(Country %in% profile1$name)
 scores <- read.csv('data/scores/blue-forest-scores-L2_area-standardised.csv') %>%  # choose scores to plot
-  left_join(select(data.frame(st_drop_geometry(units2)), unit_ID, mangrove:seagrass)) %>% 
-  rename(mang = mangrove, seag = seagrass, salt = saltmarsh)
+  left_join(select(data.frame(st_drop_geometry(units2)), unit_ID, mangrove:seagrass))
 scores2 <- read.csv('data/scores/blue-forest-scores-L2_area-standardised_enabling-constrained.csv') %>%  # choose scores to plot
-  left_join(select(data.frame(st_drop_geometry(units2)), unit_ID, mangrove:seagrass)) %>% 
-  rename(mang = mangrove, seag = seagrass, salt = saltmarsh)
+  left_join(select(data.frame(st_drop_geometry(units2)), unit_ID, mangrove:seagrass))
 
 terr <- c('Global', sort(unique(as.character(units2$TERRITORY1))))
 df <- data.frame(units2) %>% 
@@ -31,9 +29,6 @@ df <- data.frame(units2) %>%
   tidyr::pivot_longer(-unit_ID, names_to = 'eco')
 df$eco <- recode(df$eco, mangrove = 1, seagrass = 2, saltmarsh = 3, kelp = 4, seafarm = 5)
 hot_pal <- c('#66CC33','#CC3300', '#9966CC', '#FFCC00', '#00CCCC')
-
-#BF layers
-mangrove_dat <- filter(units2, mangrove == 1)
 
 # pop-ups
 

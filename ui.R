@@ -62,7 +62,7 @@ navbarPage(
            
   ), # end tabpanel
   tabPanel('Explore Mangroves',
-           forestUI("mangroves"),
+           forestUI2("mangroves"),
            tags$div(id="cite",
                     tags$em('This map was created in support of the
                             Blue Forests Initiative, a project supported by 
@@ -85,6 +85,14 @@ navbarPage(
                             WWF and the Global Wetlands Project'))
            
   ), # end tabpanel
+  tabPanel('Explore Kelp',
+           forestUI2("kelp"),
+           tags$div(id="cite",
+                    tags$em('This map was created in support of the
+                            Blue Forests Initiative, a project supported by 
+                            WWF and the Global Wetlands Project'))
+           
+  ),# end tabpanel
   tabPanel('Dashboard',
            div(class="outer",
                tags$head(
