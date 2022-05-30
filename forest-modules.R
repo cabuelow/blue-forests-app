@@ -1,20 +1,11 @@
 #modules for the single forest page 
 
 #TODO: 
-# fix 'all' criteria, not working currenlty
-# what is the 'cobenefit' criteria? 
-#CAB: only mangroves and kelp have cobenefit criteria, so have added secondi UI module for them
-#CAB: mangrove cobenefit if coastal protection and fisheries, for kelp just fisheries
-#Change this so there is a selector for forest, rather than a tab
-# tabs makes it plot all of them on launch (waste of compute)
-#ALso having issues with the modules...
+# fix 'all' criteria, if we want to have that, not working currenlty
 
-# CAB updates:
-# fixed so plotted correct forest extent in each tab
-# added kelp
-# added cobenefit criteria
-
-forestUI <- function(id) {
+forestUI <- function(id, criteria_choices) {
+  #criteria_choices: Named list of criteria for this forest
+  # mangrove and kelp have different ones 
   ns <- NS(id)
   div(class="outer",
       tags$head(
@@ -40,8 +31,7 @@ forestUI <- function(id) {
                     radioButtons(ns("criteria"), 
                                  #label=NULL,
                                  label=h4(tags$b("1. Select criteria:")), 
-                                 choices = list("Extent" = 'extent', "Threat" = 'threat', 
-                                                "Carbon" = 'carbon', "Biodiversity" = 'biodiversity'),
+                                 choices = criteria_choices,
                                  selected = 'extent'),
                     
                     tags$br(),
@@ -56,47 +46,6 @@ forestUI <- function(id) {
   )
 }
 
-forestUI2 <- function(id) {
-  ns <- NS(id)
-  div(class="outer",
-      tags$head(
-        includeCSS("styles.css")
-      ),
-      leafletOutput(ns("forest_map"), width="100%", height="100%"),
-      tags$style(".leaflet-control-layers-overlays{color: blue}"),
-      absolutePanel(id = "controls", 
-                    class = "panel panel-default", 
-                    fixed = TRUE,
-                    draggable = TRUE, 
-                    top = 100, 
-                    left = 30, 
-                    right = "auto", 
-                    bottom = "auto",
-                    width = 330, 
-                    height = "auto",
-                    
-                    tags$br(),
-                    
-                    tags$em("Allow a moment for layers to load."),
-                    
-                    radioButtons(ns("criteria"), 
-                                 #label=NULL,
-                                 label=h4(tags$b("1. Select criteria:")), 
-                                 choices = list("Extent" = 'extent', "Threat" = 'threat', 
-                                                "Carbon" = 'carbon', "Biodiversity" = 'biodiversity', 'Cobenefit' = 'cobenefit'),
-                                 selected = 'extent'),
-                    
-                    tags$br(),
-                    
-                    sliderInput(ns("perc"), label = h4(tags$b("2. Find management units in top percent of criteria")), 
-                                min = 0, max = 100, 
-                                value = 10,
-                                step = 5),
-                    
-                    tags$br()
-      )
-  )
-}
 
 forestServer <- function(id, forest_type) {
   #forest_type is the name of the columns in 

@@ -12,8 +12,12 @@ library(leaflet)
 
 source("wrangling.R")
 source("forest-modules.R")
+source("parametersUI.R")
+
 
 # navigation panel
+
+
 
 navbarPage(
   title = 'Blue Forests', id = 'nav',
@@ -62,7 +66,7 @@ navbarPage(
            
   ), # end tabpanel
   tabPanel('Explore Mangroves',
-           forestUI2("mangroves"),
+           forestUI("mangroves", criteria_choices = criteria_mang_kelp),
            tags$div(id="cite",
                     tags$em('This map was created in support of the
                             Blue Forests Initiative, a project supported by 
@@ -70,7 +74,7 @@ navbarPage(
            
   ), # end tabpanel
   tabPanel('Explore Seagrass',
-           forestUI("seagrass"),
+           forestUI("seagrass", criteria_choices = criteria_others),
            tags$div(id="cite",
                     tags$em('This map was created in support of the
                             Blue Forests Initiative, a project supported by 
@@ -78,7 +82,7 @@ navbarPage(
            
   ), # end tabpanel
   tabPanel('Explore Saltmarsh',
-           forestUI("saltmarsh"),
+           forestUI("saltmarsh", criteria_choices = criteria_others),
            tags$div(id="cite",
                     tags$em('This map was created in support of the
                             Blue Forests Initiative, a project supported by 
@@ -86,7 +90,7 @@ navbarPage(
            
   ), # end tabpanel
   tabPanel('Explore Kelp',
-           forestUI2("kelp"),
+           forestUI("kelp", criteria_choices = criteria_mang_kelp),
            tags$div(id="cite",
                     tags$em('This map was created in support of the
                             Blue Forests Initiative, a project supported by 
