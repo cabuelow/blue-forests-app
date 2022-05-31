@@ -13,11 +13,12 @@ library(leaflet)
 source("wrangling.R")
 source("forest-modules.R")
 source("parametersUI.R")
-
+  
 # navigation panel
 
 navbarPage(
-  title = 'Blue Forests', id = 'nav',
+  title = div("Blue Forests",
+              img(src = "g-logo.png", height = "35px", style = "position: relative; top: -3px; right: -1500px;")), id = 'nav',
   tabPanel('Explore Blue Forest Distributions',
            textOutput("selected_var"),
            div(class="outer",
