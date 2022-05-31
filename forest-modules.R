@@ -53,7 +53,7 @@ forestUI <- function(id, criteria_choices) {
                     left = 30, 
                     right = "auto", 
                     bottom = 30,
-                    width = 900, 
+                    width = 600, 
                     height = "auto",
                     
                     #tags$b("Blue forest area"),
@@ -67,7 +67,13 @@ forestUI <- function(id, criteria_choices) {
                     
                     #tags$b("Percent of blue forests protected"),
                     
-                    tableOutput(ns('myDf_outputf2'))
+                    tableOutput(ns('myDf_outputf2')),
+                    
+                    tags$br(),
+                    
+                    #tags$b("Percent of blue forests protected"),
+                    
+                    plotOutput(ns('indplot'), height = '200px', width = '500px')
                     
       ) # end absolute panel 2
   ) # end div
@@ -161,7 +167,8 @@ forestServer <- function(id, forest_type) {
         }else{
           NULL
         }
-      }) # end render
+      }, spacing = c("xs"),
+      width = "500px") # end render
       
       output$myDf_outputf2 <- renderTable({
         if(!is.null(rvf())){
@@ -173,7 +180,30 @@ forestServer <- function(id, forest_type) {
         }else{
           NULL
         }
+      }, spacing = c("xs"),
+      width = "500px") # end render
+      
+      output$indplot <- renderPlot({
+        if(!is.null(rvf())){
+          d <- indscores.p %>% filter(unit_ID == rvf() & forest_name == forest_type)
+          ggplot() +
+            geom_violin(data = filter(indscores.p, forest_name == forest_type), aes(y = indicator_score, x = indicator_name, fill = fill), trim = F) +
+            geom_point(data = d, aes(y = indicator_score, x = indicator_name)) +
+            xlab('') +
+            ylab('Score') +
+            ylim(c(0,100)) +
+            theme_classic() +
+            ggtitle(paste(unique(d$forest_name2), 'Indicator scores')) +
+            scale_fill_manual(
+              breaks = c('Threat', 'Extent', 'Biodiversity', 'Carbon', 'Cobenefit'),
+              values = c('orangered4', 'darkolivegreen4','goldenrod3','plum4', 'cyan4')) +
+            theme(
+              legend.title = element_blank())
+        }else{
+          NULL
+        }
       }) # end render
+      
     }
   )
 }

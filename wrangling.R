@@ -3,6 +3,7 @@
 library(sf)
 library(dplyr)
 library(tidyr)
+library(stringr)
 
 # simplify geopackages so app is faster
 #library(rmapshaper)
@@ -22,6 +23,54 @@ scores <- read.csv('data/scores/blue-forest-scores-L2_area-standardised.csv') %>
   left_join(select(data.frame(st_drop_geometry(units2)), unit_ID, mangrove:seagrass))
 scores2 <- read.csv('data/scores/blue-forest-scores-L2_area-standardised_enabling-constrained.csv') %>%  # choose scores to plot
   left_join(select(data.frame(st_drop_geometry(units2)), unit_ID, mangrove:seagrass))
+indscores <- read.csv('data/scores/rescaled-ind-scoring_area-stand-L2.csv')
+indscores2 <- read.csv('data/scores/rescaled-ind-scoring_area-stand-L2_enabling-constrained.csv')
+
+indscores.p <- indscores %>% 
+  pivot_longer(cols = c(kelp_climate_mean:kelp_carbon_gC_m2_yr, saltmarsh_carbon_mgC_ha,
+                        seagrass_carbon_gC_m2:kelp_fisheries_biomass_m2,
+                        kelp_spp_richness:seagrass_spp_richness, mangrove_carbon_mgC_ha,
+                        mangrove_fish_catch, mangrove_2016_area_ha, saltmarsh_area_ha,
+                        seagrass_area_ha, kelp_area_ha),
+               names_to = 'indicators', values_to = 'indicator_score') %>% 
+  mutate(forest = substr(indicators, 1,4),
+         indicator = substr(indicators, 6, 50)) %>% 
+  mutate(indicator_score = ifelse(is.na(indicator_score), 0, indicator_score))
+indscores.p$forest_name <- recode(indscores.p$forest, 'mang' = 'mangrove', 'seag' = 'seagrass', 'salt' = 'saltmarsh', 'kelp' = 'kelp')
+indscores.p$forest_name2 <- recode(indscores.p$forest, 'mang' = 'Mangrove', 'seag' = 'Seagrass', 'salt' = 'Saltmarsh', 'kelp' = 'Kelp')
+
+indscores.p$indicator_name <- recode(indscores.p$indicator, 
+                                     'climate_mean' = 'Climate impacts',
+                                     'land_mean' = 'Land impacts',
+                                     'marine_mean' = 'Marine impacts',
+                                     'trend' = 'Rate of Loss',
+                                     'ove_prop_lost_10_16' = 'Rate of Loss',
+                                     'ass_mean_risk' = 'Probability of decline',
+                                     'carbon_gC_m2_yr' = 'Carbon',
+                                     'arsh_carbon_mgC_ha' = 'Carbon',
+                                     "ass_carbon_gC_m2" = 'Carbon', 
+                                     "ove_coastal_protection" = 'Coastal protection', 
+                                     'fisheries_biomass_m2' = 'Fisheries', 
+                                     "spp_richness"= 'Biodiversity',
+                                     "ove_spp_richness"= 'Biodiversity',
+                                     "arsh_spp_richness" = 'Biodiversity',
+                                     "ass_spp_richness" = 'Biodiversity',
+                                     "ove_carbon_mgC_ha" = 'Carbon',
+                                     "ove_fish_catch" = 'Fisheries',
+                                     'ove_2016_area_ha' = 'Extent',
+                                     'arsh_area_ha' = 'Extent',
+                                     'ass_area_ha' = 'Extent',
+                                     "area_ha"  = 'Extent')
+indscores.p$fill <- recode(indscores.p$indicator_name,
+                           'Rate of Loss' = 'Threat',
+                           'Marine impacts' = 'Threat',
+                           'Land impacts' = 'Threat', 
+                           'Cyclone risk' = 'Threat',
+                           'Probability of decline' = 'Threat',
+                           'Climate impacts' = 'Threat',
+                           'Fisheries' = 'Cobenefit',
+                           'Coastal protection' = 'Cobenefit')
+indscores.p$indicator_name <- str_wrap(indscores.p$indicator_name, width = 9)
 
 terr <- c('Global', sort(unique(as.character(units2$TERRITORY1))))
 df <- data.frame(units2) %>% 
