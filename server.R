@@ -8,6 +8,7 @@ library(dplyr)
 library(sf)
 library(leaflet)
 library(RColorBrewer)
+library(ggplot2)
 
 # server logic
 
