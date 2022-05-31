@@ -4,6 +4,8 @@ Web application to inform blue forest conservation.
 
 #### TODO for first end-user consultation
 
+- Instead of dashboard - click on a site and absolute panel is populated with indicator plot and information on data quality
+
 - [X] Fix glitches
       - [ ] Timing out issue – increase server ‘instance’ period, greater than 15 minutes
 

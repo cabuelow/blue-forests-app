@@ -20,7 +20,7 @@ forestUI <- function(id) {
       tags$head(
         includeCSS("styles.css")
       ),
-      leafletOutput(ns("forest_map"), width="100%", height="100%"),
+      leafletOutput(ns("forestmap"), width="100%", height="100%"),
       tags$style(".leaflet-control-layers-overlays{color: blue}"),
       absolutePanel(id = "controls", 
                     class = "panel panel-default", 
@@ -52,9 +52,10 @@ forestUI <- function(id) {
                                 step = 5),
                     
                     tags$br()
-      )
+      ) # end absolute panel 1
+    
   )
-}
+} # forest UI module 1
 
 forestUI2 <- function(id) {
   ns <- NS(id)
@@ -62,7 +63,7 @@ forestUI2 <- function(id) {
       tags$head(
         includeCSS("styles.css")
       ),
-      leafletOutput(ns("forest_map"), width="100%", height="100%"),
+      leafletOutput(ns("forestmap"), width="100%", height="100%"),
       tags$style(".leaflet-control-layers-overlays{color: blue}"),
       absolutePanel(id = "controls", 
                     class = "panel panel-default", 
@@ -94,6 +95,19 @@ forestUI2 <- function(id) {
                                 step = 5),
                     
                     tags$br()
+      ),
+      absolutePanel(id = "controls", 
+                    class = "panel panel-default", 
+                    fixed = TRUE,
+                    draggable = TRUE, 
+                    top = "auto", 
+                    left = 30, 
+                    right = "auto", 
+                    bottom = 30,
+                    width = 900, 
+                    height = "auto",
+                    
+                    tableOutput(ns('myDf_output'))
       )
   )
 }
@@ -105,7 +119,11 @@ forestServer <- function(id, forest_type) {
   moduleServer(
     id,
     function(input, output, session) {
-      output$forest_map <- renderLeaflet({
+
+      ## use reactive values to store the id from observing the shape click
+      rv <- reactiveVal()
+      
+      output$forestmap <- renderLeaflet({
         leaflet() %>% 
           addProviderTiles(providers$CartoDB.Positron) %>% 
           addPolygons(
@@ -116,6 +134,7 @@ forestServer <- function(id, forest_type) {
           addPolygons(
             group = "mangroves",
             data = units2 %>% filter_at(vars(forest_type), all_vars(. == 1)),
+            layerId = ~unit_ID,
             weight = 0.4) %>%
           addCircleMarkers(group = "Blue Forest projects",
                            data = wwf,
@@ -134,6 +153,7 @@ forestServer <- function(id, forest_type) {
       })
       
       update_top_sites_dat <- reactive({
+      #  req(input$nav==forest_type)
         # browser()
         scores <- scores[scores[,forest_type]==1,]
         varname <- paste0(substr(forest_type, 1,4),"_", input$criteria)
@@ -145,10 +165,11 @@ forestServer <- function(id, forest_type) {
       })
       
       observe({
+
         #can add and remove by layer ID, so should be able to speed this
         # up by just changing polygons that need to be changed. 
         
-        leafletProxy(ns("forest_map")) %>%
+        leafletProxy(ns("forestmap")) %>%
           # # clearControls() %>%
           clearGroup(c('top_forest')) %>%
           addPolygons(
@@ -158,7 +179,25 @@ forestServer <- function(id, forest_type) {
             layerId=~unit_ID,
             weight = 0.4) 
         
-      })    
+      })
+      
+      # observe shape-click
+      
+      observeEvent(input$forestmap_shape_click, {
+        rv(input$forestmap_shape_click$id)
+        print(rv)
+      }) # end observeEvent
+      
+      # new plot based on shape-click
+      
+      output$myDf_output <- renderTable({
+        if(!is.null(rv())){
+          data.frame(lat = rv(), lon = rv())
+        }else{
+          NULL
+        }
+      }) # end render
+      
     }
   )
 }

@@ -61,6 +61,26 @@ navbarPage(
                     tags$em('This map was created in support of the Blue Forests Initiative, a project supported by WWF and the Global Wetlands Project'))
            
   ), # end tabpanel
+  #tabPanel('Dashboard',
+   #        div(class="outer",
+    #           tags$head(
+     #            includeCSS("styles.css")
+      #         ),
+       #        fluidRow(
+        #         column(width = 6,
+         #               h2("Column #1"),
+          #              plotOutput('unit_ID_dashboard_plotCrit')),
+           #      column(width = 6,
+            #            h2("Column #2"),
+             #           plotOutput('unit_ID_dashboard_plotCont')))
+               #tableOutput("unit_ID_dashboard")
+
+          # ), #end div
+           
+          # tags$div(id="cite",
+           #         tags$em('This dashboard was created in support of the Blue Forests Initiative, a project supported by WWF and the Global Wetlands Project'))
+           
+  #), # end tabpanel
   tabPanel('Explore Mangroves',
            forestUI2("mangroves"),
            tags$div(id="cite",
@@ -68,43 +88,30 @@ navbarPage(
                             Blue Forests Initiative, a project supported by 
                             WWF and the Global Wetlands Project'))
            
-  ), # end tabpanel
-  tabPanel('Explore Seagrass',
-           forestUI("seagrass"),
-           tags$div(id="cite",
-                    tags$em('This map was created in support of the
-                            Blue Forests Initiative, a project supported by 
-                            WWF and the Global Wetlands Project'))
+  #), # end tabpanel
+  #tabPanel('Explore Seagrass',
+   #        forestUI("seagrass"),
+    #       tags$div(id="cite",
+     #               tags$em('This map was created in support of the
+      #                      Blue Forests Initiative, a project supported by 
+       #                     WWF and the Global Wetlands Project'))
+        #   
+#  ), # end tabpanel
+ # tabPanel('Explore Saltmarsh',
+  #         forestUI("saltmarsh"),
+   #        tags$div(id="cite",
+    #                tags$em('This map was created in support of the
+     #                       Blue Forests Initiative, a project supported by 
+      #                      WWF and the Global Wetlands Project'))
            
-  ), # end tabpanel
-  tabPanel('Explore Saltmarsh',
-           forestUI("saltmarsh"),
-           tags$div(id="cite",
-                    tags$em('This map was created in support of the
-                            Blue Forests Initiative, a project supported by 
-                            WWF and the Global Wetlands Project'))
+  #), # end tabpanel
+  #tabPanel('Explore Kelp',
+   #        forestUI2("kelp"),
+    #       tags$div(id="cite",
+     #               tags$em('This map was created in support of the
+      #                      Blue Forests Initiative, a project supported by 
+       #                     WWF and the Global Wetlands Project'))
            
-  ), # end tabpanel
-  tabPanel('Explore Kelp',
-           forestUI2("kelp"),
-           tags$div(id="cite",
-                    tags$em('This map was created in support of the
-                            Blue Forests Initiative, a project supported by 
-                            WWF and the Global Wetlands Project'))
-           
-  ),# end tabpanel
-  tabPanel('Dashboard',
-           div(class="outer",
-               tags$head(
-                 includeCSS("styles.css")
-               ),
-               tableOutput("unit_ID_dashboard")
-               
-           ), #end div
-           
-           tags$div(id="cite",
-                    tags$em('This dashboard was created in support of the Blue Forests Initiative, a project supported by WWF and the Global Wetlands Project'))
-           
-  ) # end tabpanel
+  )
   
 ) # end nav bar

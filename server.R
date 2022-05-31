@@ -5,6 +5,7 @@
 library(shiny)
 library(shinyjs)
 library(dplyr)
+library(ggplot2)
 library(sf)
 library(leaflet)
 library(RColorBrewer)
@@ -38,7 +39,7 @@ function(input, output, session) {
         overlayGroups = c("Blue Forest projects"),
         options = layersControlOptions(collapsed = FALSE)
       )
-  })
+  }) # end mymap render
   
   #
   # Filter data for ticked blue forests 
@@ -55,6 +56,9 @@ function(input, output, session) {
   #
   
   observe({
+    
+    req(input$nav=="Explore Blue Forest Distributions")
+    
     leafletProxy("mymap") %>%
       clearGroup(c('forest')) %>%
       addPolygons(
@@ -70,26 +74,8 @@ function(input, output, session) {
   # Single forest pages
   # ------------ 
   forestServer("mangroves", "mangrove")
-  forestServer("seagrass", "seagrass")
-  forestServer("saltmarsh", "saltmarsh")
-  forestServer("kelp", "kelp")
-  
-  #
-  # Render dashboard
-  #
-  
-  unit_ID_clicked <- reactive({
-    input$mymap_shape_click$id
-  })
-  
-  output$unit_ID_dashboard <- renderTable({
-    if (!is.null(unit_ID_clicked())){
-      x <- filter(units2, unit_ID == unit_ID_clicked())
-      sf::st_geometry(x) <- NULL
-      x[,c("SOVEREIGN1", "unit_area_ha", "mangrove_2016_area_ha")]
-    } else {
-      NULL
-    }
-  })
+  #forestServer("seagrass", "seagrass")
+  #forestServer("saltmarsh", "saltmarsh")
+  #forestServer("kelp", "kelp")
   
 } #end server
