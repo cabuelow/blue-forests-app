@@ -1,6 +1,8 @@
 #modules for the single forest page 
 
 #TODO: 
+# provide indicator plot in popup panel and data qual descripition
+# get enabling constraint working
 # fix 'all' criteria, if we want to have that, not working currenlty
 
 forestUI <- function(id, criteria_choices) {
@@ -42,9 +44,34 @@ forestUI <- function(id, criteria_choices) {
                                 step = 5),
                     
                     tags$br()
-      )
-  )
-}
+      ), # end absolute panel 1
+      absolutePanel(id = "controls", 
+                    class = "panel panel-default", 
+                    fixed = TRUE,
+                    draggable = TRUE, 
+                    top = "auto", 
+                    left = 30, 
+                    right = "auto", 
+                    bottom = 30,
+                    width = 900, 
+                    height = "auto",
+                    
+                    #tags$b("Blue forest area"),
+                    tags$em("Click on a coastal management unit to find out more..."),
+                    
+                    tags$br(),
+                    
+                    tableOutput(ns('myDf_outputf')),
+                    
+                    tags$br(),
+                    
+                    #tags$b("Percent of blue forests protected"),
+                    
+                    tableOutput(ns('myDf_outputf2'))
+                    
+      ) # end absolute panel 2
+  ) # end div
+} # end UI
 
 
 forestServer <- function(id, forest_type) {
@@ -54,6 +81,12 @@ forestServer <- function(id, forest_type) {
   moduleServer(
     id,
     function(input, output, session) {
+      
+      # use reactive values to store the id from observing the shape click
+      rvf <- reactiveVal()
+      
+      # create basemap 
+      
       output$forest_map <- renderLeaflet({
         leaflet() %>% 
           addProviderTiles(providers$CartoDB.Positron) %>% 
@@ -65,6 +98,7 @@ forestServer <- function(id, forest_type) {
           addPolygons(
             group = "mangroves",
             data = units2 %>% filter_at(vars(forest_type), all_vars(. == 1)),
+            layerId = ~unit_ID,
             weight = 0.4) %>%
           addCircleMarkers(group = "Blue Forest projects",
                            data = wwf,
@@ -106,8 +140,40 @@ forestServer <- function(id, forest_type) {
             data = update_top_sites_dat(),
             layerId=~unit_ID,
             weight = 0.4) 
-        
-      })    
+      }) # end observe
+      
+      # observe shape-click event
+      
+      observeEvent(input$forest_map_shape_click, {
+        rvf(input$forest_map_shape_click$id)
+        print(rvf)
+      }) # end observeEvent
+      
+      # new plot(s) based on shape-click
+      
+      output$myDf_outputf <- renderTable({
+        if(!is.null(rvf())){
+          d <- st_drop_geometry(units2) %>% filter(unit_ID == rvf())
+          data.frame(`Mangrove area (ha)` = d$mangrove_2016_area_ha,
+                     `Seagrass area (ha)` = d$seagrass_area_ha,
+                     `Saltmarsh area (ha)` = d$saltmarsh_area_ha,
+                     `Kelp area (ha)` = d$kelp_area_ha, check.names = F)
+        }else{
+          NULL
+        }
+      }) # end render
+      
+      output$myDf_outputf2 <- renderTable({
+        if(!is.null(rvf())){
+          d <- st_drop_geometry(units2) %>% filter(unit_ID == rvf())
+          data.frame(`% mangrove protected` = d$mang_prot,
+                     `% seagrass protected` = d$seag_prot,
+                     `% saltmarsh protected` = d$salt_prot,
+                     `% kelp protected` = d$kelp_prot, check.names = F)
+        }else{
+          NULL
+        }
+      }) # end render
     }
   )
 }

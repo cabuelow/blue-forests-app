@@ -13,7 +13,7 @@ library(tidyr)
 
 # load data 
 
-units2 <- st_read('data/units-attributes_wgs84-L2-simp.gpkg') %>% mutate(HYBAS_ID = ifelse(is.na(HYBAS_ID), 1, HYBAS_ID)) %>% mutate(Unit = as.character(HYBAS_ID)) %>% mutate(prop_vul_pop = lecz_pop_count_sum/pop_count_sum, mangrove_carbon_mgC_ha = mangrove_abg_mgC_ha + mangrove_soil_mgC_ha)
+units2 <- st_read('data/units-attributes_wgs84-L2-simp.gpkg') %>% mutate(HYBAS_ID = ifelse(is.na(HYBAS_ID), 1, HYBAS_ID)) %>% mutate(Unit = as.character(HYBAS_ID)) %>% mutate(prop_vul_pop = lecz_pop_count_sum/pop_count_sum, mangrove_carbon_mgC_ha = mangrove_abg_mgC_ha + mangrove_soil_mgC_ha) %>% mutate(mangrove_2016_area_ha = round(mangrove_2016_area_ha), seagrass_area_ha = round(seagrass_area_ha), saltmarsh_area_ha = round(saltmarsh_area_ha), kelp_area_ha = round(kelp_area_ha)) %>% mutate(mang_prot = round(((mangrove_2016_wdpa_ha+mangrove_2016_oecm_ha)/mangrove_2016_area_ha)*100), seag_prot = round(((seagrass_wdpa_ha+seagrass_oecm_ha)/seagrass_area_ha)*100), salt_prot = round(((saltmarsh_wdpa_ha+saltmarsh_oecm_ha)/saltmarsh_area_ha)*100),kelp_prot = round(((kelp_wdpa_ha+kelp_oecm_ha)/kelp_area_ha)*100))  %>% mutate(seagrass_area_ha = ifelse(seagrass_points >= 1 & seagrass_area_ha == 0, 'Present (unknown area)', seagrass_area_ha), mang_prot = ifelse(is.na(mang_prot), 0, mang_prot), seag_prot = ifelse(is.na(seag_prot), 0, seag_prot), salt_prot = ifelse(is.na(salt_prot), 0, salt_prot), kelp_prot = ifelse(is.na(kelp_prot), 0, kelp_prot)) 
 unitsall <- st_read('data/units-all_wgs84-simp.gpkg')
 wwf <- st_read('data/wwf-bf-projects.gpkg')
 profile1 <- st_read('data/enabling-profiles.gpkg') %>% st_drop_geometry() %>%filter(Enabling.profile == 1)

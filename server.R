@@ -14,6 +14,10 @@ library(RColorBrewer)
 function(input, output, session) {
   
   ####################### Explore distributions logic ########################
+  
+  ## use reactive values to store the id from observing the shape click
+  rv <- reactiveVal()
+  
   # create basemap
   
   output$mymap <- renderLeaflet({
@@ -38,7 +42,7 @@ function(input, output, session) {
         overlayGroups = c("Blue Forest projects"),
         options = layersControlOptions(collapsed = FALSE)
       )
-  })
+  }) # end render leaflet
   
   #
   # Filter data for ticked blue forests 
@@ -48,12 +52,12 @@ function(input, output, session) {
                   value ==1) 
     x <- units2[units2$unit_ID %in% x$unit_ID, ]
     return(x)
-  })
+  }) # end reactive
   
   #
   # Update map
   #
-  
+
   observe({
     leafletProxy("mymap") %>%
       clearGroup(c('forest')) %>%
@@ -63,9 +67,40 @@ function(input, output, session) {
         layerId=~unit_ID,
         weight = 0.4)
     #note popups block shape_click events
-    
-  })
+  }) # end observe
   
+  # observe shape-click event
+  
+  observeEvent(input$mymap_shape_click, {
+    rv(input$mymap_shape_click$id)
+    print(rv)
+  }) # end observeEvent
+  
+  # new plot(s) based on shape-click
+  
+  output$myDf_output <- renderTable({
+    if(!is.null(rv())){
+      d <- st_drop_geometry(units2) %>% filter(unit_ID == rv())
+      data.frame(`Mangrove area (ha)` = d$mangrove_2016_area_ha,
+                 `Seagrass area (ha)` = d$seagrass_area_ha,
+                 `Saltmarsh area (ha)` = d$saltmarsh_area_ha,
+                 `Kelp area (ha)` = d$kelp_area_ha, check.names = F)
+    }else{
+      NULL
+    }
+  }) # end render
+  
+  output$myDf_output2 <- renderTable({
+    if(!is.null(rv())){
+      d <- st_drop_geometry(units2) %>% filter(unit_ID == rv())
+      data.frame(`% mangrove protected` = d$mang_prot,
+                 `% seagrass protected` = d$seag_prot,
+                 `% saltmarsh protected` = d$salt_prot,
+                 `% kelp protected` = d$kelp_prot, check.names = F)
+    }else{
+      NULL
+    }
+  }) # end render
   # ------------ 
   # Single forest pages
   # ------------ 
@@ -73,23 +108,5 @@ function(input, output, session) {
   forestServer("seagrass", "seagrass")
   forestServer("saltmarsh", "saltmarsh")
   forestServer("kelp", "kelp")
-  
-  #
-  # Render dashboard
-  #
-  
-  unit_ID_clicked <- reactive({
-    input$mymap_shape_click$id
-  })
-  
-  output$unit_ID_dashboard <- renderTable({
-    if (!is.null(unit_ID_clicked())){
-      x <- filter(units2, unit_ID == unit_ID_clicked())
-      sf::st_geometry(x) <- NULL
-      x[,c("SOVEREIGN1", "unit_area_ha", "mangrove_2016_area_ha")]
-    } else {
-      NULL
-    }
-  })
   
 } #end server

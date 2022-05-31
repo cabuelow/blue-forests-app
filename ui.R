@@ -14,10 +14,7 @@ source("wrangling.R")
 source("forest-modules.R")
 source("parametersUI.R")
 
-
 # navigation panel
-
-
 
 navbarPage(
   title = 'Blue Forests', id = 'nav',
@@ -58,7 +55,33 @@ navbarPage(
                              selectInput("country", label = h4(tags$b("2. Choose country or territory")), 
                                          choices =  terr, 
                                          selected = 'Global')
-               ), #end absolute panel
+               ), #end absolute panel 1
+               
+               absolutePanel(id = "controls", 
+                             class = "panel panel-default", 
+                             fixed = TRUE,
+                             draggable = TRUE, 
+                             top = "auto", 
+                             left = 30, 
+                             right = "auto", 
+                             bottom = 30,
+                             width = 900, 
+                             height = "auto",
+                             
+                             #tags$b("Blue forest area"),
+                             tags$em("Click on a coastal management unit to find out more..."),
+                             
+                             tags$br(),
+                             
+                             tableOutput('myDf_output'),
+                             
+                             tags$br(),
+                             
+                             #tags$b("Percent of blue forests protected"),
+                             
+                             tableOutput('myDf_output2')
+                             
+               ) # end absolute panel 2
            ), #end div
            
            tags$div(id="cite",
@@ -95,19 +118,6 @@ navbarPage(
                     tags$em('This map was created in support of the
                             Blue Forests Initiative, a project supported by 
                             WWF and the Global Wetlands Project'))
-           
-  ),# end tabpanel
-  tabPanel('Dashboard',
-           div(class="outer",
-               tags$head(
-                 includeCSS("styles.css")
-               ),
-               tableOutput("unit_ID_dashboard")
-               
-           ), #end div
-           
-           tags$div(id="cite",
-                    tags$em('This dashboard was created in support of the Blue Forests Initiative, a project supported by WWF and the Global Wetlands Project'))
            
   ) # end tabpanel
   
