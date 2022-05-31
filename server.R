@@ -88,7 +88,8 @@ function(input, output, session) {
     }else{
       NULL
     }
-  }) # end render
+  },spacing = c("xs"),
+  width = "500px") # end render
   
   output$myDf_output2 <- renderTable({
     if(!is.null(rv())){
@@ -100,7 +101,8 @@ function(input, output, session) {
     }else{
       NULL
     }
-  }) # end render
+  },spacing = c("xs"),
+  width = "500px") # end render
   # ------------ 
   # Single forest pages
   # ------------ 

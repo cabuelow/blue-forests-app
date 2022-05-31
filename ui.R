@@ -67,7 +67,7 @@ navbarPage(
                              left = 30, 
                              right = "auto", 
                              bottom = 30,
-                             width = 900, 
+                             width = 600, 
                              height = "auto",
                              
                              #tags$b("Blue forest area"),
