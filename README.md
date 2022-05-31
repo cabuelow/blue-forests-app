@@ -2,6 +2,8 @@
 
 Web application to inform blue forest conservation.
 
+Prototype [here](https://global-wetlands.shinyapps.io/blue-forests-app/)
+
 #### TODO for first end-user consultation
 
 - [X] Fix glitches
