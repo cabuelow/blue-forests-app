@@ -1,8 +1,7 @@
 #modules for the single forest page 
 
 #TODO: 
-# provide indicator plot in popup panel and data qual descripition
-# get enabling constraint working
+# fix indscore plot and data qual descripition
 # fix 'all' criteria, if we want to have that, not working currenlty
 
 forestUI <- function(id, criteria_choices) {
@@ -30,20 +29,26 @@ forestUI <- function(id, criteria_choices) {
                     
                     tags$em("Allow a moment for layers to load."),
                     
+                    tags$br(),
+                    
                     radioButtons(ns("criteria"), 
                                  #label=NULL,
-                                 label=h4(tags$b("1. Select criteria:")), 
+                                 label=h5(tags$b("1. Select criteria:")), 
                                  choices = criteria_choices,
                                  selected = 'extent'),
                     
                     tags$br(),
                     
-                    sliderInput(ns("perc"), label = h4(tags$b("2. Find management units in top percent of criteria")), 
+                    sliderInput(ns("perc"), label = h5(tags$b("3. Find management units in top percent of criteria")), 
                                 min = 0, max = 100, 
                                 value = 10,
                                 step = 5),
                     
-                    tags$br()
+                    tags$br(),
+                    
+                    h5(tags$b("3. Turn on enabling constraint layer")),
+                    checkboxInput(ns("profile2"), label = NULL, value = FALSE)
+                    
       ), # end absolute panel 1
       absolutePanel(id = "controls", 
                     class = "panel panel-default", 
@@ -88,9 +93,6 @@ forestServer <- function(id, forest_type) {
     id,
     function(input, output, session) {
       
-      # use reactive values to store the id from observing the shape click
-      rvf <- reactiveVal()
-      
       # create basemap 
       
       output$forest_map <- renderLeaflet({
@@ -105,7 +107,7 @@ forestServer <- function(id, forest_type) {
             group = "mangroves",
             data = units2 %>% filter_at(vars(forest_type), all_vars(. == 1)),
             layerId = ~unit_ID,
-            weight = 0.4) %>%
+            weight = 0.4) %>% 
           addCircleMarkers(group = "Blue Forest projects",
                            data = wwf,
                            color = ~pal(site_type),
@@ -120,25 +122,63 @@ forestServer <- function(id, forest_type) {
             overlayGroups = c("Blue Forest projects"),
             options = layersControlOptions(collapsed = FALSE)
           )
+      }) # end render leaflet
+      
+      # reactive if-elses to choose the right data depending on whether enabling constraint is on or off
+
+      dat <- reactive({
+        if(input$profile2 == TRUE){
+         unitdat <- units2.p 
+         scoredat <- scores2
+         indscoredat <- indscores.p2
+         ppal <- "#FFCC99"
+        }else{
+         unitdat <- units2
+         scoredat <- scores
+         indscoredat <- indscores.p
+         ppal <- '#D3D3D3'
+        }
+        combo <- list(unitdat = unitdat, scoredat = scoredat, indscoredat = indscoredat, ppal = ppal)
       })
       
+      # update basemap based on enabling constraint
+      
+      observe({
+      newdat <- dat() # get reactive data
+
+        leafletProxy(ns("forest_map")) %>%
+          clearGroup(c('profile', 'mangroves', 'top_forest')) %>%
+          addPolygons(
+            group = 'profile',
+            data = profile1.sf,
+            color = newdat$ppal,
+            weight = 0.4) %>% 
+          addPolygons(
+            group = "mangroves",
+            data = newdat$unitdat %>% filter_at(vars(forest_type), all_vars(. == 1)),
+            layerId = ~unit_ID,
+            weight = 0.4)
+      }) # end observe
+      
+      # reactive to capture changes in top sites
+      
       update_top_sites_dat <- reactive({
-        # browser()
-        scores <- scores[scores[,forest_type]==1,]
+        newdat <- dat()
+        scores <- newdat$scoredat[newdat$scoredat[,forest_type]==1,]
         varname <- paste0(substr(forest_type, 1,4),"_", input$criteria)
-        q <- quantile(scores[,varname], probs = 1-(input$perc)/100,
-                      names = FALSE)
+        q <- quantile(scores[,varname], probs = 1-(input$perc)/100,names = FALSE)
         x <- scores$unit_ID[scores[,varname] > q] 
-        x <- units2[units2$unit_ID %in% x, ]
+        x <- newdat$unitdat[newdat$unitdat$unit_ID %in% x, ]
         return(x)
-      })
+      }) # end reactive
+      
+      # update map top sites
       
       observe({
         #can add and remove by layer ID, so should be able to speed this
         # up by just changing polygons that need to be changed. 
         
         leafletProxy(ns("forest_map")) %>%
-          # # clearControls() %>%
           clearGroup(c('top_forest')) %>%
           addPolygons(
             group = 'top_forest',
@@ -147,6 +187,9 @@ forestServer <- function(id, forest_type) {
             layerId=~unit_ID,
             weight = 0.4) 
       }) # end observe
+      
+      # use reactive values to store the id from observing the shape click (below)
+      rvf <- reactiveVal()
       
       # observe shape-click event
       
@@ -185,9 +228,9 @@ forestServer <- function(id, forest_type) {
       
       output$indplot <- renderPlot({
         if(!is.null(rvf())){
-          d <- indscores.p %>% filter(unit_ID == rvf() & forest_name == forest_type)
+          d <- indscoredat %>% filter(unit_ID == rvf() & forest_name == forest_type)
           ggplot() +
-            geom_violin(data = filter(indscores.p, forest_name == forest_type), aes(y = indicator_score, x = indicator_name, fill = fill), alpha = 0.5, trim = F) +
+            geom_violin(data = filter(indscoredat, forest_name == forest_type), aes(y = indicator_score, x = indicator_name, fill = fill), alpha = 0.5, trim = F) +
             geom_point(data = d, aes(y = indicator_score, x = indicator_name)) +
             xlab('') +
             ylab('Score') +
