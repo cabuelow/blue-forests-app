@@ -123,7 +123,7 @@ forestServer <- function(id, forest_type) {
             color = "#FFFFFF",
             weight = 0.4) %>%
           addPolygons(
-            group = "mangroves",
+            group = "baseforest",
             data = units2 %>% filter_at(vars(forest_type), all_vars(. == 1)),
             color = '#008b8b',
             layerId = ~unit_ID,
@@ -156,30 +156,10 @@ forestServer <- function(id, forest_type) {
          unitdat <- units2
          scoredat <- scores
          indscoredat <- indscores.p
-         ppal <- '#D3D3D3'
+         ppal <- "#FFFFFF"
         }
         combo <- list(unitdat = unitdat, scoredat = scoredat, indscoredat = indscoredat, ppal = ppal)
       })
-      
-      # update basemap based on enabling constraint
-      
-      observe({
-      newdat <- dat() # get reactive data
-
-        leafletProxy(ns("forest_map")) %>%
-          clearGroup(c('profile', 'top_forest')) %>%
-          addPolygons(
-            group = 'profile',
-            data = profile1.sf,
-            color = newdat$ppal,
-            weight = 0.4) %>% 
-          addPolygons(
-            group = "mangroves",
-            data = newdat$unitdat %>% filter_at(vars(forest_type), all_vars(. == 1)),
-            color = '#008b8b',
-            layerId = ~unit_ID,
-            weight = 0.4)
-      }) # end observe
       
       # reactive to capture changes in top sites
       
@@ -193,14 +173,24 @@ forestServer <- function(id, forest_type) {
         return(x)
       }) # end reactive
       
-      # update map top sites
+      # update basemap based on enabling constraint
       
       observe({
-        #can add and remove by layer ID, so should be able to speed this
-        # up by just changing polygons that need to be changed. 
-        
+      newdat <- dat() # get reactive data
+
         leafletProxy(ns("forest_map")) %>%
-          clearGroup(c('top_forest')) %>%
+          clearGroup(c('profile', 'top_forest', 'baseforest', 'mangroves')) %>%
+          addPolygons(
+            group = 'profile',
+            data = profile1.sf,
+            color = newdat$ppal,
+            weight = 0.4) %>% 
+          addPolygons(
+            group = "mangroves",
+            data = newdat$unitdat %>% filter_at(vars(forest_type), all_vars(. == 1)),
+            color = '#008b8b',
+            layerId = ~unit_ID,
+            weight = 0.4) %>% 
           addPolygons(
             group = 'top_forest',
             color = "red",
