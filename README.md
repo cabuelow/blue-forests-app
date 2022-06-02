@@ -8,7 +8,7 @@ Prototype [here](https://global-wetlands.shinyapps.io/blue-forests-app/)
 
 - [ ] See TODO in 'forest-modules.R'
 
-- [ ] Write an instructions tab
+- [ ] Fix up instructions tab, just copied and pasted from fact sheets for now
 
 - [ ] Fix Fiji zoom problem
 
