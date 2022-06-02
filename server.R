@@ -65,6 +65,7 @@ function(input, output, session) {
       addPolygons(
         group = 'forest',
         data = update_forest_dat(),
+        color = '#008b8b',
         layerId=~unit_ID,
         weight = 0.4)
     #note popups block shape_click events

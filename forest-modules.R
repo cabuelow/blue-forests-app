@@ -120,6 +120,7 @@ forestServer <- function(id, forest_type) {
           addPolygons(
             group = "mangroves",
             data = units2 %>% filter_at(vars(forest_type), all_vars(. == 1)),
+            color = '#008b8b',
             layerId = ~unit_ID,
             weight = 0.4) %>% 
           addCircleMarkers(group = "Blue Forest projects",
@@ -161,7 +162,7 @@ forestServer <- function(id, forest_type) {
       newdat <- dat() # get reactive data
 
         leafletProxy(ns("forest_map")) %>%
-          clearGroup(c('profile', 'mangroves', 'top_forest')) %>%
+          clearGroup(c('profile', 'top_forest')) %>%
           addPolygons(
             group = 'profile',
             data = profile1.sf,
@@ -170,6 +171,7 @@ forestServer <- function(id, forest_type) {
           addPolygons(
             group = "mangroves",
             data = newdat$unitdat %>% filter_at(vars(forest_type), all_vars(. == 1)),
+            color = '#008b8b',
             layerId = ~unit_ID,
             weight = 0.4)
       }) # end observe
@@ -244,7 +246,7 @@ forestServer <- function(id, forest_type) {
         if(!is.null(rvf())){
           d <- newdat$indscoredat %>% filter(unit_ID == rvf() & forest_name == forest_type)
           ggplot() +
-            geom_violin(data = filter(newdat$indscoredat, forest_name == forest_type), aes(y = indicator_score, x = indicator_name, fill = fill), alpha = 0.5, trim = F) +
+            geom_violin(data = filter(newdat$indscoredat, forest_name == forest_type), aes(y = indicator_score, x = indicator_name, fill = fill), size = 0, scale = 'width', alpha = 0.5, trim = T) +
             geom_point(data = d, aes(y = indicator_score, x = indicator_name)) +
             xlab('') +
             ylab('Score') +
