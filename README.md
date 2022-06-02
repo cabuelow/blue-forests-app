@@ -6,22 +6,11 @@ Prototype [here](https://global-wetlands.shinyapps.io/blue-forests-app/)
 
 #### TODO for first end-user consultation
 
-- [X] Fix glitches
-      - [ ] Timing out issue – increase server ‘instance’ period, greater than 15 minutes
-
-- [ ] Add data to second tab 
-
-
-- [ ] Modify loading of layers so it only plots what is neccessary
-
-- [  ] highlight clicked cell and add message to tell user it was clicked
-
-
-- [ ] Incorporate data gap-filling information as layers to switch on/off
-
-- [ ] Fix Fiji zoom problem
+- [ ] See TODO in 'forest-modules.R'
 
 - [ ] Write an instructions tab
+
+- [ ] Fix Fiji zoom problem
 
 - [ ] Remove area suitable for seaweed farming, TNC fisheries layer, and Eger data for now.
 
