@@ -226,11 +226,13 @@ forestServer <- function(id, forest_type) {
       }, spacing = c("xs"),
       width = "500px") # end render
       
+      observe({
+      newdat <- dat()
       output$indplot <- renderPlot({
         if(!is.null(rvf())){
-          d <- indscoredat %>% filter(unit_ID == rvf() & forest_name == forest_type)
+          d <- newdat$indscoredat %>% filter(unit_ID == rvf() & forest_name == forest_type)
           ggplot() +
-            geom_violin(data = filter(indscoredat, forest_name == forest_type), aes(y = indicator_score, x = indicator_name, fill = fill), alpha = 0.5, trim = F) +
+            geom_violin(data = filter(newdat$indscoredat, forest_name == forest_type), aes(y = indicator_score, x = indicator_name, fill = fill), alpha = 0.5, trim = F) +
             geom_point(data = d, aes(y = indicator_score, x = indicator_name)) +
             xlab('') +
             ylab('Score') +
@@ -246,7 +248,7 @@ forestServer <- function(id, forest_type) {
           NULL
         }
       }) # end render
-      
+      }) # end observe
     }
   )
 }

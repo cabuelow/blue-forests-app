@@ -48,13 +48,13 @@ navbarPage(
                              
                              checkboxGroupInput("blue_forest", 
                                                 #label=NULL,
-                                                label=h4(tags$b("1. Select blue forest:")), 
+                                                label=h5(tags$b("1. Select blue forest:")), 
                                                 choices = list("Mangrove" = 1, "Seagrass" = 2, "Saltmarsh" = 3, "Kelp" = 4),
                                                 selected = NULL),
                              
                              tags$br(),
                              
-                             selectInput("country", label = h4(tags$b("2. Choose country or territory")), 
+                             selectInput("country", label = h5(tags$b("2. Choose country or territory")), 
                                          choices =  terr, 
                                          selected = 'Global')
                ), #end absolute panel 1
