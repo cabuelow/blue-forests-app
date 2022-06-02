@@ -1,7 +1,7 @@
 #modules for the single forest page 
 
 #TODO: 
-# fix indscore plot and data qual descripition
+# fadd data qual descripition to pop up panel
 # fix 'all' criteria, if we want to have that, not working currenlty
 
 forestUI <- function(id, criteria_choices) {
