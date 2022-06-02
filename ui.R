@@ -52,11 +52,11 @@ navbarPage(
                                                 choices = list("Mangrove" = 1, "Seagrass" = 2, "Saltmarsh" = 3, "Kelp" = 4),
                                                 selected = NULL),
                              
-                             tags$br(),
+                             #tags$br(),
                              
-                             selectInput("country", label = h5(tags$b("2. Choose country or territory")), 
-                                         choices =  terr, 
-                                         selected = 'Global')
+                             #selectInput("country", label = h5(tags$b("2. Choose country or territory")), 
+                              #           choices =  terr, 
+                               #          selected = 'Global')
                ), #end absolute panel 1
                
                absolutePanel(id = "controls", 
@@ -69,7 +69,21 @@ navbarPage(
                              bottom = 30,
                              width = 600, 
                              height = "auto",
-                             
+    
+                             tags$style(HTML(".table>thead>tr>th {
+                             border-top: 0;
+                             font-size: 11px;
+                             font-weight: bold;
+                             font-family: 'Helvetica Neue', Helvetica;
+                             padding: 8px
+                             }
+                            .table>tbody>tr>td {
+                             border-top: 0;
+                             font-size: 11px;
+                             font-weight: 200;
+                             font-family: 'Helvetica Neue', Helvetica;
+                             }")),
+                            
                              #tags$b("Blue forest area"),
                              tags$em("Click on a coastal management unit to find out more..."),
                              
@@ -77,7 +91,7 @@ navbarPage(
                              
                              tableOutput('myDf_output'),
                              
-                             tags$br(),
+                             #tags$br(),
                              
                              #tags$b("Percent of blue forests protected"),
                              

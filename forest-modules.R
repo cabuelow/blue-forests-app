@@ -61,6 +61,20 @@ forestUI <- function(id, criteria_choices) {
                     width = 600, 
                     height = "auto",
                     
+                    tags$style(HTML(".table>thead>tr>th {
+                             border-top: 0;
+                             font-size: 11px;
+                             font-weight: bold;
+                             font-family: 'Helvetica Neue', Helvetica;
+                             padding: 8px
+                             }
+                            .table>tbody>tr>td {
+                             border-top: 0;
+                             font-size: 11px;
+                             font-weight: 200;
+                             font-family: 'Helvetica Neue', Helvetica;
+                             }")),
+                    
                     #tags$b("Blue forest area"),
                     tags$em("Click on a coastal management unit to find out more..."),
                     
@@ -68,13 +82,13 @@ forestUI <- function(id, criteria_choices) {
                     
                     tableOutput(ns('myDf_outputf')),
                     
-                    tags$br(),
+                    #tags$br(),
                     
                     #tags$b("Percent of blue forests protected"),
                     
                     tableOutput(ns('myDf_outputf2')),
                     
-                    tags$br(),
+                    #tags$br(),
                     
                     #tags$b("Percent of blue forests protected"),
                     
@@ -210,8 +224,7 @@ forestServer <- function(id, forest_type) {
         }else{
           NULL
         }
-      }, spacing = c("xs"),
-      width = "500px") # end render
+      }, spacing = c("xs"), width = "500px") # end render
       
       output$myDf_outputf2 <- renderTable({
         if(!is.null(rvf())){
@@ -223,8 +236,7 @@ forestServer <- function(id, forest_type) {
         }else{
           NULL
         }
-      }, spacing = c("xs"),
-      width = "500px") # end render
+      }, spacing = c("xs"), width = "500px") # end render
       
       observe({
       newdat <- dat()
