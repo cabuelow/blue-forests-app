@@ -26,6 +26,23 @@ scores2 <- read.csv('data/scores/blue-forest-scores-L2_area-standardised_enablin
 indscores <- read.csv('data/scores/rescaled-ind-scoring_area-stand-L2.csv')
 indscores2 <- read.csv('data/scores/rescaled-ind-scoring_area-stand-L2_enabling-constrained.csv')
 units2.p <- units2 %>% filter(!SOVEREIGN1 %in% profile1$sovereignt & !SOVEREIGN1 == 'United States')
+datqual <- read.csv('data/scores/dat-qual-L2.csv') %>% select(unit_ID, mangrove_agb, mangrove_soil, mangrove.coastal.protection, tnc_fish_catch,
+                                                              seagrass_carbon, saltmarsh_carbon_storage, kelp_carbon, kelp.fisheries.biomass) %>% 
+  pivot_longer(cols =-unit_ID, names_to = 'indicator', values_to = 'score') %>% 
+  filter(!is.na(score) & score != 1)
+datqual$forest <- recode(datqual$indicator,  'mangrove_agb' = 'mangrove', 'mangrove_soil' = 'mangrove',
+                          'mangrove.coastal.protection'= 'mangrove',  'tnc_fish_catch' ='mangrove',
+                         'seagrass_carbon' = 'seagrass', 'saltmarsh_carbon_storage' = 'saltmarsh',
+                         'kelp_carbon' = 'kelp', 'kelp.fisheries.biomass' = 'kelp')
+datqual$forestname <- recode(datqual$indicator,  'mangrove_agb' = 'Mangrove', 'mangrove_soil' = 'Mangrove',
+                         'mangrove.coastal.protection'= 'Mangrove',  'tnc_fish_catch' ='Mangrove',
+                         'seagrass_carbon' = 'Seagrass', 'saltmarsh_carbon_storage' = 'Saltmarsh',
+                         'kelp_carbon' = 'Kelp', 'kelp.fisheries.biomass' = 'Kelp')
+datqual$indicator <- recode(datqual$indicator,  'mangrove_agb' = 'above ground biomass carbon storage', 'mangrove_soil' = 'soil carbon storage',
+                         'mangrove.coastal.protection'= 'coastal protection',  'tnc_fish_catch' ='fisheries enhancement',
+                         'seagrass_carbon' = 'carbon storage', 'saltmarsh_carbon_storage' = 'carbon storage',
+                         'kelp_carbon' = 'carbon storage', 'kelp.fisheries.biomass' = 'fisheries biomass')
+datqual$score <- recode(datqual$score, '2' = 'marine provincial average', '3' = 'marine realm average', '4' = 'global average')
 
 indscores.p <- indscores %>% 
   pivot_longer(cols = c(kelp_climate_mean:kelp_carbon_gC_m2_yr, saltmarsh_carbon_mgC_ha,

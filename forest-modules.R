@@ -1,8 +1,11 @@
 #modules for the single forest page 
 
 #TODO: 
-# fadd data qual descripition to pop up panel
-# fix 'all' criteria, if we want to have that, not working currenlty
+# Need to fix tnc fish catch data quality score, and missing cyclone indicator
+# need a way to combine look for top locations with combinations of services and forest types
+# in the second absolute panel, be able to select which indicator plot you want to see, enabling conditions or criteria
+# zoom to country
+# Two apps of the same version - one coarse scale, one fine scale?
 
 forestUI <- function(id, criteria_choices) {
   #criteria_choices: Named list of criteria for this forest
@@ -92,7 +95,9 @@ forestUI <- function(id, criteria_choices) {
                     
                     #tags$b("Percent of blue forests protected"),
                     
-                    plotOutput(ns('indplot'), height = '200px', width = '500px')
+                    plotOutput(ns('indplot'), height = '200px', width = '500px'),
+                    
+                    textOutput(ns('text'))
                     
       ) # end absolute panel 2
   ) # end div
@@ -263,6 +268,23 @@ forestServer <- function(id, forest_type) {
         }
       }) # end render
       }) # end observe
+      
+      output$text <- renderText({
+        if(!is.null(rvf())){
+          d <- datqual %>% filter(unit_ID == rvf() & forest == forest_type)
+          if(nrow(d) > 1){
+          if(length(unique(d$indicator)) == 1){
+          print(paste(unique(d$forestname), paste(unique(d$indicator), collapse = ' & '), 'was gap-filled with a', paste(unique(d$score), collapse = ' & '), 'value.'))
+          }else{
+            print(paste(unique(d$forestname), paste(unique(d$indicator), collapse = ' & '), 'were gap-filled with a', paste(unique(d$score), collapse = ' & '), 'value.'))
+          }}else{
+            print("")
+          }
+        }else{
+          NULL
+        }
+      }) # end render
+      
     }
   )
 }
