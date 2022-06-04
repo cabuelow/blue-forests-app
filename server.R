@@ -29,20 +29,35 @@ function(input, output, session) {
         data = unitsall,
         color = "#FFFFFF",
         weight = 0.4) %>%
+      addMapPane('layer6', zIndex = 460) %>%
+      addMapPane('layer7', zIndex = 470) %>%
       addCircleMarkers(group = "WWF Blue Forest projects",
                        data = wwf,
                        color = ~pal(site_type),
-                       weight = 1,
+                       weight = 0.5,
                        radius = 5,
-                       popup= my_popups) %>%
+                       popup= my_popups,
+                       options = pathOptions(pane = "layer6")) %>%
+      addCircleMarkers(group = "Investment assessment",
+                       data = inproj,
+                       color = ~pal2(Investment_readiness_stage),
+                       weight = 1,
+                       radius = 2,
+                       popup= my_popups2,
+                       options = pathOptions(pane = "layer7")) %>%
       addLegend("bottomright", data = wwf,
                 pal = pal, values = ~site_type,
                 title = "WWF Blue Forest project type",
                 opacity = 1, group = 'WWF Blue Forest projects') %>%
+      addLegend("bottomright", data = inproj,
+                pal = pal2, values = ~Investment_readiness_stage,
+                title = "Investment stage",
+                opacity = 1, group = 'Investment assessment') %>% 
       addLayersControl(
-        overlayGroups = c("WWF Blue Forest projects"),
+        overlayGroups = c("WWF Blue Forest projects", "Investment assessment"),
         options = layersControlOptions(collapsed = FALSE)) %>% 
-      hideGroup('WWF Blue Forest projects')
+      hideGroup('WWF Blue Forest projects') %>% 
+      hideGroup("Investment assessment")
     
   }) # end render leaflet
   
