@@ -49,8 +49,7 @@ function(input, output, session) {
   # Filter data for ticked blue forests 
   #
   update_forest_dat <- reactive({
-    x <- filter(df, eco %in% as.numeric(input$blue_forest) &
-                  value ==1) 
+    x <- filter(df, eco %in% as.numeric(input$blue_forest) & value ==1) 
     x <- units2[units2$unit_ID %in% x$unit_ID, ]
     return(x)
   }) # end reactive
@@ -108,9 +107,9 @@ function(input, output, session) {
   # ------------ 
   # Single forest pages
   # ------------ 
-  forestServer("mangroves", "mangrove")
-  forestServer("seagrass", "seagrass")
-  forestServer("saltmarsh", "saltmarsh")
-  forestServer("kelp", "kelp")
+  forestServer("mangroves", "mangrove", criteria_choices = criteria_mang_kelp)
+  forestServer("seagrass", "seagrass", criteria_choices = criteria_others)
+  forestServer("saltmarsh", "saltmarsh", criteria_choices = criteria_others)
+  forestServer("kelp", "kelp", criteria_choices = criteria_mang_kelp)
   
 } #end server

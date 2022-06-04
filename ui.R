@@ -171,7 +171,7 @@ navbarPage(
            
   ), # end tabpanel
   tabPanel('Explore Mangroves',
-           forestUI("mangroves", criteria_choices = criteria_mang_kelp),
+           forestUI("mangroves"), #criteria_choices = criteria_mang_kelp),
            tags$div(id="cite",
                     tags$em('This map was created in support of the
                             Blue Forests Initiative, a project supported by 
@@ -179,7 +179,7 @@ navbarPage(
            
   ), # end tabpanel
   tabPanel('Explore Seagrass',
-           forestUI("seagrass", criteria_choices = criteria_others),
+           forestUI("seagrass"), #criteria_choices = criteria_others),
            tags$div(id="cite",
                     tags$em('This map was created in support of the
                             Blue Forests Initiative, a project supported by 
@@ -187,7 +187,7 @@ navbarPage(
            
   ), # end tabpanel
   tabPanel('Explore Saltmarsh',
-           forestUI("saltmarsh", criteria_choices = criteria_others),
+           forestUI("saltmarsh"), #criteria_choices = criteria_others),
            tags$div(id="cite",
                     tags$em('This map was created in support of the
                             Blue Forests Initiative, a project supported by 
@@ -195,7 +195,7 @@ navbarPage(
            
   ), # end tabpanel
   tabPanel('Explore Kelp',
-           forestUI("kelp", criteria_choices = criteria_mang_kelp),
+           forestUI("kelp"), #criteria_choices = criteria_mang_kelp),
            tags$div(id="cite",
                     tags$em('This map was created in support of the
                             Blue Forests Initiative, a project supported by 
