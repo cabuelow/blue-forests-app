@@ -102,7 +102,7 @@ navbarPage(
                              class = "panel panel-default", 
                              fixed = TRUE,
                              draggable = TRUE, 
-                             top = 50, 
+                             top = 60, 
                              left = 30, 
                              right = "auto", 
                              bottom = "auto",
