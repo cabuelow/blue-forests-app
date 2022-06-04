@@ -1,15 +1,14 @@
 #modules for the single forest page 
 
 #TODO: 
-# when I de-select a layer from check group intput, it doensn't remove it - maybe try observeEvent?
-# make is so legends only show wup once and turn off
+
+# why aren't multicritera hotspots everywhere when percentile is 100?
 # more specific labels for criteria and indicator plots
 # fix absolute panel
 # put links to other apps
 # Need to fix tnc fish catch data quality score, and missing cyclone indicator
-# need a way to combine look for top locations with combinations of services and forest types
 # in the second absolute panel, be able to select which indicator plot you want to see, enabling conditions or criteria
-# add in finance earth data- make them plot ontop of polygons - zindex
+# add in finance earth data- make them plot ontop of polygons
 # zoom to country
 # Two apps of the same version - one coarse scale, one fine scale?
 
