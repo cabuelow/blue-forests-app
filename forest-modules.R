@@ -2,8 +2,9 @@
 
 #TODO: 
 
+# fix multicriteria hotspots - not plotting if skip a criteria e.g. extent and carbon
+# some zoom to countries arent' working
 # in the second absolute panel, be able to select which indicator plot you want to see, enabling conditions or criteria
-# zoom to country
 
 # put links to other apps
 # why aren't multicritera hotspots everywhere when percentile is 100?
@@ -32,11 +33,11 @@ forestUI <- function(id, criteria_choices) {
                     width = 300, 
                     height = "auto",
                     
-                    tags$br(),
+                   # tags$br(),
                     
                     tags$em("Allow a moment for layers to load."),
                     
-                    tags$br(),
+                    #tags$br(),
                     
                     checkboxGroupInput(ns("criteria"), 
                                  label=h5(tags$b("1. Select criteria:")), 
@@ -44,24 +45,30 @@ forestUI <- function(id, criteria_choices) {
                                  selected = 1,
                                  inline = TRUE),
                     
-                    tags$br(),
+                   # tags$br(),
                     
                     sliderInput(ns("perc"), label = h5(tags$b("2. Find management units in top percent of selected criteria:")), 
                                 min = 0, max = 100, 
                                 value = 100,
                                 step = 5),
                     
-                    tags$br(),
+                    #tags$br(),
                     
                     h5(tags$b("3. Turn on enabling constraint layer:")),
-                    checkboxInput(ns("profile2"), label = NULL, value = FALSE)
+                    checkboxInput(ns("profile2"), label = NULL, value = FALSE),
+                    
+                    #tags$br(),
+                    
+                    selectInput(ns("country"), label = h5(tags$b("4. Choose country or territory")), 
+                                choices =  terr, 
+                                selected = 'Global')
                     
       ), # end absolute panel 1
       absolutePanel(id = "controls", 
                     class = "panel panel-default", 
                     fixed = TRUE,
                     draggable = TRUE, 
-                    top = 450, 
+                    top = 550, 
                     left = 30, 
                     right = 'auto', 
                     bottom = 'auto',
@@ -240,6 +247,19 @@ forestServer <- function(id, forest_type, criteria_choices) {
             options = pathOptions(pane = 'criteria'))
        }#end if
       
+      }) # end observe
+      
+      observe({
+        if(input$country != 'Global'){
+          bounds <- unname(st_bbox(filter(units2, SOVEREIGN1 == input$country)))
+          leafletProxy("forest_map") %>%
+            flyToBounds(bounds[1], bounds[2], bounds[3], bounds[4])
+        }else{
+          bounds <- unname(st_bbox(units2))
+          leafletProxy("forest_map") %>%
+            flyToBounds(bounds[1], bounds[2], bounds[3], bounds[4])
+        }
+        #note popups block shape_click events
       }) # end observe
       
       # use reactive values to store the id from observing the shape click (below)

@@ -109,7 +109,7 @@ navbarPage(
                              width = 300, 
                              height = "auto",
                              
-                             tags$br(),
+                             #tags$br(),
                              
                              tags$em("Allow a moment for layers to load."),
                              
@@ -121,16 +121,16 @@ navbarPage(
                              
                              #tags$br(),
                              
-                             #selectInput("country", label = h5(tags$b("2. Choose country or territory")), 
-                              #           choices =  terr, 
-                               #          selected = 'Global')
+                             selectInput("country", label = h5(tags$b("2. Choose country or territory")), 
+                                         choices =  terr, 
+                                         selected = 'Global')
                ), #end absolute panel 1
                
                absolutePanel(id = "controls", 
                              class = "panel panel-default", 
                              fixed = TRUE,
                              draggable = TRUE, 
-                             top = 200, 
+                             top = 300, 
                              left = 30, 
                              right = 'auto', 
                              bottom = 'auto',

@@ -86,6 +86,19 @@ function(input, output, session) {
     #note popups block shape_click events
   }) # end observe
   
+  observe({
+    if(input$country != 'Global'){
+    bounds <- unname(st_bbox(filter(units2, SOVEREIGN1 == input$country)))
+    leafletProxy("mymap") %>%
+      flyToBounds(bounds[1], bounds[2], bounds[3], bounds[4])
+    }else{
+      bounds <- unname(st_bbox(units2))
+      leafletProxy("mymap") %>%
+        flyToBounds(bounds[1], bounds[2], bounds[3], bounds[4])
+    }
+    #note popups block shape_click events
+  }) # end observe
+  
   # observe shape-click event
   
   observeEvent(input$mymap_shape_click, {
