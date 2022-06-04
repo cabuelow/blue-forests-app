@@ -20,7 +20,7 @@ source("parametersServer.R")
 
 navbarPage(
   title = div("Blue Forests",
-              img(src = "g-logo.png", height = "35px", style = "position: relative; top: -3px; right: -1525px;")), id = 'nav',
+              img(src = "g-logo.png", height = "35px", style = "position: relative; top: -3px; left: 10px;")), id = 'nav',
   
   tabPanel('Instructions',
            tags$head(
@@ -102,11 +102,11 @@ navbarPage(
                              class = "panel panel-default", 
                              fixed = TRUE,
                              draggable = TRUE, 
-                             top = 100, 
+                             top = 50, 
                              left = 30, 
                              right = "auto", 
                              bottom = "auto",
-                             width = 330, 
+                             width = 300, 
                              height = "auto",
                              
                              tags$br(),
@@ -117,7 +117,7 @@ navbarPage(
                                                 #label=NULL,
                                                 label=h5(tags$b("1. Select blue forest:")), 
                                                 choices = list("Mangrove" = 1, "Seagrass" = 2, "Saltmarsh" = 3, "Kelp" = 4),
-                                                selected = NULL),
+                                                selected = NULL, inline = TRUE),
                              
                              #tags$br(),
                              
@@ -130,11 +130,11 @@ navbarPage(
                              class = "panel panel-default", 
                              fixed = TRUE,
                              draggable = TRUE, 
-                             top = "auto", 
+                             top = 200, 
                              left = 30, 
-                             right = "auto", 
-                             bottom = 30,
-                             width = 600, 
+                             right = 'auto', 
+                             bottom = 'auto',
+                             width = 550, 
                              height = "auto",
     
                              tags$style(HTML(".table>thead>tr>th {

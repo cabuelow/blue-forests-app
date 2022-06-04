@@ -2,15 +2,15 @@
 
 #TODO: 
 
-# why aren't multicritera hotspots everywhere when percentile is 100?
-# more specific labels for criteria and indicator plots
-# fix absolute panel
-# put links to other apps
-# Need to fix tnc fish catch data quality score, and missing cyclone indicator
 # in the second absolute panel, be able to select which indicator plot you want to see, enabling conditions or criteria
 # add in finance earth data- make them plot ontop of polygons
 # zoom to country
-# Two apps of the same version - one coarse scale, one fine scale?
+
+# put links to other apps
+# why aren't multicritera hotspots everywhere when percentile is 100?
+# more specific labels for criteria and indicator plots
+
+# Need to fix tnc fish catch data quality score, and missing cyclone indicator
 
 forestUI <- function(id, criteria_choices) {
   #criteria_choices: Named list of criteria for this forest
@@ -26,11 +26,11 @@ forestUI <- function(id, criteria_choices) {
                     class = "panel panel-default", 
                     fixed = TRUE,
                     draggable = TRUE, 
-                    top = 100, 
+                    top = 50, 
                     left = 30, 
                     right = "auto", 
                     bottom = "auto",
-                    width = 330, 
+                    width = 300, 
                     height = "auto",
                     
                     tags$br(),
@@ -42,18 +42,19 @@ forestUI <- function(id, criteria_choices) {
                     checkboxGroupInput(ns("criteria"), 
                                  label=h5(tags$b("1. Select criteria:")), 
                                  choices = criteria_choices,
-                                 selected = 1),
+                                 selected = 1,
+                                 inline = TRUE),
                     
                     tags$br(),
                     
-                    sliderInput(ns("perc"), label = h5(tags$b("2. Find management units in top percent of criteria")), 
+                    sliderInput(ns("perc"), label = h5(tags$b("2. Find management units in top percent of selected criteria:")), 
                                 min = 0, max = 100, 
                                 value = 100,
                                 step = 5),
                     
                     tags$br(),
                     
-                    h5(tags$b("3. Turn on enabling constraint layer")),
+                    h5(tags$b("3. Turn on enabling constraint layer:")),
                     checkboxInput(ns("profile2"), label = NULL, value = FALSE)
                     
       ), # end absolute panel 1
@@ -61,11 +62,11 @@ forestUI <- function(id, criteria_choices) {
                     class = "panel panel-default", 
                     fixed = TRUE,
                     draggable = TRUE, 
-                    top = "auto", 
+                    top = 450, 
                     left = 30, 
-                    right = "auto", 
-                    bottom = 30,
-                    width = 600, 
+                    right = 'auto', 
+                    bottom = 'auto',
+                    width = 550, 
                     height = "auto",
                     
                     tags$style(HTML(".table>thead>tr>th {
@@ -134,7 +135,7 @@ forestServer <- function(id, forest_type, criteria_choices) {
             weight = 0.4) %>% 
           addMapPane('criteria', zIndex = 410) %>%
           addMapPane('layer6', zIndex = 460) %>%
-          addCircleMarkers(group = "Blue Forest projects",
+          addCircleMarkers(group = "WWF Blue Forest projects",
                            data = wwf,
                            color = ~pal(site_type),
                            weight = 1,
@@ -148,11 +149,11 @@ forestServer <- function(id, forest_type, criteria_choices) {
           addLegend("bottomright", data = wwf,
                     pal = pal, values = ~site_type,
                     title = "WWF Blue Forest project type",
-                    opacity = 1, group = 'Blue Forest projects') %>%
+                    opacity = 1, group = 'WWF Blue Forest projects') %>%
           addLayersControl(
-            overlayGroups = c("Blue Forest projects"),
-            options = layersControlOptions(collapsed = FALSE)
-          )
+            overlayGroups = c("WWF Blue Forest projects"),
+            options = layersControlOptions(collapsed = FALSE)) %>% 
+          hideGroup('WWF Blue Forest projects')
       }) # end render leaflet
       
       # reactive if-elses to choose the right data depending on whether enabling constraint is on or off
@@ -212,9 +213,7 @@ forestServer <- function(id, forest_type, criteria_choices) {
             layerId=~unit_ID,
             weight = 0.4,
             opacity = 0.5,
-            options = pathOptions(pane = 'criteria')) %>% 
-          addLayersControl(overlayGroups = c("Blue Forest projects"),
-                           options = layersControlOptions(collapsed = FALSE))
+            options = pathOptions(pane = 'criteria'))
       }# end for loop
       
       if(length(newdat2$multunits != 0)){

@@ -29,7 +29,7 @@ function(input, output, session) {
         data = unitsall,
         color = "#FFFFFF",
         weight = 0.4) %>%
-      addCircleMarkers(group = "Blue Forest projects",
+      addCircleMarkers(group = "WWF Blue Forest projects",
                        data = wwf,
                        color = ~pal(site_type),
                        weight = 1,
@@ -37,12 +37,13 @@ function(input, output, session) {
                        popup= my_popups) %>%
       addLegend("bottomright", data = wwf,
                 pal = pal, values = ~site_type,
-                title = "Project type",
-                opacity = 1) %>%
+                title = "WWF Blue Forest project type",
+                opacity = 1, group = 'WWF Blue Forest projects') %>%
       addLayersControl(
-        overlayGroups = c("Blue Forest projects"),
-        options = layersControlOptions(collapsed = FALSE)
-      )
+        overlayGroups = c("WWF Blue Forest projects"),
+        options = layersControlOptions(collapsed = FALSE)) %>% 
+      hideGroup('WWF Blue Forest projects')
+    
   }) # end render leaflet
   
   #
