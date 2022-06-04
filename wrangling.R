@@ -142,7 +142,7 @@ df <- data.frame(units2) %>%
   tidyr::pivot_longer(-unit_ID, names_to = 'eco')
 df$eco <- recode(df$eco, mangrove = 1, seagrass = 2, saltmarsh = 3, kelp = 4, seafarm = 5)
 hot_pal <- c('#66CC33','#CC3300', '#9966CC', '#FFCC00', '#00CCCC')
-
+hotdf <- data.frame(input = c(1,2,3,4,5), criteria = c('extent', 'threat', 'carbon', 'biodiversity', 'cobenefit'), criteraname = c('Extent', 'Threat', 'Carbon', 'Biodiversity', 'Cobenefit'))
 # pop-ups
 
 my_popups <- st_drop_geometry(wwf) %>% 

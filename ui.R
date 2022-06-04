@@ -14,6 +14,7 @@ library(leaflet)
 source("wrangling.R")
 source("forest-modules.R")
 source("parametersUI.R")
+source("parametersServer.R")
   
 # navigation panel
 

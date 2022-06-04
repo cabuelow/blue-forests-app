@@ -107,9 +107,9 @@ function(input, output, session) {
   # ------------ 
   # Single forest pages
   # ------------ 
-  forestServer("mangroves", "mangrove")
-  forestServer("seagrass", "seagrass")
-  forestServer("saltmarsh", "saltmarsh")
-  forestServer("kelp", "kelp")
+  forestServer("mangroves", "mangrove", criteria_mang_kelp_s)
+  forestServer("seagrass", "seagrass", criteria_others_s)
+  forestServer("saltmarsh", "saltmarsh", criteria_others_s)
+  forestServer("kelp", "kelp", criteria_mang_kelp_s)
   
 } #end server

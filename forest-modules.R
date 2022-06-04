@@ -1,6 +1,8 @@
 #modules for the single forest page 
 
 #TODO: 
+# when I de-select a layer from check group intput, it doensn't remove it - maybe try observeEvent?
+# make is so legends only show wup once and turn off
 # more specific labels for criteria and indicator plots
 # fix absolute panel
 # put links to other apps
@@ -41,7 +43,7 @@ forestUI <- function(id, criteria_choices) {
                     checkboxGroupInput(ns("criteria"), 
                                  label=h5(tags$b("1. Select criteria:")), 
                                  choices = criteria_choices,
-                                 selected = 'extent'),
+                                 selected = 1),
                     
                     tags$br(),
                     
@@ -107,7 +109,7 @@ forestUI <- function(id, criteria_choices) {
 } # end UI
 
 
-forestServer <- function(id, forest_type) {
+forestServer <- function(id, forest_type, criteria_choices) {
   #forest_type is the name of the columns in 
   # the scores dataframe for each forest type
   ns <- NS(id)
@@ -128,14 +130,10 @@ forestServer <- function(id, forest_type) {
           addPolygons(
             group = "baseforest",
             data = units2 %>% filter_at(vars(forest_type), all_vars(. == 1)),
-            color = '#008b8b',
+            color = hot_pal[1],
             layerId = ~unit_ID,
             weight = 0.4) %>% 
-          addMapPane('extent', zIndex = 410) %>%
-          addMapPane('threat', zIndex = 420) %>%
-          addMapPane('carbon', zIndex = 430) %>%
-          addMapPane('biodiversity', zIndex = 440) %>%
-          addMapPane('cobenefit', zIndex = 450) %>%
+          addMapPane('criteria', zIndex = 410) %>%
           addMapPane('layer6', zIndex = 460) %>%
           addCircleMarkers(group = "Blue Forest projects",
                            data = wwf,
@@ -145,10 +143,13 @@ forestServer <- function(id, forest_type) {
                            popup= my_popups,
                            options = pathOptions(pane = "layer6")
                            ) %>%
+          addLegend("bottomright",
+                    colors = c(hot_pal[as.numeric(criteria_choices)], 'darkblue'), labels = c(hotdf[criteria_choices,3], 'Multi-criteria'),
+                    opacity = 0.5) %>% 
           addLegend("bottomright", data = wwf,
                     pal = pal, values = ~site_type,
-                    title = "Project type",
-                    opacity = 1) %>%
+                    title = "WWF Blue Forest project type",
+                    opacity = 1, group = 'Blue Forest projects') %>%
           addLayersControl(
             overlayGroups = c("Blue Forest projects"),
             options = layersControlOptions(collapsed = FALSE)
@@ -178,14 +179,15 @@ forestServer <- function(id, forest_type) {
         newdat <- dat()
         scores <- newdat$scoredat[newdat$scoredat[,forest_type]==1,]
         tmp <- list()
-        for(i in seq_along(input$criteria)){
-        varname <- paste0(substr(forest_type, 1,4),"_", input$criteria[i])
+        for(i in as.numeric(input$criteria)){
+        varname <- paste0(substr(forest_type, 1,4),"_", hotdf[i,2])
         q <- quantile(scores[,varname], probs = 1-(input$perc)/100,names = FALSE)
         x <- scores$unit_ID[scores[,varname] > q] 
         x <- newdat$unitdat[newdat$unitdat$unit_ID %in% x, ]
         tmp[[i]] <- x
         }
-        return(tmp)
+        if(length(input$criteria) > 1){multunits <- Reduce(intersect, lapply(tmp, function(x){x$unit_ID}))}else{multunits <- NULL}
+        combo2 <- list(newsc = tmp, multunits = multunits)
       }) # end reactive
       
       # update basemap based on enabling constraint
@@ -195,25 +197,38 @@ forestServer <- function(id, forest_type) {
       newdat2 <- update_top_sites_dat()
       
       leafletProxy(ns("forest_map")) %>%
-        clearGroup(c('profile', 'baseforest', paste(input$criteria))) %>% 
+        clearGroup(c('profile', 'baseforest', 'extent', 'threat', 'biodiversity', 'carbon', 'cobenefit', 'multi')) %>% 
         addPolygons(
           group = 'profile',
           data = profile1.sf,
           color = newdat$ppal,
           weight = 0.4)
       
-      for(i in seq_along(input$criteria)){
+      for(i in as.numeric(input$criteria)){
         leafletProxy(ns("forest_map")) %>%
           addPolygons(
-            group = paste(input$criteria[i]),
+            group = paste(hotdf[i,2]),
             color = hot_pal[i],
-            data = newdat2[[i]],
+            data = newdat2$newsc[[i]],
             layerId=~unit_ID,
             weight = 0.4,
-            options = pathOptions(pane = paste(input$criteria[i]))) %>% 
+            opacity = 0.5,
+            options = pathOptions(pane = 'criteria')) %>% 
           addLayersControl(overlayGroups = c("Blue Forest projects"),
                            options = layersControlOptions(collapsed = FALSE))
-      } # end for loop
+      }# end for loop
+      
+      if(length(newdat2$multunits != 0)){
+           leafletProxy(ns("forest_map")) %>% 
+          addPolygons(
+            group = 'multi',
+            color = 'darkblue',
+            data = filter(units2, unit_ID %in% newdat2$multunits),
+            layerId =~unit_ID,
+            weight = 0.8,
+            options = pathOptions(pane = 'criteria'))
+       }#end if
+      
       }) # end observe
       
       # use reactive values to store the id from observing the shape click (below)
