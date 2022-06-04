@@ -38,22 +38,21 @@ forestUI <- function(id, criteria_choices) {
                     
                     tags$br(),
                     
-                    #checkboxGroupInput(ns("criteria"), 
-                                 #label=NULL,
-                     #            label=h5(tags$b("1. Select criteria:")), 
-                      #           choices = criteria_choices,
-                       #          selected = criteria_choices),
+                    checkboxGroupInput(ns("criteria"), 
+                                 label=h5(tags$b("1. Select criteria:")), 
+                                 choices = criteria_choices,
+                                 selected = 'extent'),
                     
-                    #tags$br(),
+                    tags$br(),
                     
-                    sliderInput(ns("perc"), label = h5(tags$b("1. Find management units in top percent of criteria")), 
+                    sliderInput(ns("perc"), label = h5(tags$b("2. Find management units in top percent of criteria")), 
                                 min = 0, max = 100, 
                                 value = 100,
                                 step = 5),
                     
                     tags$br(),
                     
-                    h5(tags$b("2. Turn on enabling constraint layer")),
+                    h5(tags$b("3. Turn on enabling constraint layer")),
                     checkboxInput(ns("profile2"), label = NULL, value = FALSE)
                     
       ), # end absolute panel 1
@@ -108,7 +107,7 @@ forestUI <- function(id, criteria_choices) {
 } # end UI
 
 
-forestServer <- function(id, forest_type, criteria_choices) {
+forestServer <- function(id, forest_type) {
   #forest_type is the name of the columns in 
   # the scores dataframe for each forest type
   ns <- NS(id)
@@ -132,11 +131,11 @@ forestServer <- function(id, forest_type, criteria_choices) {
             color = '#008b8b',
             layerId = ~unit_ID,
             weight = 0.4) %>% 
-          addMapPane('layer1', zIndex = 410) %>% 
-          addMapPane('layer2', zIndex = 420) %>%
-          addMapPane('layer3', zIndex = 430) %>%
-          addMapPane('layer4', zIndex = 440) %>%
-          addMapPane('layer5', zIndex = 450) %>%
+          addMapPane('extent', zIndex = 410) %>%
+          addMapPane('threat', zIndex = 420) %>%
+          addMapPane('carbon', zIndex = 430) %>%
+          addMapPane('biodiversity', zIndex = 440) %>%
+          addMapPane('cobenefit', zIndex = 450) %>%
           addMapPane('layer6', zIndex = 460) %>%
           addCircleMarkers(group = "Blue Forest projects",
                            data = wwf,
@@ -179,12 +178,11 @@ forestServer <- function(id, forest_type, criteria_choices) {
         newdat <- dat()
         scores <- newdat$scoredat[newdat$scoredat[,forest_type]==1,]
         tmp <- list()
-        for(i in seq_along(criteria_choices)){
-        varname <- paste0(substr(forest_type, 1,4),"_", criteria_choices[i])
+        for(i in seq_along(input$criteria)){
+        varname <- paste0(substr(forest_type, 1,4),"_", input$criteria[i])
         q <- quantile(scores[,varname], probs = 1-(input$perc)/100,names = FALSE)
         x <- scores$unit_ID[scores[,varname] > q] 
         x <- newdat$unitdat[newdat$unitdat$unit_ID %in% x, ]
-        x$col <- rep(hot_pal[i], nrow(x))
         tmp[[i]] <- x
         }
         return(tmp)
@@ -196,51 +194,26 @@ forestServer <- function(id, forest_type, criteria_choices) {
       newdat <- dat() # get reactive data
       newdat2 <- update_top_sites_dat()
       
-      #for(i in seq_along(input$criteria)){
+      leafletProxy(ns("forest_map")) %>%
+        clearGroup(c('profile', 'baseforest', paste(input$criteria))) %>% 
+        addPolygons(
+          group = 'profile',
+          data = profile1.sf,
+          color = newdat$ppal,
+          weight = 0.4)
+      
+      for(i in seq_along(input$criteria)){
         leafletProxy(ns("forest_map")) %>%
-          clearGroup(c('profile', 'baseforest', paste(criteria_choices))) %>%
           addPolygons(
-            group = 'profile',
-            data = profile1.sf,
-            color = newdat$ppal,
-            weight = 0.4) %>% 
-          addPolygons(
-            group = paste(criteria_choices[1]),
-            color = hot_pal[1],
-            data = newdat2[[1]],
+            group = paste(input$criteria[i]),
+            color = hot_pal[i],
+            data = newdat2[[i]],
             layerId=~unit_ID,
             weight = 0.4,
-            options = pathOptions(pane = "layer1")) %>% 
-          addPolygons(
-            group = paste(criteria_choices[2]),
-            color = hot_pal[2],
-            data = newdat2[[2]],
-            layerId=~unit_ID,
-            weight = 0.4,
-            options = pathOptions(pane = "layer2")) %>% 
-          addPolygons(
-            group = paste(criteria_choices[3]),
-            color = hot_pal[3],
-            data = newdat2[[3]],
-            layerId=~unit_ID,
-            weight = 0.4,
-            options = pathOptions(pane = "layer3")) %>% 
-          addPolygons(
-            group = paste(criteria_choices[4]),
-            color = hot_pal[4],
-            data = newdat2[[4]],
-            layerId=~unit_ID,
-            weight = 0.4,
-            options = pathOptions(pane = "layer4")) %>% 
-         # addPolygons(
-          #  group = criteria_choices[5],
-           # color = hot_pal[5],
-            #data = newdat2[[5]],
-            #layerId=~unit_ID,
-            #weight = 0.4) %>%
-          addLayersControl(overlayGroups = c(paste(criteria_choices),"Blue Forest projects"),
-                           options = layersControlOptions(collapsed = FALSE, autoZIndex = FALSE, sortLayers = FALSE))
-      #} # end for loop
+            options = pathOptions(pane = paste(input$criteria[i]))) %>% 
+          addLayersControl(overlayGroups = c("Blue Forest projects"),
+                           options = layersControlOptions(collapsed = FALSE))
+      } # end for loop
       }) # end observe
       
       # use reactive values to store the id from observing the shape click (below)
