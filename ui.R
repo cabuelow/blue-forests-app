@@ -27,63 +27,71 @@ navbarPage(
              includeCSS("styles.css")
            ),
            
-           box(title="Welcome to the Blue Forests Web App",
+           box(title="Welcome to the Blue Forest Data Explorer",
                status="primary",
                solidHeader=TRUE,
                width = 12,
-
-               tags$div("This tool allows end-users to identify places across the globe that have high conservation potential.")),
-           
-           box(title = 'Intended use',
-               width = 12,
-               collapsible = TRUE,
-               collapsed = TRUE,
-              
-               tags$div('To provide an indication of the opportunities for blue forest conversation globally, and demonstrate how data can inform strategic decisions (blue forests = mangroves, seagrass, saltmarsh and kelp). Identifying priority locations for project development will require specific objectives to be set, and validation with local data.')),
-           
-           box(title = 'Data certainty and confidence',
-               width = 12,
-               collapsible = TRUE,
-               collapsed = TRUE,
                
-               tags$div('With the exception of mangroves, the extent of blue forests are not mapped globally at a high resolution. Therefore, there is large uncertainty in estimates of extent for seagrass, saltmarsh and kelp. 
+               tags$br(),
+
+               tags$div("This tool can help identify opportunities for conserving",
+                        tags$b('mangroves,'), 
+                        tags$b('seagrass,'), 
+                        tags$b('saltmarsh,'),'and', 
+                        tags$b('kelp forests.')),
+               
+               tags$br(),
+               
+               tags$div("Click on the",
+               tags$b('explorer'), "pages above to explore the best available global data on blue forest",
+                        tags$b("extent,"),
+                        tags$b("threats,"),
+                        tags$b("carbon,"),
+                        tags$b("biodiversity,"),
+                        tags$b("fisheries,"), 'and',
+                        tags$b("coastal protection."),
+                        )
+               ), # end box
+           
+           box(title = h5('Coastal management units', style = 'font-size:18px;'),
+               width = 12,
+               
+               tags$div('Blue forest data is provided in',
+                        tags$b('coastal management units'), 
+                        'that represent hydrologically connected',
+                        tags$b('land-seascapes'), 'based on shared river networks.')),
+          
+           box(title = h5('Data certainty and confidence', style = 'font-size:18px;'),
+               width = 12,
+
+               tags$div('With the exception of mangroves, the extent and ecosystem service value of blue forests are not mapped globally at a high resolution. Therefore, there is large',
+                        tags$b('uncertainty'), 
+                        'in estimates of extent and ecosystem services for seagrass, saltmarsh and kelp.
 '),
                tags$br(),
                
                tags$div('Indicators for criteria (described below) that were not globally comprehensive or were spatially incongruent with baseline distributions were gap-filled with regional or global averages, introducing additional uncertainty. 
 ')),
            
-           box(title = 'Coastal and offshore management units',
+           box(title = h5('Criteria and indicators to identify opportunities', style = 'font-size:18px;'),
                width = 12,
-               collapsible = TRUE,
-               collapsed = TRUE,
                
-               tags$div('Coastal management units are based on watershed boundaries and their associated coastal zone (up to 50km offshore), and are nested hierarchically from coarse to fine-scale. Global blue forest opportunities were identified at a coarse resolution, and variability in criteria and indicators (listed below) were mapped in fine-scale units. Offshore management units delineate a boundary (50km radius) for blue forests that occur outside of watershed and coastal zone boundaries.
-')),
-           
-           box(title = 'Criteria and indicators to identify Blue Forest opportunities',
-               width = 12,
-               collapsible = TRUE,
-               collapsed = TRUE,
-               
-              tags$div('1. Extent: Total area of mangroves, seagrass, saltmarsh and kelp (standardised by management unit size).
+              tags$div(tags$b('1. Extent:'), 'Total area of mangroves, seagrass, saltmarsh and kelp (standardised by management unit size).
 '),
-              tags$div('2. Threat: Composed of several indicators including rates of loss, cyclone risk, and cumulative climate, land and marine-based impacts to each forest.
+              tags$div(tags$b('2. Threat:'), 'Composed of several indicators including rates of loss, cyclone risk, and cumulative climate, land and marine-based impacts to each forest.
 '),
-              tags$div('3. Carbon: Average carbon storage (mangroves, seagrass, saltmarsh) or sequestration (kelp).
+              tags$div(tags$b('3. Carbon:'), 'Average carbon storage (mangroves, seagrass, saltmarsh) or sequestration (kelp).
 '),
-              tags$div('4. Biodiversity: Richness of species affiliated with each forest type. 
+              tags$div(tags$b('4. Biodiversity:'), 'Richness of species affiliated with each forest type. 
 '),
-              tags$div('5. Co-benefit: Fisheries (mangrove commercial fisheries enhancement or average kelp fisheries biomass) and coastal protection (average number of people protected by mangroves per 20km of coastline).
+              tags$div(tags$b('5. Co-benefit:'), 'Fisheries (mangrove commercial fisheries enhancement or average kelp fisheries biomass) and coastal protection (average number of people protected by mangroves per 20km of coastline).
 ')),
           
-           box(title = 'Opportunities constrained by enabling conditions',
+           box(title = h5('Identifying opportunities for impact', style = 'font-size:18px;'),
                width = 12,
-               collapsible = TRUE,
-               collapsed = TRUE,
                
-               tags$div('To identify locations where NGOs and other organisations can have the most impact, countries and their territories that have high socio-economic and political capacity to enable conservation were excluded.
-'))
+               tags$div('Countries and their territories that have high socio-economic and political capacity to enable blue forest conservation can be excluded using an',
+                        tags$b('enabling condition constraint layer.')))
                
   ), # end instructions tabpanel
                  

@@ -97,7 +97,7 @@ forestUI <- function(id, criteria_choices) {
                     
                     #tags$br(),
                     
-                    h5(tags$b("3. Turn on enabling constraint layer:")),
+                    h5(tags$b("3. Turn on enabling condition constraint layer:")),
                     checkboxInput(ns("profile2"), label = NULL, value = FALSE),
                     
                     #tags$br(),
