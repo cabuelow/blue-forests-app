@@ -160,7 +160,7 @@ navbarPage(
                              
                              #tags$br(),
                              
-                             selectInput("country", label = h5(tags$b("2. Choose country or territory")), 
+                             selectInput("country", label = h5(tags$b("2. Choose country or territory:")), 
                                          choices =  terr, 
                                          selected = 'Global')
                ) #end absolute panel 1

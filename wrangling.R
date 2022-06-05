@@ -49,7 +49,8 @@ datqual$score <- recode(datqual$score, '2' = 'marine provincial average', '3' = 
 indscores.p <- indscores %>% 
   pivot_longer(cols = c(kelp_climate_mean:kelp_carbon_gC_m2_yr, saltmarsh_carbon_mgC_ha,
                         seagrass_carbon_gC_m2:kelp_fisheries_biomass_m2,
-                        kelp_spp_richness:seagrass_spp_richness, mangrove_carbon_mgC_ha,
+                        kelp_spp_richness:seagrass_spp_richness, mang_cyclone_tracks:kelp_cyclone_tracks,
+                        mangrove_carbon_mgC_ha,
                         mangrove_fish_catch, mangrove_2016_area_ha, saltmarsh_area_ha,
                         seagrass_area_ha, kelp_area_ha),
                names_to = 'indicators', values_to = 'indicator_score') %>% 
@@ -59,42 +60,46 @@ indscores.p <- indscores %>%
 indscores.p$forest_name <- recode(indscores.p$forest, 'mang' = 'mangrove', 'seag' = 'seagrass', 'salt' = 'saltmarsh', 'kelp' = 'kelp')
 indscores.p$forest_name2 <- recode(indscores.p$forest, 'mang' = 'Mangrove', 'seag' = 'Seagrass', 'salt' = 'Saltmarsh', 'kelp' = 'Kelp')
 
+
 indscores.p$indicator_name <- recode(indscores.p$indicator, 
-                                     'climate_mean' = 'Climate impacts',
-                                     'land_mean' = 'Land impacts',
-                                     'marine_mean' = 'Marine impacts',
-                                     'trend' = 'Rate of Loss',
-                                     'ove_prop_lost_10_16' = 'Rate of Loss',
-                                     'ass_mean_risk' = 'Probability of decline',
-                                     'carbon_gC_m2_yr' = 'Carbon',
-                                     'arsh_carbon_mgC_ha' = 'Carbon',
-                                     "ass_carbon_gC_m2" = 'Carbon', 
-                                     "ove_coastal_protection" = 'Coastal protection', 
-                                     'fisheries_biomass_m2' = 'Fisheries', 
-                                     "spp_richness"= 'Biodiversity',
-                                     "ove_spp_richness"= 'Biodiversity',
-                                     "arsh_spp_richness" = 'Biodiversity',
-                                     "ass_spp_richness" = 'Biodiversity',
-                                     "ove_carbon_mgC_ha" = 'Carbon',
-                                     "ove_fish_catch" = 'Fisheries',
-                                     'ove_2016_area_ha' = 'Extent',
-                                     'arsh_area_ha' = 'Extent',
-                                     'ass_area_ha' = 'Extent',
-                                     "area_ha"  = 'Extent')
+                                      'cyclone_tracks' = 'Cyclone risk',
+                                      'climate_mean' = 'Climate impacts',
+                                      'land_mean' = 'Land impacts',
+                                      'marine_mean' = 'Marine impacts',
+                                      'trend' = 'Rate of Loss',
+                                      'ove_prop_lost_10_16' = 'Rate of Loss',
+                                      'ass_mean_risk' = 'Probability of decline',
+                                      'carbon_gC_m2_yr' = 'Carbon',
+                                      'arsh_carbon_mgC_ha' = 'Carbon',
+                                      "ass_carbon_gC_m2" = 'Carbon', 
+                                      "ove_coastal_protection" = 'Coastal protection', 
+                                      'fisheries_biomass_m2' = 'Fisheries', 
+                                      "spp_richness"= 'Bio- diversity',
+                                      "ove_spp_richness"= 'Bio- diversity',
+                                      "arsh_spp_richness" = 'Bio- diversity',
+                                      "ass_spp_richness" = 'Bio- diversity',
+                                      "ove_carbon_mgC_ha" = 'Carbon',
+                                      "ove_fish_catch" = 'Fisheries',
+                                      'ove_2016_area_ha' = 'Extent',
+                                      'arsh_area_ha' = 'Extent',
+                                      'ass_area_ha' = 'Extent',
+                                      "area_ha"  = 'Extent')
 indscores.p$fill <- recode(indscores.p$indicator_name,
-                           'Rate of Loss' = 'Threat',
-                           'Marine impacts' = 'Threat',
-                           'Land impacts' = 'Threat', 
-                           'Cyclone risk' = 'Threat',
-                           'Probability of decline' = 'Threat',
-                           'Climate impacts' = 'Threat',
-                           'Fisheries' = 'Cobenefit',
-                           'Coastal protection' = 'Cobenefit')
+                            'Cyclone_risk' = 'Threat',
+                            'Rate of Loss' = 'Threat',
+                            'Marine impacts' = 'Threat',
+                            'Land impacts' = 'Threat', 
+                            'Cyclone risk' = 'Threat',
+                            'Probability of decline' = 'Threat',
+                            'Climate impacts' = 'Threat',
+                            'Fisheries' = 'Cobenefit',
+                            'Coastal protection' = 'Cobenefit',
+                            'Bio- diversity' = 'Biodiversity')
 indscores.p$indicator_name <- str_wrap(indscores.p$indicator_name, width = 9)
 indscores.p$indicator_name <- factor(indscores.p$indicator_name, levels = c("Extent", "Climate\nimpacts" ,
-                                                                          "Land\nimpacts", "Marine\nimpacts",
-                                                                          "Rate of\nLoss", "Probability\nof\ndecline", 
-                                                                          "Carbon", "Biodiversity", "Fisheries","Coastal\nprotection"))
+                                                                              "Land\nimpacts", "Marine\nimpacts",
+                                                                              "Rate of\nLoss","Cyclone\nrisk", "Probability\nof\ndecline", 
+                                                                              "Carbon", "Bio-\ndiversity" , "Fisheries","Coastal\nprotection"))
 indscores.p$fill <- factor(indscores.p$fill, levels = c("Extent", "Threat", 'Carbon', 'Biodiversity', 'Cobenefit'))
 
 indscores.p2 <- indscores2 %>% 
@@ -111,6 +116,7 @@ indscores.p2$forest_name <- recode(indscores.p2$forest, 'mang' = 'mangrove', 'se
 indscores.p2$forest_name2 <- recode(indscores.p2$forest, 'mang' = 'Mangrove', 'seag' = 'Seagrass', 'salt' = 'Saltmarsh', 'kelp' = 'Kelp')
 
 indscores.p2$indicator_name <- recode(indscores.p2$indicator, 
+                                     'cyclone_tracks' = 'Cyclone risk',
                                      'climate_mean' = 'Climate impacts',
                                      'land_mean' = 'Land impacts',
                                      'marine_mean' = 'Marine impacts',
@@ -122,10 +128,10 @@ indscores.p2$indicator_name <- recode(indscores.p2$indicator,
                                      "ass_carbon_gC_m2" = 'Carbon', 
                                      "ove_coastal_protection" = 'Coastal protection', 
                                      'fisheries_biomass_m2' = 'Fisheries', 
-                                     "spp_richness"= 'Biodiversity',
-                                     "ove_spp_richness"= 'Biodiversity',
-                                     "arsh_spp_richness" = 'Biodiversity',
-                                     "ass_spp_richness" = 'Biodiversity',
+                                     "spp_richness"= 'Bio- diversity',
+                                     "ove_spp_richness"= 'Bio- diversity',
+                                     "arsh_spp_richness" = 'Bio- diversity',
+                                     "ass_spp_richness" = 'Bio- diversity',
                                      "ove_carbon_mgC_ha" = 'Carbon',
                                      "ove_fish_catch" = 'Fisheries',
                                      'ove_2016_area_ha' = 'Extent',
@@ -133,6 +139,7 @@ indscores.p2$indicator_name <- recode(indscores.p2$indicator,
                                      'ass_area_ha' = 'Extent',
                                      "area_ha"  = 'Extent')
 indscores.p2$fill <- recode(indscores.p2$indicator_name,
+                           'Cyclone_risk' = 'Threat',
                            'Rate of Loss' = 'Threat',
                            'Marine impacts' = 'Threat',
                            'Land impacts' = 'Threat', 
@@ -140,12 +147,13 @@ indscores.p2$fill <- recode(indscores.p2$indicator_name,
                            'Probability of decline' = 'Threat',
                            'Climate impacts' = 'Threat',
                            'Fisheries' = 'Cobenefit',
-                           'Coastal protection' = 'Cobenefit')
+                           'Coastal protection' = 'Cobenefit',
+                           'Bio- diversity' = 'Biodiversity')
 indscores.p2$indicator_name <- str_wrap(indscores.p2$indicator_name, width = 9)
 indscores.p2$indicator_name <- factor(indscores.p2$indicator_name, levels = c("Extent", "Climate\nimpacts" ,
                                                                             "Land\nimpacts", "Marine\nimpacts",
-                                                                            "Rate of\nLoss", "Probability\nof\ndecline", 
-                                                                            "Carbon", "Biodiversity", "Fisheries","Coastal\nprotection"))
+                                                                            "Rate of\nLoss","Cyclone\nrisk", "Probability\nof\ndecline", 
+                                                                            "Carbon", "Bio-\ndiversity" , "Fisheries","Coastal\nprotection"))
 indscores.p2$fill <- factor(indscores.p2$fill, levels = c("Extent", "Threat", 'Carbon', 'Biodiversity', 'Cobenefit'))
 
 terr <- c('Global', sort(unique(as.character(units2$TERRITORY1))))

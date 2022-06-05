@@ -3,11 +3,10 @@
 #TODO: 
 
 # in the second absolute panel, be able to select which indicator plot you want to see, enabling conditions or criteria
-# why aren't multicritera hotspots everywhere when percentile is 100? For seagrass its a problem with extent indicator - can fix - double check where have removed NAs 
 # put links to other apps
 
 # more specific labels for criteria and indicator plots
-# Need to fix tnc fish catch data quality score, and missing cyclone indicator
+# Need to fix tnc fish catch data quality score, also why are seagrass carbon storage getting two averages?
 
 forestUI <- function(id, criteria_choices) {
   #criteria_choices: Named list of criteria for this forest
@@ -27,7 +26,7 @@ forestUI <- function(id, criteria_choices) {
                     left = 30, 
                     right = 'auto', 
                     bottom = 'auto',
-                    width = 550, 
+                    width = 575, 
                     height = "auto",
                     
                     tags$style(HTML(".table>thead>tr>th {
@@ -103,7 +102,7 @@ forestUI <- function(id, criteria_choices) {
                     
                     #tags$br(),
                     
-                    selectInput(ns("country"), label = h5(tags$b("4. Choose country or territory")), 
+                    selectInput(ns("country"), label = h5(tags$b("4. Choose country or territory:")), 
                                 choices =  terr, 
                                 selected = 'Global')
                     
@@ -203,7 +202,7 @@ forestServer <- function(id, forest_type, criteria_choices) {
         for(i in as.numeric(input$criteria)){
         varname <- paste0(substr(forest_type, 1,4),"_", hotdf[i,2])
         q <- quantile(scores[,varname], probs = 1-(input$perc)/100,names = FALSE)
-        x <- scores$unit_ID[scores[,varname] > q] 
+        x <- scores$unit_ID[scores[,varname] >= q] 
         x <- newdat$unitdat[newdat$unitdat$unit_ID %in% x, ]
         tmp[[i]] <- x
         }
