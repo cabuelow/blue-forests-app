@@ -154,7 +154,7 @@ my_popups <- st_drop_geometry(wwf) %>%
          saltmarsh = ifelse(saltmarsh == 1, 'Saltmarsh', NA), 
          seaweed = ifelse(seaweed == 1, 'Seaweed', NA)) %>% 
   unite('blueforest', mangrove:seaweed, na.rm = T, sep = ' & ') %>% 
-  mutate(popup = paste0("<span style='font-size: 120%'><strong>",wwf_office,"</strong></span><br/>",
+  mutate(popup = paste0("<span style='font-size: 100%'><strong>",wwf_office,"</strong></span><br/>",
                         "<strong>", "Site: ", "</strong>", site, 
                         "<br/>", 
                         "<strong>", "Blue Forest focus: ", "</strong>", blueforest)) %>% 
@@ -168,16 +168,18 @@ my_popups2 <- st_drop_geometry(inproj) %>%
          saltmarsh = ifelse(saltmarsh == 1, 'Saltmarsh', NA), 
          seaweed = ifelse(seaweed == 1, 'Seaweed', NA)) %>% 
   unite('blueforest', mangrove:seaweed, na.rm = T, sep = ' & ') %>% 
-  mutate(popup = paste0("<span style='font-size: 120%'><strong>",project.name,"</strong></span><br/>",
+  mutate(popup = paste0("<span style='font-size: 100%'><strong>",project.name,"</strong></span><br/>",
                         "<strong>", "Country/Region: ", "</strong>", country_region, 
                         "<br/>", 
-                        "<strong>", "Blue Forest focus: ", "</strong>", blueforest)) %>% 
+                        "<strong>", "Blue Forest focus: ", "</strong>", blueforest,
+                        "<br/>", 
+                        "<strong>", "Investment stage: ", "</strong>", Investment_readiness_stage)) %>% 
   pull(popup)
 
 # colour palette
 
 pal <- colorFactor( # colour palette for blue forest projects
-  palette = "Spectral",
+  palette = "Pastel2",
   domain = wwf$site_type)
 
 pal2 <- colorFactor( # colour palette for blue forest projects

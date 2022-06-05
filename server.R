@@ -34,7 +34,9 @@ function(input, output, session) {
       addCircleMarkers(group = "WWF Blue Forest projects",
                        data = wwf,
                        color = ~pal(site_type),
-                       weight = 0.5,
+                       weight = 1,
+                       opacity = 1,
+                       fillOpacity = 0.8,
                        radius = 5,
                        popup= my_popups,
                        options = pathOptions(pane = "layer6")) %>%
@@ -42,7 +44,7 @@ function(input, output, session) {
                        data = inproj,
                        color = ~pal2(Investment_readiness_stage),
                        weight = 1,
-                       radius = 2,
+                       radius = 3,
                        popup= my_popups2,
                        options = pathOptions(pane = "layer7")) %>%
       addLegend("bottomright", data = wwf,

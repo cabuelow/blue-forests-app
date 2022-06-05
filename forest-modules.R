@@ -26,48 +26,6 @@ forestUI <- function(id, criteria_choices) {
                     class = "panel panel-default", 
                     fixed = TRUE,
                     draggable = TRUE, 
-                    top = 60, 
-                    left = 30, 
-                    right = "auto", 
-                    bottom = "auto",
-                    width = 300, 
-                    height = "auto",
-                    
-                   # tags$br(),
-                    
-                    tags$em("Allow a moment for layers to load."),
-                    
-                    #tags$br(),
-                    
-                    checkboxGroupInput(ns("criteria"), 
-                                 label=h5(tags$b("1. Select criteria:")), 
-                                 choices = criteria_choices,
-                                 selected = 1,
-                                 inline = TRUE),
-                    
-                   # tags$br(),
-                    
-                    sliderInput(ns("perc"), label = h5(tags$b("2. Find management units in top percent of selected criteria:")), 
-                                min = 0, max = 100, 
-                                value = 100,
-                                step = 5),
-                    
-                    #tags$br(),
-                    
-                    h5(tags$b("3. Turn on enabling constraint layer:")),
-                    checkboxInput(ns("profile2"), label = NULL, value = FALSE),
-                    
-                    #tags$br(),
-                    
-                    selectInput(ns("country"), label = h5(tags$b("4. Choose country or territory")), 
-                                choices =  terr, 
-                                selected = 'Global')
-                    
-      ), # end absolute panel 1
-      absolutePanel(id = "controls", 
-                    class = "panel panel-default", 
-                    fixed = TRUE,
-                    draggable = TRUE, 
                     top =475, 
                     left = 30, 
                     right = 'auto', 
@@ -110,7 +68,49 @@ forestUI <- function(id, criteria_choices) {
                     
                     textOutput(ns('text'))
                     
-      ) # end absolute panel 2
+      ), # end absolute panel 2
+      absolutePanel(id = "controls", 
+                    class = "panel panel-default", 
+                    fixed = TRUE,
+                    draggable = TRUE, 
+                    top = 60, 
+                    left = 30, 
+                    right = "auto", 
+                    bottom = "auto",
+                    width = 300, 
+                    height = "auto",
+                    
+                   # tags$br(),
+                    
+                    tags$em("Allow a moment for layers to load."),
+                    
+                    #tags$br(),
+                    
+                    checkboxGroupInput(ns("criteria"), 
+                                 label=h5(tags$b("1. Select criteria:")), 
+                                 choices = criteria_choices,
+                                 selected = 1,
+                                 inline = TRUE),
+                    
+                   # tags$br(),
+                    
+                    sliderInput(ns("perc"), label = h5(tags$b("2. Find management units in top percent of selected criteria:")), 
+                                min = 0, max = 100, 
+                                value = 100,
+                                step = 5),
+                    
+                    #tags$br(),
+                    
+                    h5(tags$b("3. Turn on enabling constraint layer:")),
+                    checkboxInput(ns("profile2"), label = NULL, value = FALSE),
+                    
+                    #tags$br(),
+                    
+                    selectInput(ns("country"), label = h5(tags$b("4. Choose country or territory")), 
+                                choices =  terr, 
+                                selected = 'Global')
+                    
+      ) # end absolute panel 1
   ) # end div
 } # end UI
 
@@ -145,7 +145,9 @@ forestServer <- function(id, forest_type, criteria_choices) {
           addCircleMarkers(group = "WWF Blue Forest projects",
                            data = wwf,
                            color = ~pal(site_type),
-                           weight = 0.5,
+                           weight = 1,
+                           opacity = 1,
+                           fillOpacity = 0.8,
                            radius = 5,
                            popup= my_popups,
                            options = pathOptions(pane = "layer6")
@@ -154,13 +156,14 @@ forestServer <- function(id, forest_type, criteria_choices) {
                            data = inproj,
                            color = ~pal2(Investment_readiness_stage),
                            weight = 1,
-                           radius = 2,
+                           radius = 3,
                            popup= my_popups2,
                            options = pathOptions(pane = "layer7")
           ) %>%
           addLegend("bottomright",
                     colors = c(hot_pal[as.numeric(criteria_choices)], 'darkblue'), labels = c(hotdf[criteria_choices,3], 'Multi-criteria'),
-                    opacity = 0.5) %>% 
+                    title = 'Criteria',
+                    opacity = 1) %>% 
           addLegend("bottomright", data = inproj,
                     pal = pal2, values = ~Investment_readiness_stage,
                     title = "Investment stage",

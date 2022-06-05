@@ -102,6 +102,45 @@ navbarPage(
                              class = "panel panel-default", 
                              fixed = TRUE,
                              draggable = TRUE, 
+                             top = 300, 
+                             left = 30, 
+                             right = 'auto', 
+                             bottom = 'auto',
+                             width = 550, 
+                             height = "auto",
+                             
+                             tags$style(HTML(".table>thead>tr>th {
+                             border-top: 0;
+                             font-size: 11px;
+                             font-weight: bold;
+                             font-family: 'Helvetica Neue', Helvetica;
+                             padding: 8px
+                             }
+                            .table>tbody>tr>td {
+                             border-top: 0;
+                             font-size: 11px;
+                             font-weight: 200;
+                             font-family: 'Helvetica Neue', Helvetica;
+                             }")),
+                             
+                             #tags$b("Blue forest area"),
+                             tags$em("Click on a coastal management unit to find out more..."),
+                             
+                             tags$br(),
+                             
+                             tableOutput('myDf_output'),
+                             
+                             #tags$br(),
+                             
+                             #tags$b("Percent of blue forests protected"),
+                             
+                             tableOutput('myDf_output2')
+                             
+               ), # end absolute panel 2
+               absolutePanel(id = "controls", 
+                             class = "panel panel-default", 
+                             fixed = TRUE,
+                             draggable = TRUE, 
                              top = 60, 
                              left = 30, 
                              right = "auto", 
@@ -124,47 +163,8 @@ navbarPage(
                              selectInput("country", label = h5(tags$b("2. Choose country or territory")), 
                                          choices =  terr, 
                                          selected = 'Global')
-               ), #end absolute panel 1
-               
-               absolutePanel(id = "controls", 
-                             class = "panel panel-default", 
-                             fixed = TRUE,
-                             draggable = TRUE, 
-                             top = 300, 
-                             left = 30, 
-                             right = 'auto', 
-                             bottom = 'auto',
-                             width = 550, 
-                             height = "auto",
-    
-                             tags$style(HTML(".table>thead>tr>th {
-                             border-top: 0;
-                             font-size: 11px;
-                             font-weight: bold;
-                             font-family: 'Helvetica Neue', Helvetica;
-                             padding: 8px
-                             }
-                            .table>tbody>tr>td {
-                             border-top: 0;
-                             font-size: 11px;
-                             font-weight: 200;
-                             font-family: 'Helvetica Neue', Helvetica;
-                             }")),
-                            
-                             #tags$b("Blue forest area"),
-                             tags$em("Click on a coastal management unit to find out more..."),
-                             
-                             tags$br(),
-                             
-                             tableOutput('myDf_output'),
-                             
-                             #tags$br(),
-                             
-                             #tags$b("Percent of blue forests protected"),
-                             
-                             tableOutput('myDf_output2')
-                             
-               ) # end absolute panel 2
+               ) #end absolute panel 1
+              
            ), #end div
            
            tags$div(id="cite",

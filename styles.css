@@ -59,3 +59,13 @@ h1, h2, h3, h4, h5 { font-weight: 400; }
 	width: 36px;
 	height: 36px;
 	}
+	
+.leaflet .legend {
+  font-family: 'Helvetica Neue', Helvetica;
+  line-height: 11px;
+  font-size: 11px;
+  }
+.leaflet .legend i{
+  width: 11px;
+  height: 11px;
+  }
