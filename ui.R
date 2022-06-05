@@ -91,7 +91,13 @@ navbarPage(
                width = 12,
                
                tags$div('Countries and their territories that have high socio-economic and political capacity to enable blue forest conservation can be excluded using an',
-                        tags$b('enabling condition constraint layer.')))
+                        tags$b('enabling condition constraint layer.'))),
+           
+           box(title = h5('Other Blue Forest tools', style = 'font-size:18px;'),
+               width = 12,
+               
+               tags$div(tags$a('Mangrove Carbon App', href="https://mangrove-carbon.wetlands.app/", target="_blank")),
+               tags$div(tags$a('Coastal Wetlands Index App', href="https://glowdex.wetlands.app/", target="_blank")))
                
   ), # end instructions tabpanel
                  
@@ -176,13 +182,13 @@ navbarPage(
            ), #end div
            
            tags$div(id="cite",
-                    tags$em('This map was created in support of the Blue Forests Initiative, a project supported by WWF and the Global Wetlands Project'))
+                    tags$em('This map was created for the Blue Forests Initiative, a project supported by WWF and the Global Wetlands Project'))
            
   ), # end tabpanel
   tabPanel('Explore Mangroves',
            forestUI("mangroves", criteria_choices = criteria_mang_kelp),
            tags$div(id="cite",
-                    tags$em('This map was created in support of the
+                    tags$em('This map was created for the
                             Blue Forests Initiative, a project supported by 
                             WWF and the Global Wetlands Project'))
            
@@ -190,7 +196,7 @@ navbarPage(
   tabPanel('Explore Seagrass',
            forestUI("seagrass", criteria_choices = criteria_others),
            tags$div(id="cite",
-                    tags$em('This map was created in support of the
+                    tags$em('This map was created for the
                             Blue Forests Initiative, a project supported by 
                             WWF and the Global Wetlands Project'))
            
@@ -198,7 +204,7 @@ navbarPage(
   tabPanel('Explore Saltmarsh',
            forestUI("saltmarsh", criteria_choices = criteria_others),
            tags$div(id="cite",
-                    tags$em('This map was created in support of the
+                    tags$em('This map was created for the
                             Blue Forests Initiative, a project supported by 
                             WWF and the Global Wetlands Project'))
            
@@ -206,7 +212,7 @@ navbarPage(
   tabPanel('Explore Kelp',
            forestUI("kelp", criteria_choices = criteria_mang_kelp),
            tags$div(id="cite",
-                    tags$em('This map was created in support of the
+                    tags$em('This map was created for the
                             Blue Forests Initiative, a project supported by 
                             WWF and the Global Wetlands Project'))
            
