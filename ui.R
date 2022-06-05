@@ -32,7 +32,7 @@ navbarPage(
                solidHeader=TRUE,
                width = 12,
                
-               tags$br(),
+               #tags$br(),
 
                tags$div("This tool can help identify opportunities for conserving",
                         tags$b('mangroves,'), 
@@ -55,7 +55,7 @@ navbarPage(
            
            box(title = h5('Coastal management units', style = 'font-size:18px;'),
                width = 12,
-               tags$br(),
+               #tags$br(),
                
                tags$div('Blue forest data is provided in',
                         tags$b('coastal management units'), 
@@ -64,7 +64,7 @@ navbarPage(
           
            box(title = h5('Data certainty and confidence', style = 'font-size:18px;'),
                width = 12,
-               tags$br(),
+               #tags$br(),
 
                tags$div('With the exception of mangroves, the extent and ecosystem service value of blue forests are not mapped globally at a high resolution. Therefore, there is large',
                         tags$b('uncertainty'), 
@@ -77,7 +77,7 @@ navbarPage(
            
            box(title = h5('Criteria and indicators to identify opportunities', style = 'font-size:18px;'),
                width = 12,
-               tags$br(),
+              # tags$br(),
                
               tags$div(tags$b('1. Extent:'), 'Total area of mangroves, seagrass, saltmarsh and kelp (standardised by management unit size).
 '),
@@ -92,14 +92,14 @@ navbarPage(
           
            box(title = h5('Identifying opportunities for impact', style = 'font-size:18px;'),
                width = 12,
-               tags$br(),
+               #tags$br(),
                
                tags$div('Countries and their territories that have high socio-economic and political capacity to enable blue forest conservation can be excluded using an',
                         tags$b('enabling condition constraint layer.'))),
            
            box(title = h5('Other Blue Forest tools', style = 'font-size:18px;'),
                width = 12,
-               tags$br(),
+               #tags$br(),
                
                tags$div(tags$a('Mangrove Carbon App', href="https://mangrove-carbon.wetlands.app/", target="_blank")),
                tags$div(tags$a('Coastal Wetlands Index App', href="https://glowdex.wetlands.app/", target="_blank")))

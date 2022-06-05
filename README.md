@@ -6,6 +6,12 @@ Prototype [here](https://global-wetlands.shinyapps.io/blue-forests-app/)
 
 #### TODO
 
+- [ ] Need to speed up loading maps on server, maybe use caching to prerender maps
+
+- [ ] could also simplify polygons layers more, will likely speed up
+
+- [ ] maybe try leafgl? Web-gl for leaflet instead of svg
+
 - [ ] More specific labels for criteria and indicator plots
 
 - [ ] Tidy up code!
