@@ -6,18 +6,18 @@ Prototype [here](https://global-wetlands.shinyapps.io/blue-forests-app/)
 
 #### TODO
 
-- [ ] See TODO in 'forest-modules.R'
+- [ ] More specific labels for criteria and indicator plots
+
+- [ ] Make data wrangling a pre-process step, so the app loads final datasets, will save
+compute time
+
+- [ ] Tidy up code!
 
 - [ ] Fix Fiji, New Zealand zoom problem
 
 - [ ] Problems with data quality scores, tnc fish catch, coastal protection, seagrass carbon - global and provincial averages
 
 - [ ] Remove area suitable for seaweed farming, TNC fisheries layer, and Eger data for now.
-
-- [ ] Make data wrangling a pre-process step, so the app loads final datasets, will save
-compute time
-
-- [ ] Tidy up code!
 
 #### Decisions decisions
 

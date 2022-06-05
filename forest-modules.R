@@ -1,10 +1,5 @@
 #modules for the single forest page 
 
-#TODO: 
-
-# put links to other apps, and improve instructions tab
-# more specific labels for criteria and indicator plots
-
 forestUI <- function(id, criteria_choices) {
   #criteria_choices: Named list of criteria for this forest
   # mangrove and kelp have different ones 
