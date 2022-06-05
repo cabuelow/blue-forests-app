@@ -4,6 +4,7 @@ library(sf)
 library(dplyr)
 library(tidyr)
 library(stringr)
+library(purrr)
 
 # simplify geopackages so app is faster
 #library(rmapshaper)
@@ -163,6 +164,53 @@ df <- data.frame(units2) %>%
 df$eco <- recode(df$eco, mangrove = 1, seagrass = 2, saltmarsh = 3, kelp = 4, seafarm = 5)
 hot_pal <- c('#66CC33','#CC3300', '#9966CC', '#FFCC00', '#00CCCC')
 hotdf <- data.frame(input = c(1,2,3,4,5), criteria = c('extent', 'threat', 'carbon', 'biodiversity', 'cobenefit'), criteraname = c('Extent', 'Threat', 'Carbon', 'Biodiversity', 'Cobenefit'))
+
+lit <- read.csv('data/scores/adult-literacy-rate.csv')
+#protein <- read.csv('data/scores/protein-consumption-per-capita.csv')
+life <- read.csv('data/scores/HDI_life-expectancy.csv') 
+wgi <- read.csv('data/scores/world-governance-rank.csv') 
+
+# combine all indicators extracted to blue forests countries, and re-scale from 1 to 100
+
+enable <- list(lit, life, wgi) %>% reduce(full_join, by = c('unit_ID', 'TERRITORY1', 'SOVEREIGN1')) %>% 
+  filter(!SOVEREIGN1 == 'San Marino') %>% # remove San Marino - part of Italy %>% 
+  dplyr::select(TERRITORY1, SOVEREIGN1, adult_lit_rate_percent, #protein_consumption_kg.capita.yr,
+                HDI_2019, life_exp_birth_yr_2019,
+                Governance_effectiveness_2020, Regulatory_quality_2020, Control_of_corruption_2020) %>% 
+  distinct() %>% 
+  mutate_at(vars(-c(TERRITORY1, SOVEREIGN1)), ~scales::rescale(., to=c(1,100), from = range(., na.rm = T)))  %>% 
+  pivot_longer(-c(SOVEREIGN1, TERRITORY1),  names_to = 'criteria', values_to = 'score')
+
+enable$criteria <- recode(enable$criteria,
+                       'adult_lit_rate_percent' = 'Literacy',
+                       'life_exp_birth_yr_2019' = 'Life expectancy',
+                       'HDI_2019' =  'Human Development Index',
+                       'Regulatory_quality_2020' = 'Regulatory quality',
+                       'Governance_effectiveness_2020' = 'Governance effectiveness',
+                       'Control_of_corruption_2020' = 'Control of corruption')
+                      # 'protein_consumption_kg.capita.yr' = 'Protein consumption from fish')
+enable$criteria <- str_wrap(enable$criteria, width = 13)
+
+enable2 <- list(lit, life, wgi) %>% reduce(full_join, by = c('unit_ID', 'TERRITORY1', 'SOVEREIGN1')) %>% 
+  filter(!SOVEREIGN1 == 'San Marino') %>% # remove San Marino - part of Italy %>% 
+  filter(!SOVEREIGN1 %in% c(as.character(profile1$sovereignt), 'United States')) %>% 
+  dplyr::select(TERRITORY1, SOVEREIGN1, adult_lit_rate_percent, #protein_consumption_kg.capita.yr,
+                HDI_2019, life_exp_birth_yr_2019,
+                Governance_effectiveness_2020, Regulatory_quality_2020, Control_of_corruption_2020) %>% 
+  distinct() %>% 
+  mutate_at(vars(-c(TERRITORY1, SOVEREIGN1)), ~scales::rescale(., to=c(1,100), from = range(., na.rm = T)))  %>% 
+  pivot_longer(-c(SOVEREIGN1, TERRITORY1),  names_to = 'criteria', values_to = 'score')
+
+enable2$criteria <- recode(enable2$criteria,
+                          'adult_lit_rate_percent' = 'Literacy',
+                          'life_exp_birth_yr_2019' = 'Life expectancy',
+                          'HDI_2019' =  'Human Development Index',
+                          'Regulatory_quality_2020' = 'Regulatory quality',
+                          'Governance_effectiveness_2020' = 'Governance effectiveness',
+                          'Control_of_corruption_2020' = 'Control of corruption')
+# 'protein_consumption_kg.capita.yr' = 'Protein consumption from fish')
+enable2$criteria <- str_wrap(enable2$criteria, width = 13)
+
 # pop-ups
 
 my_popups <- st_drop_geometry(wwf) %>% 

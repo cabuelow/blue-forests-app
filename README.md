@@ -8,8 +8,6 @@ Prototype [here](https://global-wetlands.shinyapps.io/blue-forests-app/)
 
 - [ ] See TODO in 'forest-modules.R'
 
-- [ ] Fix up instructions tab, just copied and pasted from fact sheets for now
-
 - [ ] Fix Fiji, New Zealand zoom problem
 
 - [ ] Problems with data quality scores, tnc fish catch, coastal protection, seagrass carbon - global and provincial averages

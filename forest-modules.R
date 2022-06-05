@@ -3,7 +3,7 @@
 #TODO: 
 
 # in the second absolute panel, be able to select which indicator plot you want to see, enabling conditions or criteria
-# put links to other apps
+# put links to other apps, and improve instructions tab
 # more specific labels for criteria and indicator plots
 
 forestUI <- function(id, criteria_choices) {
@@ -59,6 +59,9 @@ forestUI <- function(id, criteria_choices) {
                     #tags$b("Percent of blue forests protected"),
                     
                     plotOutput(ns('indplot'), height = '200px', width = '500px'),
+                    
+                    h5(tags$b("Show national context indicators:")),
+                    checkboxInput(ns("natcon"), label = NULL, value = FALSE),
                     
                     textOutput(ns('text'))
                     
@@ -181,14 +184,16 @@ forestServer <- function(id, forest_type, criteria_choices) {
          unitdat <- units2.p 
          scoredat <- scores2
          indscoredat <- indscores.p2
+         natcondat <- enable2
          ppal <- "#FFCC99"
         }else{
          unitdat <- units2
          scoredat <- scores
          indscoredat <- indscores.p
+         natcondat <- enable
          ppal <- "#FFFFFF"
         }
-        combo <- list(unitdat = unitdat, scoredat = scoredat, indscoredat = indscoredat, ppal = ppal)
+        combo <- list(unitdat = unitdat, scoredat = scoredat, indscoredat = indscoredat, natcondat = natcondat, ppal = ppal)
       })
       
       # reactive to capture changes in top sites
@@ -300,6 +305,7 @@ forestServer <- function(id, forest_type, criteria_choices) {
       
       observe({
       newdat <- dat()
+      if(input$natcon == FALSE){
       output$indplot <- renderPlot({
         if(!is.null(rvf())){
           d <- newdat$indscoredat %>% filter(unit_ID == rvf() & forest_name == forest_type)
@@ -314,13 +320,30 @@ forestServer <- function(id, forest_type, criteria_choices) {
             scale_fill_manual(
               breaks = c('Extent', 'Threat',  'Carbon', 'Biodiversity','Cobenefit'),
               values = c('darkolivegreen4', 'orangered4', 'plum4', 'goldenrod3', 'cyan4')) +
-            theme(
-              legend.title = element_blank())
+            theme(legend.title = element_blank())
         }else{
           NULL
         }
       }) # end render
-      }) # end observe
+      }else{
+        output$indplot <- renderPlot({
+          if(!is.null(rvf())){
+            d <- newdat$natcondat %>% filter(SOVEREIGN1 %in% unique(filter(units2, unit_ID == rvf())$SOVEREIGN1))
+            ggplot() +
+              geom_violin(data = newdat$natcondat, aes(y = score, x = criteria), fill = 'lightblue', #scale = 'width', 
+                          alpha = 0.5, trim = T, na.rm = T) +
+              geom_point(data = d, aes(y = score, x = criteria, shape = SOVEREIGN1)) +
+              xlab('') +
+              ylab('Score') +
+              ylim(c(0,100)) +
+              theme_classic() +
+              ggtitle('National Context scores') +
+              theme(legend.title = element_blank())
+          }else{
+            NULL
+          }}) # end render
+        } # end natcon if else
+        }) # end observe
       
       output$text <- renderText({
         if(!is.null(rvf())){
