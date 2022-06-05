@@ -8,9 +8,6 @@ Prototype [here](https://global-wetlands.shinyapps.io/blue-forests-app/)
 
 - [ ] More specific labels for criteria and indicator plots
 
-- [ ] Make data wrangling a pre-process step, so the app loads final datasets, will save
-compute time
-
 - [ ] Tidy up code!
 
 - [ ] Fix Fiji, New Zealand zoom problem

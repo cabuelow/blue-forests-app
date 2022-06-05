@@ -14,7 +14,7 @@ forestUI <- function(id, criteria_choices) {
                     class = "panel panel-default", 
                     fixed = TRUE,
                     draggable = TRUE, 
-                    top = 500, 
+                    top = 520, 
                     left = 30, 
                     right = 'auto', 
                     bottom = 'auto',
