@@ -4,9 +4,7 @@
 
 # in the second absolute panel, be able to select which indicator plot you want to see, enabling conditions or criteria
 # put links to other apps
-
 # more specific labels for criteria and indicator plots
-# Need to fix tnc fish catch data quality score, also why are seagrass carbon storage getting two averages?
 
 forestUI <- function(id, criteria_choices) {
   #criteria_choices: Named list of criteria for this forest

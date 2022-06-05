@@ -4,18 +4,22 @@ Web application to inform blue forest conservation.
 
 Prototype [here](https://global-wetlands.shinyapps.io/blue-forests-app/)
 
-#### TODO for first end-user consultation
+#### TODO
 
 - [ ] See TODO in 'forest-modules.R'
 
 - [ ] Fix up instructions tab, just copied and pasted from fact sheets for now
 
-- [ ] Fix Fiji zoom problem
+- [ ] Fix Fiji, New Zealand zoom problem
+
+- [ ] Problems with data quality scores, tnc fish catch, coastal protection, seagrass carbon - global and provincial averages
 
 - [ ] Remove area suitable for seaweed farming, TNC fisheries layer, and Eger data for now.
 
 - [ ] Make data wrangling a pre-process step, so the app loads final datasets, will save
 compute time
+
+- [ ] Tidy up code!
 
 #### Decisions decisions
 
