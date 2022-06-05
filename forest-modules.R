@@ -2,14 +2,11 @@
 
 #TODO: 
 
-# fix multicriteria hotspots - not plotting if skip a criteria e.g. extent and carbon
-# some zoom to countries arent' working
 # in the second absolute panel, be able to select which indicator plot you want to see, enabling conditions or criteria
-
+# why aren't multicritera hotspots everywhere when percentile is 100? For seagrass its a problem with extent indicator - can fix - double check where have removed NAs 
 # put links to other apps
-# why aren't multicritera hotspots everywhere when percentile is 100?
-# more specific labels for criteria and indicator plots
 
+# more specific labels for criteria and indicator plots
 # Need to fix tnc fish catch data quality score, and missing cyclone indicator
 
 forestUI <- function(id, criteria_choices) {
@@ -26,7 +23,7 @@ forestUI <- function(id, criteria_choices) {
                     class = "panel panel-default", 
                     fixed = TRUE,
                     draggable = TRUE, 
-                    top =475, 
+                    top = 500, 
                     left = 30, 
                     right = 'auto', 
                     bottom = 'auto',
@@ -156,6 +153,7 @@ forestServer <- function(id, forest_type, criteria_choices) {
                            data = inproj,
                            color = ~pal2(Investment_readiness_stage),
                            weight = 1,
+                           fillOpacity = 0.6,
                            radius = 3,
                            popup= my_popups2,
                            options = pathOptions(pane = "layer7")
@@ -209,6 +207,8 @@ forestServer <- function(id, forest_type, criteria_choices) {
         x <- newdat$unitdat[newdat$unitdat$unit_ID %in% x, ]
         tmp[[i]] <- x
         }
+        names(tmp) <- seq_along(tmp)
+        if(length(which(sapply(tmp,is.null))) != 0){tmp <- tmp[-which(sapply(tmp, is.null))]}
         if(length(input$criteria) > 1){multunits <- Reduce(intersect, lapply(tmp, function(x){x$unit_ID}))}else{multunits <- NULL}
         combo2 <- list(newsc = tmp, multunits = multunits)
       }) # end reactive
@@ -232,7 +232,7 @@ forestServer <- function(id, forest_type, criteria_choices) {
           addPolygons(
             group = paste(hotdf[i,2]),
             color = hot_pal[i],
-            data = newdat2$newsc[[i]],
+            data = newdat2$newsc[[paste(i)]],
             layerId=~unit_ID,
             weight = 0.4,
             opacity = 0.5,
@@ -254,7 +254,7 @@ forestServer <- function(id, forest_type, criteria_choices) {
       
       observe({
         if(input$country != 'Global'){
-          bounds <- unname(st_bbox(filter(units2, SOVEREIGN1 == input$country)))
+          bounds <- unname(st_bbox(filter(units2, TERRITORY1 == input$country)))
           leafletProxy("forest_map") %>%
             flyToBounds(bounds[1], bounds[2], bounds[3], bounds[4])
         }else{
@@ -315,8 +315,8 @@ forestServer <- function(id, forest_type, criteria_choices) {
             theme_classic() +
             ggtitle(paste(unique(d$forest_name2), 'Indicator scores')) +
             scale_fill_manual(
-              breaks = c('Threat', 'Extent', 'Biodiversity', 'Carbon', 'Cobenefit'),
-              values = c('orangered4', 'darkolivegreen4','goldenrod3','plum4', 'cyan4')) +
+              breaks = c('Extent', 'Threat',  'Carbon', 'Biodiversity','Cobenefit'),
+              values = c('darkolivegreen4', 'orangered4', 'plum4', 'goldenrod3', 'cyan4')) +
             theme(
               legend.title = element_blank())
         }else{

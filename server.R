@@ -45,6 +45,7 @@ function(input, output, session) {
                        color = ~pal2(Investment_readiness_stage),
                        weight = 1,
                        radius = 3,
+                       fillOpacity = 0.6,
                        popup= my_popups2,
                        options = pathOptions(pane = "layer7")) %>%
       addLegend("bottomright", data = wwf,
@@ -90,7 +91,7 @@ function(input, output, session) {
   
   observe({
     if(input$country != 'Global'){
-    bounds <- unname(st_bbox(filter(units2, SOVEREIGN1 == input$country)))
+    bounds <- unname(st_bbox(filter(units2, TERRITORY1 == input$country)))
     leafletProxy("mymap") %>%
       flyToBounds(bounds[1], bounds[2], bounds[3], bounds[4])
     }else{
