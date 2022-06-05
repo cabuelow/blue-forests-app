@@ -2,7 +2,6 @@
 
 #TODO: 
 
-# in the second absolute panel, be able to select which indicator plot you want to see, enabling conditions or criteria
 # put links to other apps, and improve instructions tab
 # more specific labels for criteria and indicator plots
 
@@ -328,16 +327,17 @@ forestServer <- function(id, forest_type, criteria_choices) {
       }else{
         output$indplot <- renderPlot({
           if(!is.null(rvf())){
-            d <- newdat$natcondat %>% filter(SOVEREIGN1 %in% unique(filter(units2, unit_ID == rvf())$SOVEREIGN1))
+            d <- newdat$natcondat %>% filter(SOVEREIGN1 %in% unique(filter(units2, unit_ID == rvf())$SOVEREIGN1) &
+                                               TERRITORY1 %in% unique(filter(units2, unit_ID == rvf())$TERRITORY1))
             ggplot() +
-              geom_violin(data = newdat$natcondat, aes(y = score, x = criteria), fill = 'lightblue', #scale = 'width', 
-                          alpha = 0.5, trim = T, na.rm = T) +
+              geom_violin(data = newdat$natcondat, aes(y = score, x = criteria), fill = 'lightblue',
+                          alpha = 0.5, na.rm = T) +
               geom_point(data = d, aes(y = score, x = criteria, shape = SOVEREIGN1)) +
               xlab('') +
               ylab('Score') +
               ylim(c(0,100)) +
               theme_classic() +
-              ggtitle('National Context scores') +
+              ggtitle('National Context (for Territories, Sovereign country scores are used)') +
               theme(legend.title = element_blank())
           }else{
             NULL
