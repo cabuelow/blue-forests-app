@@ -70,6 +70,8 @@ function(input, output, session) {
     
   }) # end render leaflet
   
+  outputOptions(output, "mymap", suspendWhenHidden = FALSE)
+  
   #
   # Filter data for ticked blue forests 
   #

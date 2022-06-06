@@ -90,13 +90,25 @@ navbarPage(
               tags$div(tags$b('5. Co-benefit:'), 'Fisheries (mangrove commercial fisheries enhancement or average kelp fisheries biomass) and coastal protection (average number of people protected by mangroves per 20km of coastline).
 ')),
           
-           box(title = h5('Identifying opportunities for impact', style = 'font-size:18px;'),
+           box(title = h5('Identify opportunities for impact', style = 'font-size:18px;'),
                width = 12,
                #tags$br(),
                
                tags$div('Countries and their territories that have high socio-economic and political capacity to enable blue forest conservation can be excluded using an',
                         tags$b('enabling condition constraint layer.'))),
            
+           box(title = h5('See where Blue Forest projects are happening', style = 'font-size:18px;'),
+               width = 12,
+               #tags$br(),
+               
+               tags$div('See the World Wildife Fund and other organisations',
+                        tags$b('are taking action'), 'to conserve Blue Forests. Find out about their',
+                        tags$b('business model maturity:')),
+               tags$div(tags$b('1. Technical proving:'), 'proving environmental outcomes and feasibility'),
+               tags$div(tags$b('2. Monetisation: modelling'), 'and identifying cash flows and demand for services'),
+               tags$div(tags$b('3. Investment readiness:'), 'demonstrated cash flows and ready to raise investment'),
+               tags$div(tags$b('4. Pathfinder funding:'), 'patient and concessionary capital to demonstrate sustainable revenue at scale')),
+
            box(title = h5('Other Blue Forest tools', style = 'font-size:18px;'),
                width = 12,
                #tags$br(),
@@ -104,11 +116,11 @@ navbarPage(
                tags$div(tags$a('Mangrove Carbon App', href="https://mangrove-carbon.wetlands.app/", target="_blank")),
                tags$div(tags$a('Coastal Wetlands Index App', href="https://glowdex.wetlands.app/", target="_blank"))),
            
-           box(title = h5('Issues?', style = 'font-size:18px;'),
+           box(title = h5('Issues or questions?', style = 'font-size:18px;'),
                width = 12,
                #tags$br(),
                
-               tags$div('If you have issues with the app, please contact Christina Buelow at',
+               tags$div('Please contact Christina Buelow at',
                         tags$b('c.buelow@griffith.edu.au,'),
                         'or Chris Brown at', tags$b('chris.brown@griffith.edu.au')))
                

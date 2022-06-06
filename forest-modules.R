@@ -36,7 +36,7 @@ forestUI <- function(id, criteria_choices) {
                              }")),
                     
                     #tags$b("Blue forest area"),
-                    tags$em("Click on a coastal management unit to find out more..."),
+                    tags$em("Click on a coastal management unit to find out more...(& drag this box to fit your screen)"),
                     
                     tags$br(),
                     
@@ -173,6 +173,8 @@ forestServer <- function(id, forest_type, criteria_choices) {
           hideGroup('WWF Blue Forest projects') %>% 
           hideGroup("Investment assessment")
       }) # end render leaflet
+      
+      outputOptions(output, "forest_map", suspendWhenHidden = FALSE)
       
       # reactive if-elses to choose the right data depending on whether enabling constraint is on or off
 
