@@ -10,6 +10,7 @@ library(leaflet)
 library(RColorBrewer)
 library(ggplot2)
 library(leaflet.extras2)
+library(reactlog)
 
 # server logic
 

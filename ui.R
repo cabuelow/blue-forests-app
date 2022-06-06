@@ -102,7 +102,15 @@ navbarPage(
                #tags$br(),
                
                tags$div(tags$a('Mangrove Carbon App', href="https://mangrove-carbon.wetlands.app/", target="_blank")),
-               tags$div(tags$a('Coastal Wetlands Index App', href="https://glowdex.wetlands.app/", target="_blank")))
+               tags$div(tags$a('Coastal Wetlands Index App', href="https://glowdex.wetlands.app/", target="_blank"))),
+           
+           box(title = h5('Issues?', style = 'font-size:18px;'),
+               width = 12,
+               #tags$br(),
+               
+               tags$div('If you have issues with the app, please contact Christina Buelow at',
+                        tags$b('c.buelow@griffith.edu.au,'),
+                        'or Chris Brown at', tags$b('chris.brown@griffith.edu.au')))
                
   ), # end instructions tabpanel
                  
