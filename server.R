@@ -9,11 +9,13 @@ library(sf)
 library(leaflet)
 library(RColorBrewer)
 library(ggplot2)
+library(leaflet.extras2)
 
 # server logic
 
 function(input, output, session) {
   
+ 
   ####################### Explore distributions logic ########################
   
   ## use reactive values to store the id from observing the shape click
@@ -23,12 +25,15 @@ function(input, output, session) {
   
   output$mymap <- renderLeaflet({
     leaflet() %>% 
-      addProviderTiles(providers$CartoDB.Positron) %>% 
+      addProviderTiles(providers$CartoDB.Positron) %>%
+      addSpinner() %>%
+      startSpinner(options = list("lines" = 7, "length" = 20)) %>%
       addPolygons(
         group = 'basepoly',
         data = unitsall,
         color = "#FFFFFF",
         weight = 0.4) %>%
+      stopSpinner() %>% 
       addMapPane('layer6', zIndex = 460) %>%
       addMapPane('layer7', zIndex = 470) %>%
       addCircleMarkers(group = "WWF Blue Forest projects",
@@ -80,12 +85,15 @@ function(input, output, session) {
   observe({
     leafletProxy("mymap") %>%
       clearGroup(c('forest')) %>%
+      addSpinner() %>%
+      startSpinner(options = list("lines" = 7, "length" = 20)) %>%
       addPolygons(
         group = 'forest',
         data = update_forest_dat(),
         color = '#008b8b',
         layerId=~unit_ID,
-        weight = 0.4)
+        weight = 0.4) %>% 
+      stopSpinner()
     #note popups block shape_click events
   }) # end observe
   

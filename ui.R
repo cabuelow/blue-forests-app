@@ -107,7 +107,7 @@ navbarPage(
   ), # end instructions tabpanel
                  
   tabPanel('Explore Blue Forest Distributions',
-           textOutput("selected_var"),
+           #textOutput("selected_var"),
            div(class="outer",
                tags$head(
                  includeCSS("styles.css")

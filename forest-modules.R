@@ -119,6 +119,8 @@ forestServer <- function(id, forest_type, criteria_choices) {
       output$forest_map <- renderLeaflet({
         leaflet() %>% 
           addProviderTiles(providers$CartoDB.Positron) %>% 
+          addSpinner() %>%
+          startSpinner(options = list("lines" = 7, "length" = 20)) %>%
           addPolygons(
             group = 'basepoly',
             data = unitsall,
@@ -130,6 +132,7 @@ forestServer <- function(id, forest_type, criteria_choices) {
             color = hot_pal[1],
             layerId = ~unit_ID,
             weight = 0.4) %>% 
+          stopSpinner() %>% 
           addMapPane('criteria', zIndex = 410) %>%
           addMapPane('layer6', zIndex = 460) %>%
           addMapPane('layer7', zIndex = 470) %>%
@@ -217,14 +220,19 @@ forestServer <- function(id, forest_type, criteria_choices) {
       
       leafletProxy(ns("forest_map")) %>%
         clearGroup(c('profile', 'baseforest', 'extent', 'threat', 'biodiversity', 'carbon', 'cobenefit', 'multi')) %>% 
+        addSpinner() %>%
+        startSpinner(options = list("lines" = 7, "length" = 20)) %>%
         addPolygons(
           group = 'profile',
           data = profile1.sf,
           color = newdat$ppal,
-          weight = 0.4)
+          weight = 0.4) %>% 
+        stopSpinner()
       
       for(i in as.numeric(input$criteria)){
         leafletProxy(ns("forest_map")) %>%
+          addSpinner() %>%
+          startSpinner(options = list("lines" = 7, "length" = 20)) %>%
           addPolygons(
             group = paste(hotdf[i,2]),
             color = hot_pal[i],
@@ -232,18 +240,22 @@ forestServer <- function(id, forest_type, criteria_choices) {
             layerId=~unit_ID,
             weight = 0.4,
             opacity = 0.5,
-            options = pathOptions(pane = 'criteria'))
+            options = pathOptions(pane = 'criteria')) %>% 
+          stopSpinner()
       }# end for loop
       
       if(length(newdat2$multunits != 0)){
            leafletProxy(ns("forest_map")) %>% 
+          addSpinner() %>%
+          startSpinner(options = list("lines" = 7, "length" = 20)) %>%
           addPolygons(
             group = 'multi',
             color = 'darkblue',
             data = filter(units2, unit_ID %in% newdat2$multunits),
             layerId =~unit_ID,
             weight = 0.8,
-            options = pathOptions(pane = 'criteria'))
+            options = pathOptions(pane = 'criteria')) %>% 
+          stopSpinner()
        }#end if
       
       }) # end observe
