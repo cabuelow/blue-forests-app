@@ -104,10 +104,10 @@ navbarPage(
                tags$div('See the World Wildife Fund and other organisations',
                         tags$b('are taking action'), 'to conserve Blue Forests. Find out about their',
                         tags$b('business model maturity:')),
-               tags$div(tags$b('1. Technical proving:'), 'proving environmental outcomes and feasibility'),
-               tags$div(tags$b('2. Monetisation: modelling'), 'and identifying cash flows and demand for services'),
-               tags$div(tags$b('3. Investment readiness:'), 'demonstrated cash flows and ready to raise investment'),
-               tags$div(tags$b('4. Pathfinder funding:'), 'patient and concessionary capital to demonstrate sustainable revenue at scale')),
+               tags$div(tags$b('1. Technical proving:'), 'proving environmental outcomes and feasibility.'),
+               tags$div(tags$b('2. Monetisation: modelling'), 'and identifying cash flows and demand for services.'),
+               tags$div(tags$b('3. Investment readiness:'), 'demonstrated cash flows and ready to raise investment.'),
+               tags$div(tags$b('4. Pathfinder funding:'), 'patient and concessionary capital to demonstrate sustainable revenue at scale.')),
 
            box(title = h5('Other Blue Forest tools', style = 'font-size:18px;'),
                width = 12,
@@ -122,7 +122,7 @@ navbarPage(
                
                tags$div('Please contact Christina Buelow at',
                         tags$b('c.buelow@griffith.edu.au,'),
-                        'or Chris Brown at', tags$b('chris.brown@griffith.edu.au')))
+                        'or Chris Brown at', tags$b('chris.brown@griffith.edu.au.')))
                
   ), # end instructions tabpanel
                  
@@ -141,7 +141,7 @@ navbarPage(
                              class = "panel panel-default", 
                              fixed = TRUE,
                              draggable = TRUE, 
-                             top = 300, 
+                             top = 330, 
                              left = 30, 
                              right = 'auto', 
                              bottom = 'auto',
@@ -193,9 +193,10 @@ navbarPage(
                              
                              checkboxGroupInput("blue_forest", 
                                                 #label=NULL,
-                                                label=h5(tags$b("1. Select blue forest:")), 
+                                                label=h5(tags$b("1. Select blue forest(s) to map:")), 
                                                 choices = list("Mangrove" = 1, "Seagrass" = 2, "Saltmarsh" = 3, "Kelp" = 4),
                                                 selected = NULL, inline = TRUE),
+                             actionButton('mapit', 'Map distribution'),
                              
                              #tags$br(),
                              

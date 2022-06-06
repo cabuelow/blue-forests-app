@@ -75,11 +75,11 @@ function(input, output, session) {
   #
   # Filter data for ticked blue forests 
   #
-  update_forest_dat <- reactive({
+  update_forest_dat <- eventReactive(input$mapit,{
     x <- filter(df, eco %in% as.numeric(input$blue_forest) & value ==1) 
     x <- units2[units2$unit_ID %in% x$unit_ID, ]
     return(x)
-  }) %>% bindCache(input$blue_forest) # end reactive
+  }) #%>% bindCache(input$blue_forest) # end reactive
   
   #
   # Update map

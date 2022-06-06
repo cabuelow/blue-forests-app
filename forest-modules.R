@@ -14,7 +14,7 @@ forestUI <- function(id, criteria_choices) {
                     class = "panel panel-default", 
                     fixed = TRUE,
                     draggable = TRUE, 
-                    top = 520, 
+                    top = 565, 
                     left = 30, 
                     right = 'auto', 
                     bottom = 'auto',
@@ -78,23 +78,22 @@ forestUI <- function(id, criteria_choices) {
                     #tags$br(),
                     
                     checkboxGroupInput(ns("criteria"), 
-                                 label=h5(tags$b("1. Select criteria:")), 
+                                 label=h5(tags$b("1. Select criteria to map:")), 
                                  choices = criteria_choices,
                                  selected = 1,
                                  inline = TRUE),
-                    
                    # tags$br(),
                     
-                    sliderInput(ns("perc"), label = h5(tags$b("2. Find management units in top percent of selected criteria:")), 
+                    sliderInput(ns("perc"), label = h5(tags$b("2. Set threshold to find management units in top percent of selected criteria:")), 
                                 min = 0, max = 100, 
                                 value = 100,
                                 step = 5),
                     
                     #tags$br(),
                     
-                    h5(tags$b("3. Turn on enabling condition constraint layer:")),
+                    h5(tags$b("3. Turn on enabling condition constraint layer?")),
                     checkboxInput(ns("profile2"), label = NULL, value = FALSE),
-                    
+                    actionButton(ns('mapit2'), 'Map criteria hotspots'),
                     #tags$br(),
                     
                     selectInput(ns("country"), label = h5(tags$b("4. Choose country or territory:")), 
@@ -178,7 +177,7 @@ forestServer <- function(id, forest_type, criteria_choices) {
       
       # reactive if-elses to choose the right data depending on whether enabling constraint is on or off
 
-      dat <- reactive({
+      dat <- eventReactive(input$mapit2,{
         if(input$profile2 == TRUE){
          unitdat <- units2.p 
          scoredat <- scores2
@@ -193,11 +192,11 @@ forestServer <- function(id, forest_type, criteria_choices) {
          ppal <- "#FFFFFF"
         }
         combo <- list(unitdat = unitdat, scoredat = scoredat, indscoredat = indscoredat, natcondat = natcondat, ppal = ppal)
-      }) %>% bindCache(input$profile2)
+      }) #%>% bindCache(input$profile2)
       
       # reactive to capture changes in top sites
       
-      update_top_sites_dat <- reactive({
+      update_top_sites_dat <- eventReactive(input$mapit2, {
         newdat <- dat()
         scores <- newdat$scoredat[newdat$scoredat[,forest_type]==1,]
         tmp <- list()
@@ -212,7 +211,7 @@ forestServer <- function(id, forest_type, criteria_choices) {
         if(length(which(sapply(tmp,is.null))) != 0){tmp <- tmp[-which(sapply(tmp, is.null))]}
         if(length(input$criteria) > 1){multunits <- Reduce(intersect, lapply(tmp, function(x){x$unit_ID}))}else{multunits <- NULL}
         combo2 <- list(newsc = tmp, multunits = multunits)
-      }) %>% bindCache(dat(), input$criteria, input$perc) # end reactive
+      }) #%>% bindCache(dat(), input$criteria, input$perc) # end reactive
       
       # update basemap based on enabling constraint
       
