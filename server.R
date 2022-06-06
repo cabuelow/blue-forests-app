@@ -76,7 +76,7 @@ function(input, output, session) {
     x <- filter(df, eco %in% as.numeric(input$blue_forest) & value ==1) 
     x <- units2[units2$unit_ID %in% x$unit_ID, ]
     return(x)
-  }) # end reactive
+  }) %>% bindCache(input$blue_forest) # end reactive
   
   #
   # Update map

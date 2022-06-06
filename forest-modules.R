@@ -191,7 +191,7 @@ forestServer <- function(id, forest_type, criteria_choices) {
          ppal <- "#FFFFFF"
         }
         combo <- list(unitdat = unitdat, scoredat = scoredat, indscoredat = indscoredat, natcondat = natcondat, ppal = ppal)
-      })
+      }) %>% bindCache(input$profile2)
       
       # reactive to capture changes in top sites
       
@@ -210,7 +210,7 @@ forestServer <- function(id, forest_type, criteria_choices) {
         if(length(which(sapply(tmp,is.null))) != 0){tmp <- tmp[-which(sapply(tmp, is.null))]}
         if(length(input$criteria) > 1){multunits <- Reduce(intersect, lapply(tmp, function(x){x$unit_ID}))}else{multunits <- NULL}
         combo2 <- list(newsc = tmp, multunits = multunits)
-      }) # end reactive
+      }) %>% bindCache(dat(), input$criteria, input$perc) # end reactive
       
       # update basemap based on enabling constraint
       
@@ -295,7 +295,7 @@ forestServer <- function(id, forest_type, criteria_choices) {
         }else{
           NULL
         }
-      }, spacing = c("xs"), width = "500px") # end render
+      }, spacing = c("xs"), width = "500px") %>% bindCache(rvf())# end render
       
       output$myDf_outputf2 <- renderTable({
         if(!is.null(rvf())){
@@ -307,7 +307,7 @@ forestServer <- function(id, forest_type, criteria_choices) {
         }else{
           NULL
         }
-      }, spacing = c("xs"), width = "500px") # end render
+      }, spacing = c("xs"), width = "500px") %>% bindCache(rvf()) # end render
       
       observe({
       newdat <- dat()
@@ -330,7 +330,7 @@ forestServer <- function(id, forest_type, criteria_choices) {
         }else{
           NULL
         }
-      }) # end render
+      }) %>% bindCache(rvf(), dat(), input$natcon) # end render
       }else{
         output$indplot <- renderPlot({
           if(!is.null(rvf())){
@@ -348,7 +348,7 @@ forestServer <- function(id, forest_type, criteria_choices) {
               theme(legend.title = element_blank())
           }else{
             NULL
-          }}) # end render
+          }}) %>% bindCache(rvf(), dat(), input$natcon)  # end render
         } # end natcon if else
         }) # end observe
       
