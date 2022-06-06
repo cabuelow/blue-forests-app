@@ -215,7 +215,7 @@ forestServer <- function(id, forest_type, criteria_choices) {
       
       # update basemap based on enabling constraint
       
-      observe({
+      observeEvent(input$mapit2,{
       newdat <- dat() # get reactive data
       newdat2 <- update_top_sites_dat()
       
