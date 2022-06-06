@@ -40,9 +40,11 @@ navbarPage(
                         tags$b('saltmarsh,'),'and', 
                         tags$b('kelp forests.')),
                
-               tags$br(),
-               
-               tags$div("Click on the",
+               #tags$br(),
+               tags$div("The app needs time to",
+                        tags$b('warm-up.')),
+               tags$div("Please allow 30 seconds to one minute before you",
+                        tags$b('click'), "on the",
                tags$b('explorer'), "pages above to tour the best available global data on blue forest",
                         tags$b("extent,"),
                         tags$b("threats,"),
@@ -70,7 +72,7 @@ navbarPage(
                         tags$b('uncertainty'), 
                         'in estimates of extent and ecosystem services for seagrass, saltmarsh and kelp.
 '),
-               tags$br(),
+               #tags$br(),
                
                tags$div('Indicators for criteria (described below) that were not globally comprehensive or were spatially incongruent with baseline distributions were gap-filled with regional or global averages, introducing additional uncertainty. 
 ')),
