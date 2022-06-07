@@ -103,7 +103,7 @@ navbarPage(
                width = 12,
                #tags$br(),
                
-               tags$div('See the World Wildife Fund and other organisations',
+               tags$div('See where the World Wildife Fund and other organisations',
                         tags$b('are taking action'), 'to conserve Blue Forests. Find out about their',
                         tags$b('business model maturity:')),
                tags$div(tags$b('1. Technical proving:'), 'proving environmental outcomes and feasibility.'),
@@ -128,91 +128,6 @@ navbarPage(
                
   ), # end instructions tabpanel
                  
-  tabPanel('Explore Blue Forest Distributions',
-           #textOutput("selected_var"),
-           div(class="outer",
-               tags$head(
-                 includeCSS("styles.css")
-               ),
-               
-               leafletOutput("mymap", width="100%", height="100%"),
-               
-               tags$style(".leaflet-control-layers-overlays{color: blue}"),
-               
-               absolutePanel(id = "controls", 
-                             class = "panel panel-default", 
-                             fixed = TRUE,
-                             draggable = TRUE, 
-                             top = 330, 
-                             left = 30, 
-                             right = 'auto', 
-                             bottom = 'auto',
-                             width = 550, 
-                             height = "auto",
-                             
-                             tags$style(HTML(".table>thead>tr>th {
-                             border-top: 0;
-                             font-size: 11px;
-                             font-weight: bold;
-                             font-family: 'Helvetica Neue', Helvetica;
-                             padding: 8px
-                             }
-                            .table>tbody>tr>td {
-                             border-top: 0;
-                             font-size: 11px;
-                             font-weight: 200;
-                             font-family: 'Helvetica Neue', Helvetica;
-                             }")),
-                             
-                             #tags$b("Blue forest area"),
-                             tags$em("Click on a coastal management unit to find out more..."),
-                             
-                             tags$br(),
-                             
-                             tableOutput('myDf_output'),
-                             
-                             #tags$br(),
-                             
-                             #tags$b("Percent of blue forests protected"),
-                             
-                             tableOutput('myDf_output2')
-                             
-               ), # end absolute panel 2
-               absolutePanel(id = "controls", 
-                             class = "panel panel-default", 
-                             fixed = TRUE,
-                             draggable = TRUE, 
-                             top = 60, 
-                             left = 30, 
-                             right = "auto", 
-                             bottom = "auto",
-                             width = 300, 
-                             height = "auto",
-                             
-                             #tags$br(),
-                             
-                             tags$em("Allow a moment for layers to load."),
-                             
-                             checkboxGroupInput("blue_forest", 
-                                                #label=NULL,
-                                                label=h5(tags$b("1. Select blue forest(s) to map:")), 
-                                                choices = list("Mangrove" = 1, "Seagrass" = 2, "Saltmarsh" = 3, "Kelp" = 4),
-                                                selected = NULL, inline = TRUE),
-                             actionButton('mapit', 'Map distribution'),
-                             
-                             #tags$br(),
-                             
-                             selectInput("country", label = h5(tags$b("2. Choose country or territory:")), 
-                                         choices =  terr, 
-                                         selected = 'Global')
-               ) #end absolute panel 1
-              
-           ), #end div
-           
-           tags$div(id="cite",
-                    tags$em('This map was created for the Blue Forests Initiative, a project supported by WWF and the Global Wetlands Project'))
-           
-  ), # end tabpanel
   tabPanel('Explore Mangroves',
            forestUI("mangroves", criteria_choices = criteria_mang_kelp),
            tags$div(id="cite",
