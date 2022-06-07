@@ -104,7 +104,7 @@ navbarPage(
                #tags$br(),
                
                tags$div('See where the World Wildife Fund and other organisations',
-                        tags$b('are taking action'), 'to conserve Blue Forests. Find out about their',
+                        tags$b('are taking action'), 'to conserve Blue Forests, and find out about project',
                         tags$b('business model maturity:')),
                tags$div(tags$b('1. Technical proving:'), 'proving environmental outcomes and feasibility.'),
                tags$div(tags$b('2. Monetisation: modelling'), 'and identifying cash flows and demand for services.'),
