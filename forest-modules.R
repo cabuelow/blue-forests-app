@@ -147,7 +147,7 @@ forestServer <- function(id, forest_type, criteria_choices) {
                            popup= my_popups,
                            options = pathOptions(pane = "layer6")
                            ) %>%
-          addCircleMarkers(group = "Investment assessment",
+          addCircleMarkers(group = "Business model maturity",
                            data = inproj,
                            color = ~pal2(Investment_readiness_stage),
                            weight = 1,
@@ -163,16 +163,16 @@ forestServer <- function(id, forest_type, criteria_choices) {
           addLegend("bottomright", data = inproj,
                     pal = pal2, values = ~Investment_readiness_stage,
                     title = "Investment stage",
-                    opacity = 1, group = 'Investment assessment') %>% 
+                    opacity = 1, group = 'Business model maturity') %>% 
           addLegend("bottomright", data = wwf,
                     pal = pal, values = ~site_type,
                     title = "WWF Blue Forest project type",
                     opacity = 1, group = 'WWF Blue Forest projects') %>%
           addLayersControl(
-            overlayGroups = c("WWF Blue Forest projects", 'Investment assessment'),
+            overlayGroups = c("WWF Blue Forest projects", 'Business model maturity'),
             options = layersControlOptions(collapsed = FALSE)) %>% 
           hideGroup('WWF Blue Forest projects') %>% 
-          hideGroup("Investment assessment")
+          hideGroup("Business model maturity")
       }) # end render leaflet
       
       outputOptions(output, "forest_map", suspendWhenHidden = FALSE, priority = 1)
