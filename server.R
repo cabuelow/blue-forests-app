@@ -58,7 +58,7 @@ function(input, output, session) {
                          options = pathOptions(pane = "layer7")
         ) %>%
         addLegend("bottomright",
-                  colors = c(hot_pal[as.numeric(input$criteria)], 'darkblue'), labels = c(hotdf[input$criteria,3], 'All selected criteria'),
+                  colors = c(hot_pal[c(1,2,3,4,5)], 'darkblue'), labels = c(hotdf[c(1,2,3,4,5),3], 'All selected criteria'),
                   title = 'Criteria',
                   opacity = 1) %>% 
         addLegend("bottomright", data = inproj,
