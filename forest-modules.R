@@ -14,7 +14,7 @@ forestUI <- function(id, criteria_choices) {
                     class = "panel panel-default", 
                     fixed = TRUE,
                     draggable = TRUE, 
-                    top = 565, 
+                    top = 600, 
                     left = 30, 
                     right = 'auto', 
                     bottom = 'auto',
@@ -36,7 +36,7 @@ forestUI <- function(id, criteria_choices) {
                              }")),
                     
                     #tags$b("Blue forest area"),
-                    tags$em("Click on a coastal management unit to find out more...(& drag this box to fit your screen)"),
+                    tags$em("Click on a coastal management unit to find out more & drag this box to fit your screen)"),
                     
                     tags$br(),
                     
@@ -75,7 +75,9 @@ forestUI <- function(id, criteria_choices) {
                     
                     tags$em("Allow a moment for layers to load."),
                     
-                    #tags$br(),
+                    tags$br(),
+                   
+                    tags$em("Select from steps 1-3. Then click 'Map criteria hotspots'."),
                     
                     checkboxGroupInput(ns("criteria"), 
                                  label=h5(tags$b("1. Select criteria to map:")), 
@@ -155,7 +157,7 @@ forestServer <- function(id, forest_type, criteria_choices) {
                            options = pathOptions(pane = "layer7")
           ) %>%
           addLegend("bottomright",
-                    colors = c(hot_pal[as.numeric(criteria_choices)], 'darkblue'), labels = c(hotdf[criteria_choices,3], 'Multi-criteria'),
+                    colors = c(hot_pal[as.numeric(criteria_choices)], 'darkblue'), labels = c(hotdf[criteria_choices,3], 'All selected criteria'),
                     title = 'Criteria',
                     opacity = 1) %>% 
           addLegend("bottomright", data = inproj,
@@ -173,7 +175,7 @@ forestServer <- function(id, forest_type, criteria_choices) {
           hideGroup("Investment assessment")
       }) # end render leaflet
       
-      outputOptions(output, "forest_map", suspendWhenHidden = FALSE)
+      outputOptions(output, "forest_map", suspendWhenHidden = FALSE, priority = 1)
       
       # reactive if-elses to choose the right data depending on whether enabling constraint is on or off
 
@@ -338,7 +340,7 @@ forestServer <- function(id, forest_type, criteria_choices) {
             d <- newdat$natcondat %>% filter(SOVEREIGN1 %in% unique(filter(units2, unit_ID == rvf())$SOVEREIGN1) &
                                                TERRITORY1 %in% unique(filter(units2, unit_ID == rvf())$TERRITORY1))
             ggplot() +
-              geom_violin(data = newdat$natcondat, aes(y = score, x = criteria), fill = 'lightblue',
+              geom_violin(data = newdat$natcondat, aes(y = score, x = criteria), fill = 'lightblue', size = 0,
                           alpha = 0.5, na.rm = T) +
               geom_point(data = d, aes(y = score, x = criteria, shape = SOVEREIGN1)) +
               xlab('') +

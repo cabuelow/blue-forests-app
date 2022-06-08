@@ -8,6 +8,9 @@ library(shinydashboard)
 library(dplyr)
 library(sf)
 library(leaflet)
+library(RColorBrewer)
+library(ggplot2)
+library(leaflet.extras2)
 
 # load and wrangle all required components for app
 
@@ -104,7 +107,7 @@ navbarPage(
                #tags$br(),
                
                tags$div('See where the World Wildife Fund and other organisations',
-                        tags$b('are taking action'), 'to conserve Blue Forests, and find out about project',
+                        tags$b('are taking action'), 'to conserve Blue Forests, and find out about',
                         tags$b('business model maturity:')),
                tags$div(tags$b('1. Technical proving:'), 'proving environmental outcomes and feasibility.'),
                tags$div(tags$b('2. Monetisation: modelling'), 'and identifying cash flows and demand for services.'),
@@ -129,7 +132,108 @@ navbarPage(
   ), # end instructions tabpanel
                  
   tabPanel('Explore Mangroves',
-           forestUI("mangroves", criteria_choices = criteria_mang_kelp),
+           div(class="outer",
+               tags$head(
+                 includeCSS("styles.css")
+               ),
+               leafletOutput("mangrove_map", width="100%", height="100%"),
+               tags$style(".leaflet-control-layers-overlays{color: blue}"),
+               absolutePanel(id = "controls", 
+                             class = "panel panel-default", 
+                             fixed = TRUE,
+                             draggable = TRUE, 
+                             top = 600, 
+                             left = 30, 
+                             right = 'auto', 
+                             bottom = 'auto',
+                             width = 575, 
+                             height = "auto",
+                             
+                             tags$style(HTML(".table>thead>tr>th {
+                             border-top: 0;
+                             font-size: 11px;
+                             font-weight: bold;
+                             font-family: 'Helvetica Neue', Helvetica;
+                             padding: 8px
+                             }
+                            .table>tbody>tr>td {
+                             border-top: 0;
+                             font-size: 11px;
+                             font-weight: 200;
+                             font-family: 'Helvetica Neue', Helvetica;
+                             }")),
+                             
+                             #tags$b("Blue forest area"),
+                             tags$em("Click on a coastal management unit to find out more & drag this box to fit your screen)"),
+                             
+                             tags$br(),
+                             
+                             tableOutput('myDf_outputf'),
+                             
+                             #tags$br(),
+                             
+                             #tags$b("Percent of blue forests protected"),
+                             
+                             tableOutput('myDf_outputf2'),
+                             
+                             #tags$br(),
+                             
+                             #tags$b("Percent of blue forests protected"),
+                             
+                             plotOutput('indplot', height = '200px', width = '500px'),
+                             
+                             h5(tags$b("Show national context indicators:")),
+                             checkboxInput("natcon", label = NULL, value = FALSE),
+                             
+                             textOutput('text')
+                             
+               ), # end absolute panel 2
+               absolutePanel(id = "controls", 
+                             class = "panel panel-default", 
+                             fixed = TRUE,
+                             draggable = TRUE, 
+                             top = 60, 
+                             left = 30, 
+                             right = "auto", 
+                             bottom = "auto",
+                             width = 300, 
+                             height = "auto",
+                             
+                             # tags$br(),
+                             
+                             tags$em("Allow a moment for layers to load."),
+                             
+                             tags$br(),
+                             
+                             tags$em("Select from steps 1-3. Then click 'Map criteria hotspots'."),
+                             
+                             checkboxGroupInput("criteria", 
+                                                label=h5(tags$b("1. Select criteria to map:")), 
+                                                choices = list("Extent" = 1, "Threat" = 2, 
+                                                               "Carbon" = 3, "Biodiversity" = 4, 'Cobenefit' = 5),
+                                                selected = 1,
+                                                inline = TRUE),
+                             # tags$br(),
+                             
+                             sliderInput("perc", label = h5(tags$b("2. Set threshold to find management units in top percent of selected criteria:")), 
+                                         min = 0, max = 100, 
+                                         value = 100,
+                                         step = 5),
+                             
+                             #tags$br(),
+                             
+                             h5(tags$b("3. Turn on enabling condition constraint layer?")),
+                             checkboxInput("profile2", label = NULL, value = FALSE),
+                             actionButton('mapit2', 'Map criteria hotspots'),
+                             #tags$br(),
+                             
+                             selectInput("country", label = h5(tags$b("4. Choose country or territory:")), 
+                                         choices =  terr, 
+                                         selected = 'Global')
+                             
+               ) # end absolute panel 1
+           ), # end div
+
            tags$div(id="cite",
                     tags$em('This map was created for the
                             Blue Forests Initiative, a project supported by 

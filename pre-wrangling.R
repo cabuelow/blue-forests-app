@@ -23,6 +23,9 @@ wwf <- st_read('data/wwf-bf-projects.gpkg')
 wwf$site_type <- recode(wwf$site_type,  'Ongoing' = 'Existing site', 'Existing site (research collaboration)' = 'Existing site')
 st_write(wwf, 'data/wwf-bf-projects2.gpkg', overwrite = T, append = F)
 
+profile1 <- st_read('data/enabling-profiles.gpkg') %>% st_drop_geometry() %>% filter(Enabling.profile == 1)
+st_write(profile1, 'data/enabling-profiles.csv', row.names = F)
+
 scores <- read.csv('data/scores/blue-forest-scores-L2_area-standardised.csv') %>%  # choose scores to plot
   left_join(select(data.frame(st_drop_geometry(units2)), unit_ID, mangrove:seagrass))
 write.csv(scores, 'data/scores/blue-forest-scores-L2_area-standardised2.csv', row.names = F)
