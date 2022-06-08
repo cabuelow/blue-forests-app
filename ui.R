@@ -110,7 +110,7 @@ navbarPage(
                         tags$b('are taking action'), 'to conserve Blue Forests, and find out about',
                         tags$b('business model maturity:')),
                tags$div(tags$b('1. Technical proving:'), 'proving environmental outcomes and feasibility.'),
-               tags$div(tags$b('2. Monetisation: modelling'), 'and identifying cash flows and demand for services.'),
+               tags$div(tags$b('2. Monetisation:'), 'modelling and identifying cash flows and demand for services.'),
                tags$div(tags$b('3. Investment readiness:'), 'demonstrated cash flows and ready to raise investment.'),
                tags$div(tags$b('4. Pathfinder funding:'), 'patient and concessionary capital to demonstrate sustainable revenue at scale.')),
 
