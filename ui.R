@@ -109,7 +109,7 @@ navbarPage(
 ),
                #tags$br(),
                
-               tags$div('Indicators for criteria (described above) that were not globally comprehensive or were spatially incongruent with baseline distributions were gap-filled with regional or global averages. These gap-filled estimates could be improved in the future as more data from local scales become available to be integrated into global maps.
+               tags$div('Indicators for criteria (described above) that were not globally comprehensive or spatially congruent with baseline distributions were gap-filled with regional or global averages. These gap-filled estimates could be improved in the future as more data from local scales become available to be integrated into global maps.
 ')),
            box(title = h5('Other Blue Forest tools', style = 'font-size:18px;'),
                width = 12,
