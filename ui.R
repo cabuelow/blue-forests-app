@@ -66,19 +66,6 @@ navbarPage(
                         tags$b('coastal management units'), 
                         'that represent hydrologically connected',
                         tags$b('land-seascapes'), 'based on shared river networks.')),
-          
-           box(title = h5('Data certainty and confidence', style = 'font-size:18px;'),
-               width = 12,
-               #tags$br(),
-
-               tags$div('With the exception of mangroves, the extent and ecosystem service value of blue forests are not mapped globally at a high resolution. Therefore, there is large',
-                        tags$b('uncertainty'), 
-                        'in estimates of extent and ecosystem services for seagrass, saltmarsh and kelp.
-'),
-               #tags$br(),
-               
-               tags$div('Indicators for criteria (described below) that were not globally comprehensive or were spatially incongruent with baseline distributions were gap-filled with regional or global averages, introducing additional uncertainty. 
-')),
            
            box(title = h5('Criteria and indicators to identify opportunities', style = 'font-size:18px;'),
                width = 12,
@@ -114,6 +101,16 @@ navbarPage(
                tags$div(tags$b('3. Investment readiness:'), 'demonstrated cash flows and ready to raise investment.'),
                tags$div(tags$b('4. Pathfinder funding:'), 'patient and concessionary capital to demonstrate sustainable revenue at scale.')),
 
+           box(title = h5('Data certainty and confidence', style = 'font-size:18px;'),
+               width = 12,
+               #tags$br(),
+               
+               tags$div('With the exception of mangroves, the extent and ecosystem service value of blue forests are not mapped globally at a high resolution. Therefore, more work is needed to better map the extent and ecosystem services for seagrass, saltmarsh and kelp.'
+),
+               #tags$br(),
+               
+               tags$div('Indicators for criteria (described above) that were not globally comprehensive or were spatially incongruent with baseline distributions were gap-filled with regional or global averages. These gap-filled estimates could be improved in the future as more data from local scales become available to be integrated into global maps.
+')),
            box(title = h5('Other Blue Forest tools', style = 'font-size:18px;'),
                width = 12,
                #tags$br(),
