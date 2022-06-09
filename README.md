@@ -21,6 +21,8 @@ Prototype [here](https://global-wetlands.shinyapps.io/blue-forests-app/)
 - [ ] Problems with data quality scores, tnc fish catch, coastal protection, seagrass carbon - global and provincial averages
 
 - [ ] Remove area suitable for seaweed farming, TNC fisheries layer, and Eger data for now.
+- [ ] Add link to GMW under 'other tools' section of instructions.
+
 
 #### Decisions decisions
 
