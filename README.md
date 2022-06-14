@@ -20,19 +20,29 @@ Prototype [here](https://global-wetlands.shinyapps.io/blue-forests-app/)
 
 - [ ] Problems with data quality scores, tnc fish catch, coastal protection, seagrass carbon - global and provincial averages
 
+- [ ] Include coastal protection
+
 - [ ] Remove area suitable for seaweed farming, TNC fisheries layer, and Eger data for now.
+
 - [ ] Add link to GMW under 'other tools' section of instructions.
 
+#### From 1st end-user consulation - ideas
 
-#### Decisions decisions
+- [ ] Allow jurisdictional boundaries to be turned on, e.g., country-borders
 
-- [ ] Map at fine scale or coarse-scale?
+- [ ] Allow to zoom to specific regions, e.g., SWIO, or have different pages for different regions?
 
-- [ ] Include all individual indicator layers? e.g. land vs. climate threats, spp. richness, etc.? Could show both prototypes at consultation and see if its necessary?
+- [ ] Link to NDC database - which countries have BF NDC's?
 
-#### Wish List
+- [ ] Impact metrics - subset of inofrmation we want people to submit on tracking projects
 
-- [ ] Pick your own threats indicators (e.g., land vs climate, prob of decline, etc)
+- [ ] Point people to where they can get more info about a project - i.e., contact a project manager
+
+- [ ] Be able to filter by project size (i.e., small vs large)
+
+- [ ] If possible, more indicators on livelihoods
+
+- [ ] Track changes from baseline, show increase or decreases in indicators over time
 
 #### Data/Analysis updates 
 

@@ -11,7 +11,7 @@ library(RColorBrewer)
 library(ggplot2)
 library(leaflet.extras2)
 
-# server l
+# server logic
 
 function(input, output, session) {
     
