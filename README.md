@@ -22,6 +22,8 @@ Prototype [here](https://global-wetlands.shinyapps.io/blue-forests-app/)
 
 - [ ] Add link to GMW under 'other tools' section of instructions.
 
+- [ ] Have data export options/screen shot options
+ 
 #### From 1st end-user consulation - ideas
 
 - [ ] Allow jurisdictional boundaries to be turned on, e.g., country-borders
