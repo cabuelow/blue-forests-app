@@ -6,13 +6,11 @@ Prototype [here](https://global-wetlands.shinyapps.io/blue-forests-app/)
 
 #### TODO
 
-- [ ] More specific labels for criteria and indicator plots
-
-- [ ] Fix Fiji, New Zealand zoom problem
-
 - [ ] Problems with data quality scores, tnc fish catch, coastal protection, seagrass carbon - global and provincial averages
 
-- [ ] Have data export options/screen shot options
+- [ ] More specific labels for criteria and indicator plots
+
+- [ ] Be able to filter by project size (i.e., small vs large)
  
 #### From 1st end-user consulation - ideas
 
@@ -22,15 +20,9 @@ Prototype [here](https://global-wetlands.shinyapps.io/blue-forests-app/)
 
 - [ ] Link to NDC database - which countries have BF NDC's?
 
-- [ ] Impact metrics - subset of inofrmation we want people to submit on tracking projects
+- [ ] Have data export options/screen shot options
 
 - [ ] Point people to where they can get more info about a project - i.e., contact a project manager
-
-- [ ] Be able to filter by project size (i.e., small vs large)
-
-- [ ] If possible, more indicators on livelihoods
-
-- [ ] Track changes from baseline, show increase or decreases in indicators over time
 
 #### Data/Analysis updates 
 

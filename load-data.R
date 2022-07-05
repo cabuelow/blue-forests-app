@@ -29,7 +29,7 @@ indscores.p2$indicator_name <- factor(indscores.p2$indicator_name, levels = c("E
 enable <- fread('data/scores/enable.csv')
 enable2 <- fread('data/scores/enable2.csv')
 terr <- c('Global', sort(unique(as.character(units2$TERRITORY1))))
-hot_pal <- c('#66CC33','#CC3300', '#9966CC', '#FFCC00', '#00CCCC', '#FF9933')
+hot_pal <- c('#66CC33','#CC3300', '#9966CC', '#FFCC00', '#00CCCC', '#003333')
 hotdf <- data.frame(input = c(1,2,3,4,5,6), criteria = c('extent', 'threat', 'carbon', 'biodiversity', 'pop_vulnerability', 'cobenefit'), criteraname = c('Extent', 'Threat', 'Carbon', 'Biodiversity', 'Coastal community', 'Coastal protection'))
 my_popups <- fread('data/scores/mypopups.csv') %>% pull(popup)
 my_popups2 <- fread('data/scores/mypopups2.csv') %>% pull(popup)

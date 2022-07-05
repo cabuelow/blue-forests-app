@@ -264,10 +264,19 @@ forestServer <- function(id, forest_type, criteria_choices) {
       }) # end observe
       
       observe({
-        if(input$country != 'Global'){
+        if(!input$country %in% c('Global', 'New Zealand', 'Fiji', 'Alaska')){
           bounds <- unname(st_bbox(filter(units2, TERRITORY1 == input$country)))
           leafletProxy("forest_map") %>%
             flyToBounds(bounds[1], bounds[2], bounds[3], bounds[4])
+        }else if(input$country == 'New Zealand'){
+          leafletProxy("forest_map") %>%
+            flyToBounds(177, -55, 179, -33)
+        }else if(input$country == 'Fiji'){
+          leafletProxy("forest_map") %>%
+            flyToBounds(178, -15, 179.2, -19)
+        }else if(input$country == 'Alaska'){
+          leafletProxy("forest_map") %>%
+            flyToBounds(-179, 50.5, -178, 72.8)
         }else{
           bounds <- unname(st_bbox(units2))
           leafletProxy("forest_map") %>%
@@ -275,6 +284,7 @@ forestServer <- function(id, forest_type, criteria_choices) {
         }
         #note popups block shape_click events
       }) # end observe
+      
       
       # use reactive values to store the id from observing the shape click (below)
       rvf <- reactiveVal()
@@ -328,7 +338,7 @@ forestServer <- function(id, forest_type, criteria_choices) {
             ggtitle(paste(unique(d$forest_name2), 'Indicator scores')) +
             scale_fill_manual(
               breaks = c('Extent', 'Threat',  'Carbon', 'Biodiversity','Coastal community', 'Coastal protection'),
-              values = c('darkolivegreen4', 'orangered4', 'plum4', 'goldenrod3', 'cyan4', '#FF9933')) +
+              values = c('darkolivegreen4', 'orangered4', 'plum4', 'goldenrod3', 'cyan4', '#336666')) +
             theme(legend.title = element_blank())
         }else{
           NULL
