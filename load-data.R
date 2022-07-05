@@ -20,17 +20,17 @@ indscores.p <- fread('data/scores/rescaled-ind-scoring_area-stand-L2-2.csv')
 indscores.p$indicator_name <- factor(indscores.p$indicator_name, levels = c("Extent", "Climate\nimpacts" ,
                                                                             "Land\nimpacts", "Marine\nimpacts",
                                                                             "Rate of\nLoss","Cyclone\nrisk", "Probability\nof\ndecline", 
-                                                                            "Carbon", "Bio-\ndiversity" , "Fisheries","Coastal\nprotection"))
+                                                                            "Carbon", "Bio-\ndiversity" ,  "Coastal\ncommunity", "Coastal\nprotection"))
 indscores.p2 <- fread('data/scores/rescaled-ind-scoring_area-stand-L2_enabling-constrained2.csv')
 indscores.p2$indicator_name <- factor(indscores.p2$indicator_name, levels = c("Extent", "Climate\nimpacts" ,
                                                                             "Land\nimpacts", "Marine\nimpacts",
                                                                             "Rate of\nLoss","Cyclone\nrisk", "Probability\nof\ndecline", 
-                                                                            "Carbon", "Bio-\ndiversity" , "Fisheries","Coastal\nprotection"))
+                                                                            "Carbon", "Bio-\ndiversity" , "Coastal\ncommunity", "Coastal\nprotection"))
 enable <- fread('data/scores/enable.csv')
 enable2 <- fread('data/scores/enable2.csv')
 terr <- c('Global', sort(unique(as.character(units2$TERRITORY1))))
-hot_pal <- c('#66CC33','#CC3300', '#9966CC', '#FFCC00', '#00CCCC')
-hotdf <- data.frame(input = c(1,2,3,4,5), criteria = c('extent', 'threat', 'carbon', 'biodiversity', 'cobenefit'), criteraname = c('Extent', 'Threat', 'Carbon', 'Biodiversity', 'Cobenefit'))
+hot_pal <- c('#66CC33','#CC3300', '#9966CC', '#FFCC00', '#00CCCC', '#FF9933')
+hotdf <- data.frame(input = c(1,2,3,4,5,6), criteria = c('extent', 'threat', 'carbon', 'biodiversity', 'pop_vulnerability', 'cobenefit'), criteraname = c('Extent', 'Threat', 'Carbon', 'Biodiversity', 'Coastal community', 'Coastal protection'))
 my_popups <- fread('data/scores/mypopups.csv') %>% pull(popup)
 my_popups2 <- fread('data/scores/mypopups2.csv') %>% pull(popup)
 

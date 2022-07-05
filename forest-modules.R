@@ -222,7 +222,7 @@ forestServer <- function(id, forest_type, criteria_choices) {
       newdat2 <- update_top_sites_dat()
       
       leafletProxy(ns("forest_map")) %>%
-        clearGroup(c('profile', 'baseforest', 'extent', 'threat', 'biodiversity', 'carbon', 'cobenefit', 'multi')) %>% 
+        clearGroup(c('profile', 'baseforest', 'extent', 'threat', 'biodiversity', 'carbon','pop_vulnerability', 'cobenefit','multi')) %>% 
         addSpinner() %>%
         startSpinner(options = list("lines" = 7, "length" = 20)) %>%
         addPolygons(
@@ -327,8 +327,8 @@ forestServer <- function(id, forest_type, criteria_choices) {
             theme_classic() +
             ggtitle(paste(unique(d$forest_name2), 'Indicator scores')) +
             scale_fill_manual(
-              breaks = c('Extent', 'Threat',  'Carbon', 'Biodiversity','Cobenefit'),
-              values = c('darkolivegreen4', 'orangered4', 'plum4', 'goldenrod3', 'cyan4')) +
+              breaks = c('Extent', 'Threat',  'Carbon', 'Biodiversity','Coastal community', 'Coastal protection'),
+              values = c('darkolivegreen4', 'orangered4', 'plum4', 'goldenrod3', 'cyan4', '#FF9933')) +
             theme(legend.title = element_blank())
         }else{
           NULL

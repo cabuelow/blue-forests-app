@@ -6,21 +6,11 @@ Prototype [here](https://global-wetlands.shinyapps.io/blue-forests-app/)
 
 #### TODO
 
-- [ ] Add in coastal community vulnerability as a criteria
-
 - [ ] More specific labels for criteria and indicator plots
-
-- [ ] Tidy up code!
 
 - [ ] Fix Fiji, New Zealand zoom problem
 
 - [ ] Problems with data quality scores, tnc fish catch, coastal protection, seagrass carbon - global and provincial averages
-
-- [ ] Include coastal protection
-
-- [ ] Remove area suitable for seaweed farming, TNC fisheries layer, and Eger data for now.
-
-- [ ] Add link to GMW under 'other tools' section of instructions.
 
 - [ ] Have data export options/screen shot options
  

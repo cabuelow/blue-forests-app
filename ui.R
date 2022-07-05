@@ -53,7 +53,7 @@ navbarPage(
                         tags$b("threats,"),
                         tags$b("carbon,"),
                         tags$b("biodiversity,"),
-                        tags$b("fisheries,"), 'and',
+                        tags$b("coastal communities,"), 'and',
                         tags$b("coastal protection."),
                         )
                ), # end box
@@ -79,7 +79,9 @@ navbarPage(
 '),
               tags$div(tags$b('4. Biodiversity:'), 'Richness of species affiliated with each forest type. 
 '),
-              tags$div(tags$b('5. Co-benefit:'), 'Fisheries (mangrove commercial fisheries enhancement or average kelp fisheries biomass) and coastal protection (average number of people protected by mangroves per 20km of coastline).
+              tags$div(tags$b('5. Coastal communities:'), 'Proportion of population living within 10km of the coastline. 
+'),
+              tags$div(tags$b('6. Coastal Protection:'), 'Average number of people protected by mangroves per 20km of coastline.
 ')),
           
            box(title = h5('Identify opportunities for impact', style = 'font-size:18px;'),
@@ -116,7 +118,8 @@ navbarPage(
                #tags$br(),
                
                tags$div(tags$a('Mangrove Carbon App', href="https://mangrove-carbon.wetlands.app/", target="_blank")),
-               tags$div(tags$a('Coastal Wetlands Index App', href="https://glowdex.wetlands.app/", target="_blank"))),
+               tags$div(tags$a('Coastal Wetlands Index App', href="https://glowdex.wetlands.app/", target="_blank")),
+               tags$div(tags$a('Global Mangrove Watch', href="https://www.globalmangrovewatch.org/", target="_blank"))),
            
            box(title = h5('Issues or questions?', style = 'font-size:18px;'),
                width = 12,
@@ -207,7 +210,8 @@ navbarPage(
                              checkboxGroupInput("criteria", 
                                                 label=h5(tags$b("1. Select criteria to map:")), 
                                                 choices = list("Extent" = 1, "Threat" = 2, 
-                                                               "Carbon" = 3, "Biodiversity" = 4, 'Cobenefit' = 5),
+                                                               "Carbon" = 3, "Biodiversity" = 4, 
+                                                               'Coastal community' = 5, 'Coastal protection' = 6),
                                                 selected = 1,
                                                 inline = TRUE),
                              # tags$br(),
@@ -254,7 +258,7 @@ navbarPage(
            
   ), # end tabpanel
   tabPanel('Explore Kelp',
-           forestUI("kelp", criteria_choices = criteria_mang_kelp),
+           forestUI("kelp", criteria_choices = criteria_kelp),
            tags$div(id="cite",
                     tags$em('This map was created for the
                             Blue Forests Initiative, a project supported by 
@@ -279,8 +283,8 @@ navbarPage(
 ),tags$br(),
                tags$div("CIESIN (2021). Low Elevation Coastal Zone (LECZ) Urban-Rural Population and Land Area Estimates, Version 3. Palisades, NY: NASA Socioeconomic Data and Applications Center (SEDAC). ", tags$a("https://doi.org/10.7927/d1x1-d702", href="https://doi.org/10.7927/d1x1-d702", target="_blank", .noWS='outside'), ". Accessed 12 01 2022."
 ),tags$br(),
-               tags$div("Eger, A. M., Marzinelli, E. M., Rodrigo, B., Blain, C., Blamey, L., Carnell, P. E., et al. (2021). The economic value of fisheries, blue carbon, and nutrient cycling in global marine forests. EcoEvoRxiv. ", tags$a("doi:10.32942/osf.io/n7kjs", href="https://doi.org/10.32942/osf.io/n7kjs", target="_blank", .noWS='outside'), '.'
-),tags$br(),
+              # tags$div("Eger, A. M., Marzinelli, E. M., Rodrigo, B., Blain, C., Blamey, L., Carnell, P. E., et al. (2021). The economic value of fisheries, blue carbon, and nutrient cycling in global marine forests. EcoEvoRxiv. ", tags$a("doi:10.32942/osf.io/n7kjs", href="https://doi.org/10.32942/osf.io/n7kjs", target="_blank", .noWS='outside'), '.'
+#),tags$br(),
                tags$div("FAO (2020). Fish, seafood – food supply quantity (kg/capita/yr). ", tags$a("https://www.fao.org/faostat/en/#data/FBS", href="https://www.fao.org/faostat/en/#data/FBS", target="_blank", .noWS='outside'), '.'
 ),tags$br(),
                tags$div("Fourqurean, J. W., Duarte, C. M., Kennedy, H., Marbà, N., Holmer, M., Mateo, M. A., et al. (2012). Seagrass ecosystems as a globally significant carbon stock. Nat. Geosci. 5, 505–509. ", tags$a("doi:10.1038/ngeo1477", href="https://doi.org/10.1038/ngeo1477", target="_blank", .noWS='outside'), '.'
@@ -307,10 +311,10 @@ navbarPage(
 ),tags$br(),
                tags$div('Simard, M., Fatoyinbo, L., Smetanka, C., Rivera-Monroy, V. H., Castañeda-Moya, E., Thomas, N., et al. (2019). Mangrove canopy height globally related to precipitation, temperature and cyclone frequency. Nat. Geosci. 12, 40–45. ', tags$a('doi:10.1038/s41561-018-0279-1', href='https://doi.org/10.1038/s41561-018-0279-1', target='_blank', .noWS='outside'), '.'
 ),tags$br(),
-               tags$div('Spillias, S. in prep. Mapping the Global Potential for Seaweed Farming. University of Queensland.
-'),tags$br(),
-               tags$div('The Nature Conservancy (2022). Modelled mangrove commercial finfish enhancement; Mapping ocean wealth portal. ', tags$a('https://maps.oceanwealth.org/', href='https://maps.oceanwealth.org/', target='_blank', .noWS='outside'), '.'
-),tags$br(),
+               #tags$div('Spillias, S. in prep. Mapping the Global Potential for Seaweed Farming. University of Queensland.
+#'),tags$br(),
+               #tags$div('The Nature Conservancy (2022). Modelled mangrove commercial finfish enhancement; Mapping ocean wealth portal. ', tags$a('https://maps.oceanwealth.org/', href='https://maps.oceanwealth.org/', target='_blank', .noWS='outside'), '.'
+#),tags$br(),
                tags$div('Turschwell, M. P., Connolly, R. M., Dunic, J. C., Sievers, M., Buelow, C. A., Pearson, R. M., et al. (2021). Anthropogenic pressures and life history predict trajectories of seagrass meadow extent at a global scale. Proc. Natl. Acad. Sci. 118, e2110802118. ', tags$a('doi:10.1073/pnas.2110802118', href='https://doi.org/10.1073/pnas.2110802118', target='_blank', .noWS='outside'), '.'
 ),tags$br(),
                tags$div(tags$a('UNDP (2020). Human Development Index. Hum. Dev. Rep..', href="https://hdr.undp.org/data-center/human-development-index#/indicies/HDI", target="_blank")

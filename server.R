@@ -58,7 +58,7 @@ function(input, output, session) {
                          options = pathOptions(pane = "layer7")
         ) %>%
         addLegend("bottomright",
-                  colors = c(hot_pal[c(1,2,3,4,5)], 'darkblue'), labels = c(hotdf[c(1,2,3,4,5),3], 'All selected criteria'),
+                  colors = c(hot_pal[c(1,2,3,4,5,6)], 'darkblue'), labels = c(hotdf[c(1,2,3,4,5,6),3], 'All selected criteria'),
                   title = 'Criteria',
                   opacity = 1) %>% 
         addLegend("bottomright", data = inproj,
@@ -123,7 +123,7 @@ function(input, output, session) {
       newdat2 <- update_top_sites_dat()
       
       leafletProxy("mangrove_map") %>%
-        clearGroup(c('profile', 'baseforest', 'extent', 'threat', 'biodiversity', 'carbon', 'cobenefit', 'multi')) %>% 
+        clearGroup(c('profile', 'baseforest', 'extent', 'threat', 'biodiversity', 'carbon', 'pop_vulnerability', 'cobenefit', 'multi')) %>% 
         addSpinner() %>%
         startSpinner(options = list("lines" = 7, "length" = 20)) %>%
         addPolygons(
@@ -228,8 +228,8 @@ function(input, output, session) {
               theme_classic() +
               ggtitle(paste(unique(d$forest_name2), 'Indicator scores')) +
               scale_fill_manual(
-                breaks = c('Extent', 'Threat',  'Carbon', 'Biodiversity','Cobenefit'),
-                values = c('darkolivegreen4', 'orangered4', 'plum4', 'goldenrod3', 'cyan4')) +
+                breaks = c('Extent', 'Threat',  'Carbon', 'Biodiversity','Coastal community', 'Coastal protection'),
+                values = c('darkolivegreen4', 'orangered4', 'plum4', 'goldenrod3', 'cyan4', '#FF9933')) +
               theme(legend.title = element_blank())
           }else{
             NULL
@@ -275,6 +275,6 @@ function(input, output, session) {
   #forestServer("mangroves", "mangrove", criteria_mang_kelp_s)
   forestServer("seagrass", "seagrass", criteria_others_s)
   forestServer("saltmarsh", "saltmarsh", criteria_others_s)
-  forestServer("kelp", "kelp", criteria_mang_kelp_s)
+  forestServer("kelp", "kelp", criteria_kelp_s)
   
 } #end server
