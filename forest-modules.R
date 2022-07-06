@@ -1,6 +1,6 @@
 #modules for the single forest page 
 
-forestUI <- function(id, criteria_choices) {
+forestUI <- function(id, criteria_choices, help_tab) {
   #criteria_choices: Named list of criteria for this forest
   # mangrove and kelp have different ones 
   ns <- NS(id)
@@ -9,7 +9,19 @@ forestUI <- function(id, criteria_choices) {
         includeCSS("styles.css")
       ),
       leafletOutput(ns("forest_map"), width="100%", height="100%"),
-      tags$style(".leaflet-control-layers-overlays{color: blue}"),
+      tags$style(".leaflet-control-layers-overlays{color: black}"),
+      absolutePanel(id = "controls", 
+                    class = "panel panel-default", 
+                    fixed = TRUE,
+                    draggable = F, 
+                    top = 100, 
+                    left = 'auto', 
+                    right = 200, 
+                    bottom = 'auto',
+                    width = 0.1, 
+                    height = "auto",
+                    div(id = ns('projects'))
+      ),
       absolutePanel(id = "controls", 
                     class = "panel panel-default", 
                     fixed = TRUE,
@@ -35,8 +47,10 @@ forestUI <- function(id, criteria_choices) {
                              font-family: 'Helvetica Neue', Helvetica;
                              }")),
                     
+                    div(id = ns('dashboard'),
+                    #actionButton(ns("help3"), "Dashboard", icon = icon("question")),
                     #tags$b("Blue forest area"),
-                    tags$em("Click on a coastal management unit to find out more & drag this box to fit your screen)"),
+                    #tags$em("Click on a coastal management unit to find out more & drag this box to fit your screen)"),
                     
                     tags$br(),
                     
@@ -54,11 +68,13 @@ forestUI <- function(id, criteria_choices) {
                     
                     plotOutput(ns('indplot'), height = '200px', width = '500px'),
                     
+                    div(id = ns('natcont'),
                     h5(tags$b("Show national context indicators:")),
-                    checkboxInput(ns("natcon"), label = NULL, value = FALSE),
+                    checkboxInput(ns("natcon"), label = NULL, value = FALSE)
+                    ),
                     
                     textOutput(ns('text'))
-                    
+                    )
       ), # end absolute panel 2
       absolutePanel(id = "controls", 
                     class = "panel panel-default", 
@@ -72,48 +88,79 @@ forestUI <- function(id, criteria_choices) {
                     height = "auto",
                     
                    # tags$br(),
-                    
+      
                     tags$em("Allow a moment for layers to load."),
                     
-                    tags$br(),
-                   
-                    tags$em("Select from steps 1-3. Then click 'Map management units'."),
-                    
+                    #tags$br(),
+                    actionButton(ns("help"), "Instructions", icon = icon("star")),
+                    #tags$em("Select from steps 1-3. Then click 'Map management units'."),
+              
                     checkboxGroupInput(ns("criteria"), 
                                  label=h5(tags$b("1. Select criteria to map:")), 
                                  choices = criteria_choices,
                                  selected = 1,
                                  inline = TRUE),
+                   #actionButton(ns("help"), "Criteria", icon = icon("question")),
                    # tags$br(),
                     
+                   div(id = ns('myslider'),
                     sliderInput(ns("perc"), label = h5(tags$b("2. Set threshold to find management units in top percent of selected criteria:")), 
                                 min = 0, max = 100, 
                                 value = 100,
-                                step = 5),
+                                step = 5)
+                   ),
                     
                     #tags$br(),
                     
+                   div(id = ns('myenabling'),
                     h5(tags$b("3. Turn on enabling condition constraint layer?")),
-                    checkboxInput(ns("profile2"), label = NULL, value = FALSE),
+                    checkboxInput(ns("profile2"), label = NULL, value = FALSE)
+                   ),
+                    #actionButton(ns("help2"), "What is the constraint layer", icon = icon("question")),
+                    
                     actionButton(ns('mapit2'), 'Map management units'),
                     #tags$br(),
                     
+                   div(id = ns('mycountry'),
                     selectInput(ns("country"), label = h5(tags$b("4. Choose country or territory:")), 
                                 choices =  terr, 
                                 selected = 'Global')
-                    
+                   )
+               
       ) # end absolute panel 1
   ) # end div
 } # end UI
 
 
-forestServer <- function(id, forest_type, criteria_choices) {
+forestServer <- function(id, forest_type, criteria_choices, help_tab) {
   #forest_type is the name of the columns in 
   # the scores dataframe for each forest type
   ns <- NS(id)
   moduleServer(
     id,
     function(input, output, session) {
+      
+      intro <- reactive({
+        data.frame(
+          step = c(1,2,3,4,5,6,7,8),
+          element = c(paste0("#", session$ns("criteria")), 
+                      paste0("#", session$ns("myslider")), 
+                      paste0("#", session$ns("myenabling")), 
+                      paste0("#", session$ns("mapit2")), 
+                      paste0("#", session$ns("mycountry")), 
+                      paste0("#", session$ns("dashboard")),
+                      paste0("#", session$ns("natcont")),
+                      paste0("#", session$ns("projects"))
+                      ), 
+          intro = c(paste(help_tab),"Set the threshold you want",
+                    "Turn on enabling profile","Map management units", 'Choose a country', 
+                    'Click on a coastal managment unit to...', 'Look at national context indicators',
+                    'Turn on local projects'), id)
+      })
+      
+      observeEvent(input$help,
+                   introjs(session, 
+                           options = list(steps = intro())))
       
       # create basemap 
       
@@ -176,6 +223,7 @@ forestServer <- function(id, forest_type, criteria_choices) {
       }) # end render leaflet
       
       outputOptions(output, "forest_map", suspendWhenHidden = FALSE, priority = 1)
+      
       
       # reactive if-elses to choose the right data depending on whether enabling constraint is on or off
 
@@ -266,20 +314,20 @@ forestServer <- function(id, forest_type, criteria_choices) {
       observe({
         if(!input$country %in% c('Global', 'New Zealand', 'Fiji', 'Alaska')){
           bounds <- unname(st_bbox(filter(units2, TERRITORY1 == input$country)))
-          leafletProxy("forest_map") %>%
+          leafletProxy(ns("forest_map")) %>%
             flyToBounds(bounds[1], bounds[2], bounds[3], bounds[4])
         }else if(input$country == 'New Zealand'){
-          leafletProxy("forest_map") %>%
+          leafletProxy(ns("forest_map")) %>%
             flyToBounds(177, -55, 179, -33)
         }else if(input$country == 'Fiji'){
-          leafletProxy("forest_map") %>%
+          leafletProxy(ns("forest_map")) %>%
             flyToBounds(178, -15, 179.2, -19)
         }else if(input$country == 'Alaska'){
-          leafletProxy("forest_map") %>%
+          leafletProxy(ns("forest_map")) %>%
             flyToBounds(-179, 50.5, -178, 72.8)
         }else{
           bounds <- unname(st_bbox(units2))
-          leafletProxy("forest_map") %>%
+          leafletProxy(ns("forest_map")) %>%
             flyToBounds(bounds[1], bounds[2], bounds[3], bounds[4])
         }
         #note popups block shape_click events
@@ -369,13 +417,16 @@ forestServer <- function(id, forest_type, criteria_choices) {
         if(!is.null(rvf())){
           d <- datqual %>% filter(unit_ID == rvf() & forest == forest_type)
           if(nrow(d) > 1){
-          if(length(unique(d$indicator)) == 1){
-          print(paste(unique(d$forestname), paste(unique(d$indicator), collapse = ' & '), 'was gap-filled with a', paste(unique(d$score), collapse = ' & '), 'value.'))
+            if(length(unique(d$indicator)) == 1){
+              print(paste(unique(d$forestname), paste(unique(d$indicator), collapse = ' & '), 'was gap-filled with a', paste(unique(d$score), collapse = ' & '), 'value.'))
+            }else if(length(unique(d$indicator)) >1 & length(unique(d$score)) == 1){
+              print(paste(unique(d$forestname), paste(unique(d$indicator), collapse = ' & '), 'were gap-filled with a', paste(unique(d$score), collapse = ' & '), 'value.'))
+            }else if(length(unique(d$indicator)) >1 & length(unique(d$score)) > 1){
+              print(paste(unique(d$forestname), paste(unique(d$indicator), collapse = ' & '), 'were gap-filled with a', paste(unique(d$score), collapse = ' & '), 'value, respectively.'))
+            }
           }else{
-            print(paste(unique(d$forestname), paste(unique(d$indicator), collapse = ' & '), 'were gap-filled with a', paste(unique(d$score), collapse = ' & '), 'value.'))
-          }}else{
-            print("")
-          }
+              print("")
+            }
         }else{
           NULL
         }

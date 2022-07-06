@@ -14,8 +14,20 @@ library(leaflet.extras2)
 # server logic
 
 function(input, output, session) {
-    
-  # mangroves
+  
+  helptext <- data.frame(
+    step = c(1,2,3,4,5,6,7,8),
+    element = c("#criteria", "#myslider", "#myenabling", "#mapit2", '#mycountry', '#dashboard', '#natcont', '#projects'),
+    intro = c("Select the criteria you want","Set the threshold you want",
+              "Turn on enabling profile","Map management units", 'Choose a country', 
+              'Click on a coastal managment unit to...', 'Look at national context indicators',
+              'Turn on local projects')
+  )
+
+  observeEvent(input$help,
+               introjs(session, 
+                       options = list(steps = helptext)))
+  
     # create basemap 
     
     output$mangrove_map <- renderLeaflet({
@@ -77,7 +89,7 @@ function(input, output, session) {
     }) # end render leaflet
     
     outputOptions(output, "mangrove_map", suspendWhenHidden = FALSE, priority = 2)
-    
+  
     # reactive if-elses to choose the right data depending on whether enabling constraint is on or off
     
     dat <- eventReactive(input$mapit2,{
@@ -271,8 +283,10 @@ function(input, output, session) {
         if(nrow(d) > 1){
           if(length(unique(d$indicator)) == 1){
             print(paste(unique(d$forestname), paste(unique(d$indicator), collapse = ' & '), 'was gap-filled with a', paste(unique(d$score), collapse = ' & '), 'value.'))
-          }else{
+          }else if(length(unique(d$indicator)) >1 & length(unique(d$score)) == 1){
             print(paste(unique(d$forestname), paste(unique(d$indicator), collapse = ' & '), 'were gap-filled with a', paste(unique(d$score), collapse = ' & '), 'value.'))
+          }else if(length(unique(d$indicator)) >1 & length(unique(d$score)) > 1){
+            print(paste(unique(d$forestname), paste(unique(d$indicator), collapse = ' & '), 'were gap-filled with a', paste(unique(d$score), collapse = ' & '), 'value, respectively.'))
           }}else{
             print("")
           }
@@ -282,8 +296,8 @@ function(input, output, session) {
     }) # end render
 
   #forestServer("mangroves", "mangrove", criteria_mang_kelp_s)
-  forestServer("seagrass", "seagrass", criteria_others_s)
-  forestServer("saltmarsh", "saltmarsh", criteria_others_s)
-  forestServer("kelp", "kelp", criteria_kelp_s)
+  forestServer("seagrass", "seagrass", criteria_others_s, tab_seag_s)
+  forestServer("saltmarsh", "saltmarsh", criteria_others_s, tab_salt_s)
+  forestServer("kelp", "kelp", criteria_kelp_s, tab_kelp_s)
   
 } #end server

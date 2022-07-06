@@ -11,6 +11,7 @@ library(leaflet)
 library(RColorBrewer)
 library(ggplot2)
 library(leaflet.extras2)
+library(rintrojs)
 
 # load and wrangle all required components for app
 
@@ -132,12 +133,25 @@ navbarPage(
   ), # end instructions tabpanel
                  
   tabPanel('Explore Mangroves',
+           introjsUI(),
            div(class="outer",
                tags$head(
                  includeCSS("styles.css")
                ),
                leafletOutput("mangrove_map", width="100%", height="100%"),
-               tags$style(".leaflet-control-layers-overlays{color: blue}"),
+               tags$style(".leaflet-control-layers-overlays{color: black}"),
+               absolutePanel(id = "controls", 
+                            class = "panel panel-default", 
+                            fixed = TRUE,
+                            draggable = F, 
+                            top = 100, 
+                            left = 'auto', 
+                            right = 200, 
+                            bottom = 'auto',
+                            width = 0.1, 
+                            height = "auto",
+                            div(id = 'projects')
+               ),
                absolutePanel(id = "controls", 
                              class = "panel panel-default", 
                              fixed = TRUE,
@@ -164,7 +178,9 @@ navbarPage(
                              }")),
                              
                              #tags$b("Blue forest area"),
-                             tags$em("Click on a coastal management unit to find out more & drag this box to fit your screen)"),
+                             div(id = 'dashboard',
+                             #actionButton("help3", "Dashboard", icon = icon("question")),
+                             #tags$em("Click on a coastal management unit to find out more & drag this box to fit your screen)"),
                              
                              tags$br(),
                              
@@ -182,11 +198,13 @@ navbarPage(
                              
                              plotOutput('indplot', height = '200px', width = '500px'),
                              
+                             div(id = 'natcont',
                              h5(tags$b("Show national context indicators:")),
-                             checkboxInput("natcon", label = NULL, value = FALSE),
+                             checkboxInput("natcon", label = NULL, value = FALSE)
+                             ),
                              
                              textOutput('text')
-                             
+                             )
                ), # end absolute panel 2
                absolutePanel(id = "controls", 
                              class = "panel panel-default", 
@@ -200,12 +218,12 @@ navbarPage(
                              height = "auto",
                              
                              # tags$br(),
-                             
+                     
                              tags$em("Allow a moment for layers to load."),
                              
-                             tags$br(),
-                             
-                             tags$em("Select from steps 1-3. Then click 'Map management units'."),
+                             #tags$br(),
+                             actionButton("help", "Instructions", icon = icon("star")),
+                             #tags$em("Select from steps 1-3. Then click 'Map management units'."),
                              
                              checkboxGroupInput("criteria", 
                                                 label=h5(tags$b("1. Select criteria to map:")), 
@@ -214,24 +232,31 @@ navbarPage(
                                                                'Coastal community' = 5, 'Coastal protection' = 6),
                                                 selected = 1,
                                                 inline = TRUE),
+                             
+                             #actionButton("help", "Criteria", icon = icon("question")),
                              # tags$br(),
                              
+                             div(id = 'myslider',
                              sliderInput("perc", label = h5(tags$b("2. Set threshold to find management units in top percent of selected criteria:")), 
                                          min = 0, max = 100, 
                                          value = 100,
-                                         step = 5),
-                             
+                                         step = 5)
+                             ),
                              #tags$br(),
                              
+                             div(id = 'myenabling',
                              h5(tags$b("3. Turn on enabling condition constraint layer?")),
-                             checkboxInput("profile2", label = NULL, value = FALSE),
+                             checkboxInput("profile2", label = NULL, value = FALSE)
+                             ),
+                             #actionButton("help2", "What is the constraint layer", icon = icon("question")),
                              actionButton('mapit2', 'Map management units'),
                              #tags$br(),
                              
+                             div(id = 'mycountry',
                              selectInput("country", label = h5(tags$b("4. Choose country or territory:")), 
                                          choices =  terr, 
                                          selected = 'Global')
-                             
+                             )
                ) # end absolute panel 1
            ), # end div
 
@@ -242,7 +267,8 @@ navbarPage(
            
   ), # end tabpanel
   tabPanel('Explore Seagrass',
-           forestUI("seagrass", criteria_choices = criteria_others),
+           introjsUI(),
+           forestUI("seagrass", criteria_choices = criteria_others, help_tab = tab_seag),
            tags$div(id="cite",
                     tags$em('This map was created for the
                             Blue Forests Initiative, a project supported by 
@@ -250,7 +276,8 @@ navbarPage(
            
   ), # end tabpanel
   tabPanel('Explore Saltmarsh',
-           forestUI("saltmarsh", criteria_choices = criteria_others),
+           introjsUI(),
+           forestUI("saltmarsh", criteria_choices = criteria_others, help_tab = tab_salt),
            tags$div(id="cite",
                     tags$em('This map was created for the
                             Blue Forests Initiative, a project supported by 
@@ -258,7 +285,8 @@ navbarPage(
            
   ), # end tabpanel
   tabPanel('Explore Kelp',
-           forestUI("kelp", criteria_choices = criteria_kelp),
+           introjsUI(),
+           forestUI("kelp", criteria_choices = criteria_kelp, help_tab = tab_kelp),
            tags$div(id="cite",
                     tags$em('This map was created for the
                             Blue Forests Initiative, a project supported by 
