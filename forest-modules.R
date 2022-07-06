@@ -26,7 +26,7 @@ forestUI <- function(id, criteria_choices, help_tab) {
                     class = "panel panel-default", 
                     fixed = TRUE,
                     draggable = TRUE, 
-                    top = 600, 
+                    top = 625, 
                     left = 30, 
                     right = 'auto', 
                     bottom = 'auto',
@@ -50,7 +50,7 @@ forestUI <- function(id, criteria_choices, help_tab) {
                     div(id = ns('dashboard'),
                     #actionButton(ns("help3"), "Dashboard", icon = icon("question")),
                     #tags$b("Blue forest area"),
-                    #tags$em("Click on a coastal management unit to find out more & drag this box to fit your screen)"),
+                    tags$em("Coastal management unit dashboard"),
                     
                     tags$br(),
                     
@@ -92,7 +92,7 @@ forestUI <- function(id, criteria_choices, help_tab) {
                     tags$em("Allow a moment for layers to load."),
                     
                     #tags$br(),
-                    actionButton(ns("help"), "Instructions", icon = icon("star")),
+                    actionButton(ns("help"), "Tour page", icon = icon("star")),
                     #tags$em("Select from steps 1-3. Then click 'Map management units'."),
               
                     checkboxGroupInput(ns("criteria"), 
@@ -103,30 +103,29 @@ forestUI <- function(id, criteria_choices, help_tab) {
                    #actionButton(ns("help"), "Criteria", icon = icon("question")),
                    # tags$br(),
                     
-                   div(id = ns('myslider'),
-                    sliderInput(ns("perc"), label = h5(tags$b("2. Set threshold to find management units in top percent of selected criteria:")), 
+                   div(id = ns('myslider'), h5(tags$b("2. Set threshold to find management units in top percent of selected criteria:"))),
+                   
+                    sliderInput(ns("perc"), label = h5(tags$b("")), 
                                 min = 0, max = 100, 
                                 value = 100,
-                                step = 5)
-                   ),
-                    
+                                step = 5),
                     #tags$br(),
                     
                    div(id = ns('myenabling'),
-                    h5(tags$b("3. Turn on enabling condition constraint layer?")),
+                    h5(tags$b("3. Turn on enabling condition constraint layer?"))),
+                   
+                   div(id = ns('mymapit2'),
                     checkboxInput(ns("profile2"), label = NULL, value = FALSE)
-                   ),
-                    #actionButton(ns("help2"), "What is the constraint layer", icon = icon("question")),
-                    
+                    ),
+                   
                     actionButton(ns('mapit2'), 'Map management units'),
                     #tags$br(),
                     
-                   div(id = ns('mycountry'),
-                    selectInput(ns("country"), label = h5(tags$b("4. Choose country or territory:")), 
+                   div(id = ns('mycountry'), h5(tags$b("4. Choose country or territory:"))),
+                   
+                    selectInput(ns("country"), label = h5(tags$b("")), 
                                 choices =  terr, 
                                 selected = 'Global')
-                   )
-               
       ) # end absolute panel 1
   ) # end div
 } # end UI
@@ -142,25 +141,27 @@ forestServer <- function(id, forest_type, criteria_choices, help_tab) {
       
       intro <- reactive({
         data.frame(
-          step = c(1,2,3,4,5,6,7,8),
+          step = c(1,2,3,4,5,6,7),
           element = c(paste0("#", session$ns("criteria")), 
                       paste0("#", session$ns("myslider")), 
                       paste0("#", session$ns("myenabling")), 
-                      paste0("#", session$ns("mapit2")), 
+                      paste0("#", session$ns("mymapit2")), 
                       paste0("#", session$ns("mycountry")), 
                       paste0("#", session$ns("dashboard")),
-                      paste0("#", session$ns("natcont")),
+                      #paste0("#", session$ns("natcont")),
                       paste0("#", session$ns("projects"))
                       ), 
           intro = c(paste(help_tab),"Set the threshold you want",
                     "Turn on enabling profile","Map management units", 'Choose a country', 
-                    'Click on a coastal managment unit to...', 'Look at national context indicators',
+                    'Click on a coastal managment unit to...',
                     'Turn on local projects'), id)
       })
       
       observeEvent(input$help,
                    introjs(session, 
-                           options = list(steps = intro())))
+                           options = list(steps = intro(),
+                                          "nextLabel"="Next",
+                                          "prevLabel"="Back")))
       
       # create basemap 
       

@@ -35,16 +35,13 @@ navbarPage(
                status="primary",
                solidHeader=TRUE,
                width = 12,
-               
-               #tags$br(),
-
+      
                tags$div("This tool can help identify opportunities for conserving",
                         tags$b('mangroves,'), 
                         tags$b('seagrass,'), 
                         tags$b('saltmarsh,'),'and', 
                         tags$b('kelp forests.')),
-               
-               #tags$br(),
+         
                tags$div("The app needs time to",
                         tags$b('warm-up.')),
                tags$div("Please allow 30 seconds to one minute before you",
@@ -61,7 +58,6 @@ navbarPage(
            
            box(title = h5('Coastal management units', style = 'font-size:18px;'),
                width = 12,
-               #tags$br(),
                
                tags$div('Blue forest data is provided in',
                         tags$b('coastal management units'), 
@@ -70,8 +66,7 @@ navbarPage(
            
            box(title = h5('Criteria and indicators to identify opportunities', style = 'font-size:18px;'),
                width = 12,
-              # tags$br(),
-               
+            
               tags$div(tags$b('1. Extent:'), 'Total area of mangroves, seagrass, saltmarsh and kelp (standardised by management unit size).
 '),
               tags$div(tags$b('2. Threat:'), 'Composed of several indicators including rates of loss, cyclone risk, and cumulative climate, land and marine-based impacts to each forest.
@@ -87,14 +82,12 @@ navbarPage(
           
            box(title = h5('Identify opportunities for impact', style = 'font-size:18px;'),
                width = 12,
-               #tags$br(),
                
                tags$div('Countries and their territories that have high socio-economic and political capacity to enable blue forest conservation can be excluded using an',
                         tags$b('enabling condition constraint layer.'))),
            
            box(title = h5('See where Blue Forest projects are happening', style = 'font-size:18px;'),
                width = 12,
-               #tags$br(),
                
                tags$div('See where the World Wildife Fund and other organisations',
                         tags$b('are taking action'), 'to conserve Blue Forests, and find out about',
@@ -106,17 +99,14 @@ navbarPage(
 
            box(title = h5('Data certainty and confidence', style = 'font-size:18px;'),
                width = 12,
-               #tags$br(),
                
                tags$div('With the exception of mangroves, the extent and ecosystem service value of blue forests are not mapped globally at a high resolution. Therefore, more work is needed to better map the extent and ecosystem services for seagrass, saltmarsh and kelp.'
 ),
-               #tags$br(),
                
                tags$div('Indicators for criteria (described above) that were not globally comprehensive or spatially congruent with baseline distributions were gap-filled with regional or global averages. These gap-filled estimates could be improved in the future as more data from local scales become available to be integrated into global maps.
 ')),
            box(title = h5('Other Blue Forest tools', style = 'font-size:18px;'),
                width = 12,
-               #tags$br(),
                
                tags$div(tags$a('Mangrove Carbon App', href="https://mangrove-carbon.wetlands.app/", target="_blank")),
                tags$div(tags$a('Coastal Wetlands Index App', href="https://glowdex.wetlands.app/", target="_blank")),
@@ -124,7 +114,6 @@ navbarPage(
            
            box(title = h5('Issues or questions?', style = 'font-size:18px;'),
                width = 12,
-               #tags$br(),
                
                tags$div('Please contact Christina Buelow at',
                         tags$b('c.buelow@griffith.edu.au,'),
@@ -156,7 +145,7 @@ navbarPage(
                              class = "panel panel-default", 
                              fixed = TRUE,
                              draggable = TRUE, 
-                             top = 600, 
+                             top = 625, 
                              left = 30, 
                              right = 'auto', 
                              bottom = 'auto',
@@ -180,7 +169,7 @@ navbarPage(
                              #tags$b("Blue forest area"),
                              div(id = 'dashboard',
                              #actionButton("help3", "Dashboard", icon = icon("question")),
-                             #tags$em("Click on a coastal management unit to find out more & drag this box to fit your screen)"),
+                             tags$em("Coastal management unit dashboard"),
                              
                              tags$br(),
                              
@@ -198,8 +187,9 @@ navbarPage(
                              
                              plotOutput('indplot', height = '200px', width = '500px'),
                              
-                             div(id = 'natcont',
+                            
                              h5(tags$b("Show national context indicators:")),
+                             div(id = 'natcont',
                              checkboxInput("natcon", label = NULL, value = FALSE)
                              ),
                              
@@ -222,7 +212,7 @@ navbarPage(
                              tags$em("Allow a moment for layers to load."),
                              
                              #tags$br(),
-                             actionButton("help", "Instructions", icon = icon("star")),
+                             actionButton("help", "Tour page", icon = icon("star")),
                              #tags$em("Select from steps 1-3. Then click 'Map management units'."),
                              
                              checkboxGroupInput("criteria", 
@@ -235,28 +225,32 @@ navbarPage(
                              
                              #actionButton("help", "Criteria", icon = icon("question")),
                              # tags$br(),
+                     
+                             div(id = 'myslider', 
+                                 h5(tags$b("2. Set threshold to find management units in top percent of selected criteria:"))),
                              
-                             div(id = 'myslider',
-                             sliderInput("perc", label = h5(tags$b("2. Set threshold to find management units in top percent of selected criteria:")), 
+                             sliderInput("perc", label = h5(tags$b("")), 
                                          min = 0, max = 100, 
                                          value = 100,
-                                         step = 5)
-                             ),
-                             #tags$br(),
-                             
+                                         step = 5),
+                          
                              div(id = 'myenabling',
-                             h5(tags$b("3. Turn on enabling condition constraint layer?")),
+                             h5(tags$b("3. Turn on enabling condition constraint layer?"))
+                             ),
+                             
+                             div(id = 'mymapit2', 
                              checkboxInput("profile2", label = NULL, value = FALSE)
                              ),
+                             
                              #actionButton("help2", "What is the constraint layer", icon = icon("question")),
                              actionButton('mapit2', 'Map management units'),
                              #tags$br(),
                              
-                             div(id = 'mycountry',
-                             selectInput("country", label = h5(tags$b("4. Choose country or territory:")), 
+                             div(id = 'mycountry', h5(tags$b("4. Choose country or territory:"))),
+                                 
+                             selectInput("country", label = h5(tags$b("")), 
                                          choices =  terr, 
                                          selected = 'Global')
-                             )
                ) # end absolute panel 1
            ), # end div
 

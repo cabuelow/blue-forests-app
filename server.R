@@ -16,17 +16,19 @@ library(leaflet.extras2)
 function(input, output, session) {
   
   helptext <- data.frame(
-    step = c(1,2,3,4,5,6,7,8),
-    element = c("#criteria", "#myslider", "#myenabling", "#mapit2", '#mycountry', '#dashboard', '#natcont', '#projects'),
+    step = c(1,2,3,4,5,6,7),
+    element = c("#criteria", "#myslider", "#myenabling", "#mymapit2", '#mycountry', '#dashboard', '#projects'),
     intro = c("Select the criteria you want","Set the threshold you want",
               "Turn on enabling profile","Map management units", 'Choose a country', 
-              'Click on a coastal managment unit to...', 'Look at national context indicators',
+              'Click on a coastal managment unit to...',
               'Turn on local projects')
   )
 
   observeEvent(input$help,
                introjs(session, 
-                       options = list(steps = helptext)))
+                       options = list(steps = helptext,
+                       "nextLabel"="Next",
+                       "prevLabel"="Back")))
   
     # create basemap 
     
