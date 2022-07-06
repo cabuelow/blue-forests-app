@@ -6,11 +6,13 @@ Prototype [here](https://global-wetlands.shinyapps.io/blue-forests-app/)
 
 #### TODO
 
-- [ ] Problems with data quality scores, tnc fish catch, coastal protection, seagrass carbon - global and provincial averages
+- [ ] Need info buttons for criteria and indicators - e.g. what is kelp carbon?
 
-- [ ] More specific labels for criteria and indicator plots
+- [ ] Filter by project size (i.e., small vs large)
 
-- [ ] Be able to filter by project size (i.e., small vs large)
+- [ ] screenshot tool for printing dashboards etc, also data export?
+
+- [ ] Enabling condition page - so can see indicators underpinning
  
 #### From 1st end-user consulation - ideas
 
@@ -19,8 +21,6 @@ Prototype [here](https://global-wetlands.shinyapps.io/blue-forests-app/)
 - [ ] Allow to zoom to specific regions, e.g., SWIO, or have different pages for different regions?
 
 - [ ] Link to NDC database - which countries have BF NDC's?
-
-- [ ] Have data export options/screen shot options
 
 - [ ] Point people to where they can get more info about a project - i.e., contact a project manager
 

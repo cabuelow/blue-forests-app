@@ -205,7 +205,7 @@ navbarPage(
                              
                              tags$br(),
                              
-                             tags$em("Select from steps 1-3. Then click 'Map criteria hotspots'."),
+                             tags$em("Select from steps 1-3. Then click 'Map management units'."),
                              
                              checkboxGroupInput("criteria", 
                                                 label=h5(tags$b("1. Select criteria to map:")), 
@@ -225,7 +225,7 @@ navbarPage(
                              
                              h5(tags$b("3. Turn on enabling condition constraint layer?")),
                              checkboxInput("profile2", label = NULL, value = FALSE),
-                             actionButton('mapit2', 'Map criteria hotspots'),
+                             actionButton('mapit2', 'Map management units'),
                              #tags$br(),
                              
                              selectInput("country", label = h5(tags$b("4. Choose country or territory:")), 

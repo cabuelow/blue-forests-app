@@ -56,6 +56,11 @@ datqual$indicator <- recode(datqual$indicator,  'mangrove_agb' = 'above ground b
                             'seagrass_carbon' = 'carbon storage', 'saltmarsh_carbon_storage' = 'carbon storage',
                             'kelp_carbon' = 'carbon storage', 'kelp.fisheries.biomass' = 'fisheries biomass')
 datqual$score <- recode(datqual$score, '2' = 'marine provincial average', '3' = 'marine realm average', '4' = 'global average')
+datqual <- datqual %>% # coastal protection is a bit different
+  mutate(score = ifelse(indicator == 'coastal protection' & score == 'global average', 'global median', score)) %>% 
+  mutate(score = ifelse(indicator == 'coastal protection' & score == 'marine realm average', '100km buffer average', score)) %>% 
+  mutate(score = ifelse(indicator == 'coastal protection' & score == 'marine provincial average', '20km buffer average', score)) 
+datqual <- datqual %>% filter(forestname != 'Kelp' & indicator != 'fisheries enhancement') # remove kelp until can display Eger data, and TNC fish catch until can display that too
 write.csv(datqual, 'data/scores/dat-qual-L2-2.csv', row.names = F)
 
 indscores <- read.csv('data/scores/rescaled-ind-scoring_area-stand-L2.csv')
