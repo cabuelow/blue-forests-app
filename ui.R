@@ -145,7 +145,7 @@ navbarPage(
                              class = "panel panel-default", 
                              fixed = TRUE,
                              draggable = TRUE, 
-                             top = 625, 
+                             top = 650, 
                              left = 30, 
                              right = 'auto', 
                              bottom = 'auto',
