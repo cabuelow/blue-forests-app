@@ -7,7 +7,7 @@ Prototype [here](https://global-wetlands.shinyapps.io/blue-forests-app/)
 #### TODO
 
 - [ ] tidy code!
-- [ ] add ocean health index as another tool?
+- [ ] add ocean health index, TNC mapping ocean wealth as another tool
  
 #### From 1st end-user consulation - ideas
 
