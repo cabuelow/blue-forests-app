@@ -8,6 +8,9 @@ Prototype [here](https://global-wetlands.shinyapps.io/blue-forests-app/)
 
 - [ ] tidy code!
 - [ ] add ocean health index, TNC mapping ocean wealth as another tool
+- [ ] business model matruity points - a bit larger
+- [ ] Threshold for selection of man units, say Top 10%, is that always of global units, or does it recalculate if National Context box is ticked at bottom of page? Could edit Tour explanation to make clear.
+- [ ] mangrove dashboard is a bit crowded
  
 #### From 1st end-user consulation - ideas
 
