@@ -7,8 +7,6 @@ Prototype [here](https://global-wetlands.shinyapps.io/blue-forests-app/)
 #### TODO
 
 - [ ] tidy code!
-
-- [ ] Fill in ringjos instructions
  
 #### From 1st end-user consulation - ideas
 

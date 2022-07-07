@@ -50,7 +50,7 @@ forestUI <- function(id, criteria_choices, help_tab) {
                     div(id = ns('dashboard'),
                     #actionButton(ns("help3"), "Dashboard", icon = icon("question")),
                     #tags$b("Blue forest area"),
-                    tags$em("Coastal management unit dashboard"),
+                    tags$em("Coastal management unit dashboard (move the box around to fit your screen)"),
                     
                     tags$br(),
                     
@@ -131,7 +131,7 @@ forestUI <- function(id, criteria_choices, help_tab) {
 } # end UI
 
 
-forestServer <- function(id, forest_type, criteria_choices, help_tab) {
+forestServer <- function(id, forest_type, criteria_choices, help_1, help_2, help_3, help_4, help_5, help_6, help_7) {
   #forest_type is the name of the columns in 
   # the scores dataframe for each forest type
   ns <- NS(id)
@@ -151,10 +151,9 @@ forestServer <- function(id, forest_type, criteria_choices, help_tab) {
                       #paste0("#", session$ns("natcont")),
                       paste0("#", session$ns("projects"))
                       ), 
-          intro = c(paste(help_tab),"Set the threshold you want",
-                    "Turn on enabling profile","Map management units", 'Choose a country', 
-                    'Click on a coastal managment unit to...',
-                    'Turn on local projects'), id)
+          intro = c(paste(help_1),paste(help_2),paste(help_3),
+                    paste(help_4),paste(help_5),paste(help_6),
+                    paste(help_7)), id)
       })
       
       observeEvent(input$help,

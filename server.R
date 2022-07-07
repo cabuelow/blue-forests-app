@@ -14,15 +14,6 @@ library(leaflet.extras2)
 # server logic
 
 function(input, output, session) {
-  
-  helptext <- data.frame(
-    step = c(1,2,3,4,5,6,7),
-    element = c("#criteria", "#myslider", "#myenabling", "#mymapit2", '#mycountry', '#dashboard', '#projects'),
-    intro = c("Select the criteria you want","Set the threshold you want",
-              "Turn on enabling profile","Map management units", 'Choose a country', 
-              'Click on a coastal managment unit to...',
-              'Turn on local projects')
-  )
 
   observeEvent(input$help,
                introjs(session, 
@@ -295,8 +286,8 @@ function(input, output, session) {
     }) # end render
 
   #forestServer("mangroves", "mangrove", criteria_mang_kelp_s)
-  forestServer("seagrass", "seagrass", criteria_others_s, tab_seag_s)
-  forestServer("saltmarsh", "saltmarsh", criteria_others_s, tab_salt_s)
-  forestServer("kelp", "kelp", criteria_kelp_s, tab_kelp_s)
+  forestServer("seagrass", "seagrass", criteria_others_s, tab_seag_1_s, tab_2_s, tab_3_s, tab_4_s, tab_5_s, tab_6_s, tab_7_s)
+  forestServer("saltmarsh", "saltmarsh", criteria_others_s, tab_salt_1_s,  tab_2_s, tab_3_s, tab_4_s, tab_5_s, tab_6_s, tab_7_s)
+  forestServer("kelp", "kelp", criteria_kelp_s, tab_kelp_1_s,  tab_2_s, tab_3_s, tab_4_s, tab_5_s, tab_6_s, tab_7_s)
   
 } #end server

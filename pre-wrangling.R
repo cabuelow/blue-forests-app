@@ -266,3 +266,28 @@ my_popups2 <- st_drop_geometry(inproj) %>%
                         "<strong>", "Investment stage: ", "</strong>", Investment_readiness_stage))
 write.csv(my_popups2, 'data/scores/mypopups2.csv', row.names = F)
 
+# helptext fpr instructions
+
+helptext <- data.frame(
+  step = c(1,2,3,4,5,6,7),
+  element = c("#criteria", "#myslider", "#myenabling", "#mymapit2", '#mycountry', '#dashboard', '#projects'),
+  intro = c("Select the criteria you want.<br/></strong>1. Extent:</strong> Total area of mangroves (standardised by management unit size).
+  <br/></strong>2. Threat:</strong> Composed of several indicators including rates of loss, cyclone risk, and cumulative climate, land and marine-based impacts.
+  <br/></strong>3. Carbon:</strong> Average above-ground biomass and soil carbon storage.
+   <br/></strong>4. Biodiversity:</strong> Richness of species affiliated with mangroves.
+   <br/></strong>5. Coastal community:</strong> Proportion of population living within 10km of the coastline. 
+   <br/></strong>6. Coastal Protection:</strong> Average number of people protected by mangroves per 20km of coastline.",
+            "Set a threshold to map the top percentage of coastal management units for the criteria you selected above.",
+            "If you want, exclude countries that have high socio-economic and political capacity to enable blue forest conservation
+            by turning on the enabling condition constraint layer.",
+            "Click this button to map management units according to above parameters.", 
+            'Fly to a country of your choice, or zoom back out to a global view.', 
+            'Click on a coastal managment unit to populate this dashboard with information on: <br>
+            1. Total area (ha) of blue forests. <br>
+            2. Proportion of each blue forest currently protected. <br>
+            3. How the selected unit scores relative to all other mangagement units on individual indicators. <br>
+            4. Switch to national indicators of conservation context by hitting the check-box in the bottom-left corner. <br>
+            Note! You need to hit the `Map management units` button above for the dashboard to work.',
+            'Turn on layers that show where blue forest conservation is happening, and find information on business model maturity.'))
+
+write.csv(helptext, 'data/helptext.csv', row.names = F)

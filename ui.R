@@ -71,7 +71,7 @@ navbarPage(
 '),
               tags$div(tags$b('2. Threat:'), 'Composed of several indicators including rates of loss, cyclone risk, and cumulative climate, land and marine-based impacts to each forest.
 '),
-              tags$div(tags$b('3. Carbon:'), 'Average carbon storage (mangroves, seagrass, saltmarsh) or sequestration (kelp).
+              tags$div(tags$b('3. Carbon:'), 'Average carbon storage.
 '),
               tags$div(tags$b('4. Biodiversity:'), 'Richness of species affiliated with each forest type. 
 '),
@@ -169,7 +169,7 @@ navbarPage(
                              #tags$b("Blue forest area"),
                              div(id = 'dashboard',
                              #actionButton("help3", "Dashboard", icon = icon("question")),
-                             tags$em("Coastal management unit dashboard"),
+                             tags$em("Coastal management unit dashboard (move the box around to fit your screen)"),
                              
                              tags$br(),
                              
@@ -262,7 +262,7 @@ navbarPage(
   ), # end tabpanel
   tabPanel('Explore Seagrass',
            introjsUI(),
-           forestUI("seagrass", criteria_choices = criteria_others, help_tab = tab_seag),
+           forestUI("seagrass", criteria_choices = criteria_others),
            tags$div(id="cite",
                     tags$em('This map was created for the
                             Blue Forests Initiative, a project supported by 
@@ -271,7 +271,7 @@ navbarPage(
   ), # end tabpanel
   tabPanel('Explore Saltmarsh',
            introjsUI(),
-           forestUI("saltmarsh", criteria_choices = criteria_others, help_tab = tab_salt),
+           forestUI("saltmarsh", criteria_choices = criteria_others),
            tags$div(id="cite",
                     tags$em('This map was created for the
                             Blue Forests Initiative, a project supported by 
@@ -280,7 +280,7 @@ navbarPage(
   ), # end tabpanel
   tabPanel('Explore Kelp',
            introjsUI(),
-           forestUI("kelp", criteria_choices = criteria_kelp, help_tab = tab_kelp),
+           forestUI("kelp", criteria_choices = criteria_kelp),
            tags$div(id="cite",
                     tags$em('This map was created for the
                             Blue Forests Initiative, a project supported by 

@@ -43,3 +43,7 @@ pal <- colorFactor( # colour palette for blue forest projects
 pal2 <- colorFactor( # colour palette for blue forest projects
   palette = "Spectral",
   domain = inproj$Investment_readiness_stage)
+
+# help text
+
+helptext <- read.csv('data/helptext.csv')
