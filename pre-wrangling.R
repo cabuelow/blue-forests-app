@@ -60,7 +60,10 @@ datqual <- datqual %>% # coastal protection is a bit different
   mutate(score = ifelse(indicator == 'coastal protection' & score == 'global average', 'global median', score)) %>% 
   mutate(score = ifelse(indicator == 'coastal protection' & score == 'marine realm average', '100km buffer average', score)) %>% 
   mutate(score = ifelse(indicator == 'coastal protection' & score == 'marine provincial average', '20km buffer average', score)) 
-datqual <- datqual %>% filter(forestname != 'Kelp' & indicator != 'fisheries enhancement') # remove kelp until can display Eger data, and TNC fish catch until can display that too
+datqual <- datqual %>% 
+  mutate(vals = 1) %>% 
+  pivot_wider(names_from = score, values_from = vals, values_fn = sum) %>% 
+  filter(forestname != 'Kelp' & indicator != 'fisheries enhancement') # remove kelp until can display Eger data, and TNC fish catch until can display that too
 write.csv(datqual, 'data/scores/dat-qual-L2-2.csv', row.names = F)
 
 indscores <- read.csv('data/scores/rescaled-ind-scoring_area-stand-L2.csv')

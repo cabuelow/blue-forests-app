@@ -282,17 +282,14 @@ function(input, output, session) {
     output$text <- renderText({
       if(!is.null(rvf())){
         d <- datqual %>% filter(unit_ID == rvf() & forest == 'mangrove')
-        if(nrow(d) > 1){
-          if(length(unique(d$indicator)) == 1){
-            print(paste(unique(d$forestname), paste(unique(d$indicator), collapse = ' & '), 'was gap-filled with a', paste(unique(d$score), collapse = ' & '), 'value.'))
-          }else if(length(unique(d$indicator)) >1 & length(unique(d$score)) == 1){
-            print(paste(unique(d$forestname), paste(unique(d$indicator), collapse = ' & '), 'were gap-filled with a', paste(unique(d$score), collapse = ' & '), 'value.'))
-          }else if(length(unique(d$indicator)) >1 & length(unique(d$score)) > 1){
-            print(paste(unique(d$forestname), paste(unique(d$indicator), collapse = ' & '), 'were gap-filled with a', paste(unique(d$score), collapse = ' & '), 'value, respectively.'))
-          }}else{
-            print("")
+        if(nrow(d) >= 1){
+          tmp <- c()
+          for(i in 1:nrow(d)){
+            d2 <- d[i,] %>% pivot_longer(cols = `marine realm average`:`global median`, values_to = 'vals', names_to = 'score') %>% filter(!is.na(vals))
+            tmp[i] <- paste(unique(d2$forestname), paste(unique(d2$indicator), collapse = ' & '), 'was gap-filled with a', paste(unique(d2$score), collapse = ' & '), 'value.')
           }
-      }else{
+        print(tmp)
+            }}else{
         NULL
       }
     }) # end render

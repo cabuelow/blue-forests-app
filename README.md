@@ -6,9 +6,9 @@ Prototype [here](https://global-wetlands.shinyapps.io/blue-forests-app/)
 
 #### TODO
 
-- [ ] fix data qual description - split into two sentences, one for each indicator
+- [ ] tidy code!
+
 - [ ] Fill in ringjos instructions
-- [ ] make rintjos inst. right location
  
 #### From 1st end-user consulation - ideas
 
