@@ -58,7 +58,7 @@ function(input, output, session) {
                          color = ~pal2(Investment_readiness_stage),
                          weight = 1,
                          fillOpacity = 0.6,
-                         radius = 3,
+                         radius = 4,
                          popup= my_popups2,
                          options = pathOptions(pane = "layer7")
         ) %>%

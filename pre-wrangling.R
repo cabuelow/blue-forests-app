@@ -273,9 +273,9 @@ helptext <- data.frame(
   element = c("#criteria", "#myslider", "#myenabling", "#mymapit2", '#mycountry', '#dashboard', '#projects'),
   intro = c("Select the criteria you want.<br/></strong>1. Extent:</strong> Total area of mangroves (standardised by management unit size).
   <br/></strong>2. Threat:</strong> Composed of several indicators including rates of loss, cyclone risk, and cumulative climate, land and marine-based impacts.
-  <br/></strong>3. Carbon:</strong> Average above-ground biomass and soil carbon storage.
+  <br/></strong>3. Carbon:</strong> Average above-ground biomass and soil carbon storage per unit area.
    <br/></strong>4. Biodiversity:</strong> Richness of species affiliated with mangroves.
-   <br/></strong>5. Coastal community:</strong> Proportion of population living within 10km of the coastline. 
+   <br/></strong>5. Coastal Community:</strong> Proportion of population living within 10km of the coastline. 
    <br/></strong>6. Coastal Protection:</strong> Average number of people protected by mangroves per 20km of coastline.",
             "Set a threshold to map the top percentage of coastal management units for the criteria you selected above.",
             "If you want, exclude countries that have high socio-economic and political capacity to enable blue forest conservation

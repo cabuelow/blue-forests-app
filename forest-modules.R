@@ -199,7 +199,7 @@ forestServer <- function(id, forest_type, criteria_choices, help_1, help_2, help
                            color = ~pal2(Investment_readiness_stage),
                            weight = 1,
                            fillOpacity = 0.6,
-                           radius = 3,
+                           radius = 4,
                            popup= my_popups2,
                            options = pathOptions(pane = "layer7")
           ) %>%
