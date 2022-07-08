@@ -6,6 +6,7 @@ Prototype [here](https://global-wetlands.shinyapps.io/blue-forests-app/)
 
 #### TODO
 
+- [ ] Coastal Belize Business model maturity site is in the wrong place (near myanmar)
 - [ ] tidy code!
 - [ ] Threshold for selection of man units, say Top 10%, is that always of global units, or does it recalculate if National Context box is ticked at bottom of page? Could edit Tour explanation to make clear.
 - [ ] set up adoption use: https://appsilon.com/monitoring-r-shiny-user-adoption/
