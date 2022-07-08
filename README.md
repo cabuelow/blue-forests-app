@@ -7,12 +7,13 @@ Prototype [here](https://global-wetlands.shinyapps.io/blue-forests-app/)
 #### TODO
 
 - [ ] tidy code!
-- [ ] add ocean health index, TNC mapping ocean wealth as another tool
 - [ ] business model matruity points - a bit larger
 - [ ] Threshold for selection of man units, say Top 10%, is that always of global units, or does it recalculate if National Context box is ticked at bottom of page? Could edit Tour explanation to make clear.
-- [ ] "4. Zoom in to a country or territory" instead of choose (Since I think zooming is really what this #4 option does?
 - [ ] mangrove dashboard is a bit crowded
 - [ ] set up adoption use: https://appsilon.com/monitoring-r-shiny-user-adoption/
+
+Front page:
+- [ ] Make a technical 'Before you launch the app' box that has 'app needs time to warm up', data issues, etc.
  
 #### From 1st end-user consulation - ideas
 

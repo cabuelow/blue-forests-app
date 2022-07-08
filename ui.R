@@ -36,7 +36,7 @@ navbarPage(
                solidHeader=TRUE,
                width = 12,
       
-               tags$div("This tool can help identify opportunities for conserving",
+               tags$div("The purpose of this tool is to help identify opportunities for conserving blue forests, i.e.,",
                         tags$b('mangroves,'), 
                         tags$b('seagrass,'), 
                         tags$b('saltmarsh,'),'and', 
@@ -71,7 +71,7 @@ navbarPage(
 '),
               tags$div(tags$b('2. Threat:'), 'Composed of several indicators including rates of loss, cyclone risk, and cumulative climate, land and marine-based impacts to each forest.
 '),
-              tags$div(tags$b('3. Carbon:'), 'Average carbon storage.
+              tags$div(tags$b('3. Carbon:'), 'Average carbon storage per unit area.
 '),
               tags$div(tags$b('4. Biodiversity:'), 'Richness of species affiliated with each forest type. 
 '),
@@ -83,7 +83,7 @@ navbarPage(
            box(title = h5('Identify opportunities for impact', style = 'font-size:18px;'),
                width = 12,
                
-               tags$div('Countries and their territories that have high socio-economic and political capacity to enable blue forest conservation can be excluded using an',
+               tags$div('For users wishing to focus on impact, countries and their territories that already have high socio-economic and political capacity to enable blue forest conservation can be excluded using an',
                         tags$b('enabling condition constraint layer.'))),
            
            box(title = h5('See where Blue Forest projects are happening', style = 'font-size:18px;'),
@@ -99,8 +99,9 @@ navbarPage(
 
            box(title = h5('Data certainty and confidence', style = 'font-size:18px;'),
                width = 12,
-               
-               tags$div('With the exception of mangroves, the extent and ecosystem service value of blue forests are not mapped globally at a high resolution. Therefore, more work is needed to better map the extent and ecosystem services for seagrass, saltmarsh and kelp.'
+               tags$div('We have used the best available data in all cases.'
+               ),
+               tags$div('With the exception of mangroves however, the extent and ecosystem service value of blue forests are not mapped globally at a high resolution. Therefore, more work is needed to better map the extent and ecosystem services for seagrass, saltmarsh and kelp.'
 ),
                
                tags$div('Indicators for criteria (described above) that were not globally comprehensive or spatially congruent with baseline distributions were gap-filled with regional or global averages. These gap-filled estimates could be improved in the future as more data from local scales become available to be integrated into global maps.
@@ -110,7 +111,8 @@ navbarPage(
                
                tags$div(tags$a('Mangrove Carbon App', href="https://mangrove-carbon.wetlands.app/", target="_blank")),
                tags$div(tags$a('Coastal Wetlands Index App', href="https://glowdex.wetlands.app/", target="_blank")),
-               tags$div(tags$a('Global Mangrove Watch', href="https://www.globalmangrovewatch.org/", target="_blank"))),
+               tags$div(tags$a('Global Mangrove Watch', href="https://www.globalmangrovewatch.org/", target="_blank")),
+               tags$div(tags$a('Mapping Ocean Wealth Explorer', href="https://maps.oceanwealth.org/", target="_blank"))),
            
            box(title = h5('Issues or questions?', style = 'font-size:18px;'),
                width = 12,
@@ -149,7 +151,7 @@ navbarPage(
                              left = 30, 
                              right = 'auto', 
                              bottom = 'auto',
-                             width = 575, 
+                             width = 600, 
                              height = "auto",
                              
                              tags$style(HTML(".table>thead>tr>th {
@@ -209,7 +211,7 @@ navbarPage(
                              
                              # tags$br(),
                      
-                             tags$em("Allow a moment for layers to load."),
+                             tags$em("Allow a moment for layers to load"),
                              
                              #tags$br(),
                              actionButton("help", "Tour page", icon = icon("star")),
@@ -246,7 +248,7 @@ navbarPage(
                              actionButton('mapit2', 'Map management units'),
                              #tags$br(),
                              
-                             div(id = 'mycountry', h5(tags$b("4. Choose country or territory:"))),
+                             div(id = 'mycountry', h5(tags$b("4. Zoom to a country or territory:"))),
                                  
                              selectInput("country", label = h5(tags$b("")), 
                                          choices =  terr, 

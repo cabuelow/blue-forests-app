@@ -89,7 +89,7 @@ forestUI <- function(id, criteria_choices, help_tab) {
                     
                    # tags$br(),
       
-                    tags$em("Allow a moment for layers to load."),
+                    tags$em("Allow a moment for layers to load"),
                     
                     #tags$br(),
                     actionButton(ns("help"), "Tour page", icon = icon("star")),
@@ -121,7 +121,7 @@ forestUI <- function(id, criteria_choices, help_tab) {
                     actionButton(ns('mapit2'), 'Map management units'),
                     #tags$br(),
                     
-                   div(id = ns('mycountry'), h5(tags$b("4. Choose country or territory:"))),
+                   div(id = ns('mycountry'), h5(tags$b("4. Zoom to a country or territory:"))),
                    
                     selectInput(ns("country"), label = h5(tags$b("")), 
                                 choices =  terr, 
