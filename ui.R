@@ -151,7 +151,7 @@ navbarPage(
                              left = 30, 
                              right = 'auto', 
                              bottom = 'auto',
-                             width = 600, 
+                             width = 575, 
                              height = "auto",
                              
                              tags$style(HTML(".table>thead>tr>th {
@@ -187,7 +187,7 @@ navbarPage(
                              
                              #tags$b("Percent of blue forests protected"),
                              
-                             plotOutput('indplot', height = '200px', width = '500px'),
+                             plotOutput('indplot', height = '200px', width = '550px'),
                              
                             
                              h5(tags$b("Show national context indicators:")),
