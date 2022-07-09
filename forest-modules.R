@@ -50,7 +50,7 @@ forestUI <- function(id, criteria_choices, help_tab) {
                     div(id = ns('dashboard'),
                     #actionButton(ns("help3"), "Dashboard", icon = icon("question")),
                     #tags$b("Blue forest area"),
-                    tags$em("Coastal management unit dashboard (click on a unit & move the box around to fit your screen)"),
+                    tags$em("Coastal management unit dashboard (click on a unit & move this box to fit your screen)"),
                     
                     tags$br(),
                     

@@ -26,8 +26,7 @@ source("parametersServer.R")
 navbarPage(
   title = div("Blue Forests",
               img(src = "g-logo.png", height = "35px", style = "position: relative; top: -3px; left: 10px;")), id = 'nav',
-  tags$style(HTML("
-                    .box.box-solid.box-info>.box-header {
+  tags$style(HTML(".box.box-solid.box-info>.box-header {
                     color:#fff;
                     background:#E0F2F1
                     }
@@ -38,6 +37,19 @@ navbarPage(
                     border-right-color:#E0F2F1;
                     border-top-color:#E0F2F1;
                     background:#E0F2F1
+                    }
+                    ",
+                  ".box.box-solid.box-danger>.box-header {
+                    color:#fff;
+                    background:#FFF8E1
+                    }
+
+                    .box.box-solid.box-danger{
+                    border-bottom-color:#FFF8E1;
+                    border-left-color:#FFF8E1;
+                    border-right-color:#FFF8E1;
+                    border-top-color:#FFF8E1;
+                    background:#FFF8E1
                     }
                     ")),
   
@@ -86,8 +98,12 @@ navbarPage(
           tags$h6('Before you launch the explorer pages above', style = 'font-size:16px;'),
            
            tags$div("The app needs time to",
-                    tags$b('warm-up.'), 'Please allow 30 seconds to 1 minute.'),
+                    tags$b('warm-up.'), 'Please allow 30 seconds to 1 minute.')),
            
+          box(title = "",
+              status = 'danger',
+              solidHeader=TRUE,
+              width = 4,
            tags$h6('Data certainty and confidence', style = 'font-size:15px;'),
                tags$div('We have used the best available global data in all cases.'
                ),
@@ -181,7 +197,7 @@ navbarPage(
                              #tags$b("Blue forest area"),
                              div(id = 'dashboard',
                              #actionButton("help3", "Dashboard", icon = icon("question")),
-                             tags$em("Coastal management unit dashboard (click on a unit & move the box around to fit your screen)"),
+                             tags$em("Coastal management unit dashboard (click on a unit & move this box to fit your screen)"),
                              
                              tags$br(),
                              
@@ -268,7 +284,7 @@ navbarPage(
 
            tags$div(id="cite",
                     tags$em('This map was created for the
-                            Blue Forests Initiative, a project supported by 
+                            Blue Forests Initiative, a project supported by the 
                             WWF and the Global Wetlands Project'))
            
   ), # end tabpanel
@@ -278,7 +294,7 @@ navbarPage(
            tags$div(id="cite",
                     tags$em('This map was created for the
                             Blue Forests Initiative, a project supported by 
-                            WWF and the Global Wetlands Project'))
+                            the WWF and the Global Wetlands Project'))
            
   ), # end tabpanel
   tabPanel('Explore Saltmarsh',
@@ -287,7 +303,7 @@ navbarPage(
            tags$div(id="cite",
                     tags$em('This map was created for the
                             Blue Forests Initiative, a project supported by 
-                            WWF and the Global Wetlands Project'))
+                            the WWF and the Global Wetlands Project'))
            
   ), # end tabpanel
   tabPanel('Explore Kelp',
@@ -296,7 +312,7 @@ navbarPage(
            tags$div(id="cite",
                     tags$em('This map was created for the
                             Blue Forests Initiative, a project supported by 
-                            WWF and the Global Wetlands Project'))
+                            the WWF and the Global Wetlands Project'))
            
   ), # end tabpanel
   tabPanel('Data sources',
