@@ -50,7 +50,7 @@ forestUI <- function(id, criteria_choices, help_tab) {
                     div(id = ns('dashboard'),
                     #actionButton(ns("help3"), "Dashboard", icon = icon("question")),
                     #tags$b("Blue forest area"),
-                    tags$em("Coastal management unit dashboard (move the box around to fit your screen)"),
+                    tags$em("Coastal management unit dashboard (click on a unit & move the box around to fit your screen)"),
                     
                     tags$br(),
                     
@@ -92,7 +92,7 @@ forestUI <- function(id, criteria_choices, help_tab) {
                     tags$em("Allow a moment for layers to load"),
                     
                     #tags$br(),
-                    actionButton(ns("help"), "Tour page", icon = icon("star")),
+                    actionButton(ns("help"), "Click here to tour the page", icon = icon("lightbulb", lib = "font-awesome")),
                     #tags$em("Select from steps 1-3. Then click 'Map management units'."),
               
                     checkboxGroupInput(ns("criteria"), 
