@@ -19,7 +19,7 @@ units2 <- units2 %>% mutate(mang_prot = ifelse(mang_prot > 100, 100, mang_prot),
                             salt_prot = ifelse(salt_prot > 100, 100, salt_prot),
                             kelp_prot = ifelse(kelp_prot > 100, 100, kelp_prot))
 st_write(units2, 'data/units-attributes_wgs84-L2-simp2.gpkg', overwrite = T, append = F)
-wwf <- st_read('data/wwf-bf-projects.gpkg')
+wwf <- read.csv('data/wwf-bf-projects.csv') %>% filter(!is.na(long)) %>% st_as_sf(coords = c('long', 'lat'), crs = 4326)
 wwf$site_type <- recode(wwf$site_type,  'Ongoing' = 'Existing site', 'Existing site (research collaboration)' = 'Existing site')
 st_write(wwf, 'data/wwf-bf-projects2.gpkg', overwrite = T, append = F)
 
@@ -250,6 +250,7 @@ my_popups <- st_drop_geometry(wwf) %>%
                         "<strong>", "Blue Forest focus: ", "</strong>", blueforest))
 write.csv(my_popups, 'data/scores/mypopups.csv', row.names = F)
 
+inproj <- st_read('data/invest-proj.gpkg')
 my_popups2 <- st_drop_geometry(inproj) %>% 
   #pivot_longer(cols = mangrove:seaweed, names_to = 'blueforest', values_to = 'val') %>% 
   #filter(val == 1) %>% 

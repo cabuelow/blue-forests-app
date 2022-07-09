@@ -5,6 +5,7 @@
 library(shiny)
 library(shinyjs)
 library(shinydashboard)
+library(shinydashboardPlus)
 library(dplyr)
 library(sf)
 library(leaflet)
@@ -25,60 +26,78 @@ source("parametersServer.R")
 navbarPage(
   title = div("Blue Forests",
               img(src = "g-logo.png", height = "35px", style = "position: relative; top: -3px; left: 10px;")), id = 'nav',
+  tags$style(HTML("
+                    .box.box-solid.box-info>.box-header {
+                    color:#fff;
+                    background:#E0F2F1
+                    }
+
+                    .box.box-solid.box-info{
+                    border-bottom-color:#E0F2F1;
+                    border-left-color:#E0F2F1;
+                    border-right-color:#E0F2F1;
+                    border-top-color:#E0F2F1;
+                    background:#E0F2F1
+                    }
+                    ")),
   
   tabPanel('Instructions',
            tags$head(
              includeCSS("styles.css")
            ),
-           
+  
            box(title="Welcome to the Blue Forest Data Explorer",
                status="primary",
                solidHeader=TRUE,
-               width = 12,
+               width = 8,
       
                tags$div("The purpose of this tool is to help identify opportunities for conserving blue forests, i.e.,",
                         tags$b('mangroves,'), 
                         tags$b('seagrass,'), 
                         tags$b('saltmarsh,'),'and', 
                         tags$b('kelp forests.')),
-         
-               tags$div("The app needs time to",
-                        tags$b('warm-up.')),
-               tags$div("Please allow 30 seconds to one minute before you",
-                        tags$b('click'), "on the",
-               tags$b('explorer'), "pages above to tour the best available global data on blue forest",
-                        tags$b("extent,"),
-                        tags$b("threats,"),
-                        tags$b("carbon,"),
-                        tags$b("biodiversity,"),
-                        tags$b("coastal communities,"), 'and',
-                        tags$b("coastal protection."),
-                        )
-               ), # end box
-           
-           box(title = h5('Coastal management units', style = 'font-size:18px;'),
-               width = 12,
                
+               tags$h5('Coastal management units', style = 'font-size:18px;'),
+              
                tags$div('Blue forest data is provided in',
                         tags$b('coastal management units'), 
                         'that represent hydrologically connected',
-                        tags$b('land-seascapes'), 'based on shared river networks.')),
+                        tags$b('land-seascapes'), 'based on shared river networks.'),
            
-           box(title = h5('Criteria and indicators to identify opportunities', style = 'font-size:18px;'),
-               width = 12,
-            
-              tags$div(tags$b('1. Extent:'), 'Total area of mangroves, seagrass, saltmarsh and kelp (standardised by management unit size).
+              tags$h5('Criteria and indicators to identify opportunities', style = 'font-size:18px;'),
+               
+               tags$div(tags$b('1. Extent:'), 'Total area of mangroves, seagrass, saltmarsh and kelp (standardised by management unit size).
 '),
-              tags$div(tags$b('2. Threat:'), 'Composed of several indicators including rates of loss, cyclone risk, and cumulative climate, land and marine-based impacts to each forest.
+               tags$div(tags$b('2. Threat:'), 'Composed of several indicators including rates of loss, cyclone risk, and cumulative climate, land and marine-based impacts to each forest.
 '),
-              tags$div(tags$b('3. Carbon:'), 'Average carbon storage per unit area.
+               tags$div(tags$b('3. Carbon:'), 'Average carbon storage per unit area.
 '),
-              tags$div(tags$b('4. Biodiversity:'), 'Richness of species affiliated with each forest type. 
+               tags$div(tags$b('4. Biodiversity:'), 'Richness of species affiliated with each forest type. 
 '),
-              tags$div(tags$b('5. Coastal Communities:'), 'Proportion of population living within 10km of the coastline. 
+               tags$div(tags$b('5. Coastal Communities:'), 'Proportion of population living within 10km of the coastline. 
 '),
-              tags$div(tags$b('6. Coastal Protection:'), 'Average number of people protected by mangroves per 20km of coastline.
+               tags$div(tags$b('6. Coastal Protection:'), 'Average number of people protected by mangroves per 20km of coastline.
 ')),
+           box(title = "",
+               status = 'info',
+               solidHeader=TRUE,
+               width = 4,
+            
+          tags$h6('Before you launch the explorer pages above', style = 'font-size:16px;'),
+           
+           tags$div("The app needs time to",
+                    tags$b('warm-up.'), 'Please allow 30 seconds to 1 minute.'),
+           
+           tags$h6('Data certainty and confidence', style = 'font-size:15px;'),
+               tags$div('We have used the best available data in all cases.'
+               ),
+          tags$br(),
+               tags$div('With the exception of mangroves, however, the extent and ecosystem service value of blue forests are not mapped globally at a high resolution.'
+               ),
+          tags$br(),
+               tags$div('Also, indicators for criteria that were not globally comprehensive or spatially congruent with baseline blue forest distributions were gap-filled with regional or global averages. Gap-filling information is available to you in dashboards.'),
+          tags$br(),     
+          tags$div('The app will be updated as new data becomes available.')),
           
            box(title = h5('Identify opportunities for impact', style = 'font-size:18px;'),
                width = 12,
@@ -96,16 +115,7 @@ navbarPage(
                tags$div(tags$b('2. Monetisation:'), 'modelling and identifying cash flows and demand for services.'),
                tags$div(tags$b('3. Investment readiness:'), 'demonstrated cash flows and ready to raise investment.'),
                tags$div(tags$b('4. Pathfinder funding:'), 'patient and concessionary capital to demonstrate sustainable revenue at scale.')),
-
-           box(title = h5('Data certainty and confidence', style = 'font-size:18px;'),
-               width = 12,
-               tags$div('We have used the best available data in all cases.'
-               ),
-               tags$div('With the exception of mangroves however, the extent and ecosystem service value of blue forests are not mapped globally at a high resolution. Therefore, more work is needed to better map the extent and ecosystem services for seagrass, saltmarsh and kelp.'
-),
-               
-               tags$div('Indicators for criteria (described above) that were not globally comprehensive or spatially congruent with baseline distributions were gap-filled with regional or global averages. These gap-filled estimates could be improved in the future as more data from local scales become available to be integrated into global maps.
-')),
+           
            box(title = h5('Other Blue Forest tools', style = 'font-size:18px;'),
                width = 12,
                
