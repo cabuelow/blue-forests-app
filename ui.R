@@ -89,7 +89,7 @@ navbarPage(
                     tags$b('warm-up.'), 'Please allow 30 seconds to 1 minute.'),
            
            tags$h6('Data certainty and confidence', style = 'font-size:15px;'),
-               tags$div('We have used the best available data in all cases.'
+               tags$div('We have used the best available global data in all cases.'
                ),
           tags$br(),
                tags$div('With the exception of mangroves, however, the extent and ecosystem service value of blue forests are not mapped globally at a high resolution.'
