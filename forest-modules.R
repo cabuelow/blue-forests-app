@@ -222,7 +222,8 @@ forestServer <- function(id, forest_type, criteria_choices, help_1, help_2, help
           hideGroup("Business model maturity")
       }) # end render leaflet
       
-      outputOptions(output, "forest_map", suspendWhenHidden = FALSE, priority = 1)
+      outputOptions(output, "forest_map", suspendWhenHidden = FALSE)
+      #outputOptions(output, "forest_map", suspendWhenHidden = FALSE, priority = 1)
       
       
       # reactive if-elses to choose the right data depending on whether enabling constraint is on or off

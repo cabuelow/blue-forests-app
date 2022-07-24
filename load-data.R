@@ -2,7 +2,6 @@ library(sf)
 library(dplyr)
 library(tidyr)
 library(data.table)
-dfd
 
 # load data 
 
