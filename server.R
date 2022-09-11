@@ -14,7 +14,7 @@ library(leaflet.extras2)
 # server logic
 
 function(input, output, session) {
-
+  
   observeEvent(input$help,
                introjs(session, 
                        options = list(steps = helptext,
@@ -81,8 +81,8 @@ function(input, output, session) {
         hideGroup("Business model maturity")
     }) # end render leaflet
     
-    outputOptions(output, "mangrove_map", suspendWhenHidden = FALSE)
-    #outputOptions(output, "mangrove_map", suspendWhenHidden = FALSE, priority = 2)
+    #outputOptions(output, "mangrove_map", suspendWhenHidden = FALSE)
+    outputOptions(output, "mangrove_map", suspendWhenHidden = FALSE, priority = 2)
   
     # reactive if-elses to choose the right data depending on whether enabling constraint is on or off
     
