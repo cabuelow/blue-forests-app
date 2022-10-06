@@ -14,8 +14,6 @@ library(ggplot2)
 library(leaflet.extras2)
 library(rintrojs)
 
-#make change
-
 # load and wrangle all required components for app
 
 source("load-data.R")
@@ -121,7 +119,7 @@ navbarPage(
                width = 12,
                
                tags$div('For users wishing to focus on impact, countries and their territories that already have high socio-economic and political capacity to enable blue forest conservation can be excluded using an',
-                        tags$b('enabling condition constraint layer.'))),
+                        tags$b('enabling condition constraint layer;'), 'find out more', tags$a('here.', href='https://github.com/cabuelow/enabling-profiles-app/blob/main/README.md', target = '_blank'))),
            
            box(title = h5('See where Blue Forest projects are happening', style = 'font-size:18px;'),
                width = 12,
