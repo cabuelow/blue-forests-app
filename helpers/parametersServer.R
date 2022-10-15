@@ -1,4 +1,4 @@
-#parameters for server
+# parameters for server
 
 criteria_mang_s <- c(1,2,3,4,5,6)
 

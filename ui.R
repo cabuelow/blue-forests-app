@@ -1,5 +1,3 @@
-# code adapted from: https://github.com/molly-williams/deltaSLR_map
-
 # user interface
 
 library(shiny)
@@ -16,11 +14,11 @@ library(rintrojs)
 
 # load and wrangle all required components for app
 
-source("load-data.R")
-source("forest-modules.R")
-source("parametersUI.R")
-source("parametersServer.R")
-  
+source("helpers/load-data.R")
+source("helpers/parametersUI.R")
+source("helpers/parametersServer.R")
+source("helpers/forest-modules.R")
+
 # navigation panel
 
 navbarPage(
@@ -30,7 +28,6 @@ navbarPage(
                     color:#fff;
                     background:#E0F2F1
                     }
-
                     .box.box-solid.box-info{
                     border-bottom-color:#E0F2F1;
                     border-left-color:#E0F2F1;
@@ -43,7 +40,6 @@ navbarPage(
                     color:#fff;
                     background:#FFF8E1
                     }
-
                     .box.box-solid.box-danger{
                     border-bottom-color:#FFF8E1;
                     border-left-color:#FFF8E1;
@@ -96,7 +92,6 @@ navbarPage(
                width = 4,
             
           tags$h6('Before you launch the explorer pages above', style = 'font-size:16px;'),
-           
            tags$div("The app needs time to",
                     tags$b('warm-up.'), 'Please allow 30 seconds to 1 minute.')),
            
@@ -130,7 +125,8 @@ navbarPage(
                tags$div(tags$b('1. Technical proving:'), 'proving environmental outcomes and feasibility.'),
                tags$div(tags$b('2. Monetisation:'), 'modelling and identifying cash flows and demand for services.'),
                tags$div(tags$b('3. Investment readiness:'), 'demonstrated cash flows and ready to raise investment.'),
-               tags$div(tags$b('4. Pathfinder funding:'), 'patient and concessionary capital to demonstrate sustainable revenue at scale.')),
+               tags$div(tags$b('4. Pathfinder funding:'), 'patient and concessionary capital to demonstrate sustainable revenue at scale.'),
+               tags$div('To find out more about these projects, please contact Monique van Es, manager of Programme Development for Oceans Practice (WWF) at', tags$b('mvanes@wwfint.org.'))),
            
            box(title = h5('Other Blue Forest tools', style = 'font-size:18px;'),
                width = 12,
@@ -193,34 +189,22 @@ navbarPage(
                              font-weight: 200;
                              font-family: 'Helvetica Neue', Helvetica;
                              }")),
-                             
-                             #tags$b("Blue forest area"),
+
                              div(id = 'dashboard',
-                             #actionButton("help3", "Dashboard", icon = icon("question")),
                              tags$em("Coastal management unit dashboard (click on a unit & move this box to fit your screen)"),
                              
                              tags$br(),
                              
                              tableOutput('myDf_outputf'),
                              
-                             #tags$br(),
-                             
-                             #tags$b("Percent of blue forests protected"),
-                             
                              tableOutput('myDf_outputf2'),
-                             
-                             #tags$br(),
-                             
-                             #tags$b("Percent of blue forests protected"),
                              
                              plotOutput('indplot', height = '200px', width = '550px'),
                              
-                            
                              h5(tags$b("Show national context indicators:")),
                              div(id = 'natcont',
                              checkboxInput("natcon", label = NULL, value = FALSE)
                              ),
-                             
                              textOutput('text')
                              )
                ), # end absolute panel 2
@@ -234,15 +218,8 @@ navbarPage(
                              bottom = "auto",
                              width = 300, 
                              height = "auto",
-                             
-                             # tags$br(),
-                     
                              tags$em("Allow a moment for layers to load"),
-                             
-                             #tags$br(),
                              actionButton("help", "Click here to tour the page", icon = icon("lightbulb", lib = "font-awesome")),
-                             #tags$em("Select from steps 1-3. Then click 'Map management units'."),
-                             
                              checkboxGroupInput("criteria", 
                                                 label=h5(tags$b("1. Select criteria to map:")), 
                                                 choices = list("Extent" = 1, "Threat" = 2, 
@@ -250,10 +227,6 @@ navbarPage(
                                                                'Coastal community' = 5, 'Coastal protection' = 6),
                                                 selected = 1,
                                                 inline = TRUE),
-                             
-                             #actionButton("help", "Criteria", icon = icon("question")),
-                             # tags$br(),
-                     
                              div(id = 'myslider', 
                                  h5(tags$b("2. Set threshold to find management units in top percent of selected criteria:"))),
                              
@@ -269,11 +242,7 @@ navbarPage(
                              div(id = 'mymapit2', 
                              checkboxInput("profile2", label = NULL, value = FALSE)
                              ),
-                             
-                             #actionButton("help2", "What is the constraint layer", icon = icon("question")),
                              actionButton('mapit2', 'Map management units'),
-                             #tags$br(),
-                             
                              div(id = 'mycountry', h5(tags$b("4. Zoom to a country or territory:"))),
                                  
                              selectInput("country", label = h5(tags$b("")), 

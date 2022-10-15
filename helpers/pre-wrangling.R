@@ -56,14 +56,14 @@ datqual$indicator <- recode(datqual$indicator,  'mangrove_agb' = 'above ground b
                             'seagrass_carbon' = 'carbon storage', 'saltmarsh_carbon_storage' = 'carbon storage',
                             'kelp_carbon' = 'carbon storage', 'kelp.fisheries.biomass' = 'fisheries biomass')
 datqual$score <- recode(datqual$score, '2' = 'marine provincial average', '3' = 'marine realm average', '4' = 'global average')
-datqual <- datqual %>% # coastal protection is a bit different
+datqual <- datqual %>% 
   mutate(score = ifelse(indicator == 'coastal protection' & score == 'global average', 'global median', score)) %>% 
-  mutate(score = ifelse(indicator == 'coastal protection' & score == 'marine realm average', '100km buffer average', score)) %>% 
-  mutate(score = ifelse(indicator == 'coastal protection' & score == 'marine provincial average', '20km buffer average', score)) 
+  mutate(score = ifelse(indicator == 'coastal protection' & score == 'marine realm average', '100km radius average', score)) %>% 
+  mutate(score = ifelse(indicator == 'coastal protection' & score == 'marine provincial average', '20km radius average', score)) 
 datqual <- datqual %>% 
   mutate(vals = 1) %>% 
   pivot_wider(names_from = score, values_from = vals, values_fn = sum) %>% 
-  filter(forestname != 'Kelp' & indicator != 'fisheries enhancement') # remove kelp until can display Eger data, and TNC fish catch until can display that too
+  filter(forestname != 'Kelp' & indicator != 'fisheries enhancement') # remove kelp and fish catch until can display that data
 write.csv(datqual, 'data/scores/dat-qual-L2-2.csv', row.names = F)
 
 indscores <- read.csv('data/scores/rescaled-ind-scoring_area-stand-L2.csv')
@@ -185,9 +185,6 @@ indscores.p2$indicator_name <- factor(indscores.p2$indicator_name, levels = c("E
 indscores.p2$fill <- factor(indscores.p2$fill, levels = c("Extent", "Threat", 'Carbon', 'Biodiversity', 'Coastal community', 'Coastal protection'))
 write.csv(indscores.p2, 'data/scores/rescaled-ind-scoring_area-stand-L2_enabling-constrained2.csv', row.names = F)
 
-
-#lit <- read.csv('data/scores/adult-literacy-rate.csv')
-#protein <- read.csv('data/scores/protein-consumption-per-capita.csv')
 life <- read.csv('data/scores/HDI_life-expectancy.csv') 
 wgi <- read.csv('data/scores/world-governance-rank.csv') 
 
@@ -203,13 +200,11 @@ enable <- list(life, wgi) %>% reduce(full_join, by = c('unit_ID', 'TERRITORY1', 
   pivot_longer(-c(SOVEREIGN1, TERRITORY1),  names_to = 'criteria', values_to = 'score')
 
 enable$criteria <- recode(enable$criteria,
-                          #'adult_lit_rate_percent' = 'Literacy',
                           'life_exp_birth_yr_2019' = 'Life expectancy',
                           'HDI_2019' =  'Human Development Index',
                           'Regulatory_quality_2020' = 'Regulatory quality',
                           'Governance_effectiveness_2020' = 'Governance effectiveness',
                           'Control_of_corruption_2020' = 'Control of corruption')
-# 'protein_consumption_kg.capita.yr' = 'Protein consumption from fish')
 enable$criteria <- str_wrap(enable$criteria, width = 13)
 write.csv(enable, 'data/scores/enable.csv', row.names = F)
 
@@ -224,21 +219,17 @@ enable2 <- list(life, wgi) %>% reduce(full_join, by = c('unit_ID', 'TERRITORY1',
   pivot_longer(-c(SOVEREIGN1, TERRITORY1),  names_to = 'criteria', values_to = 'score')
 
 enable2$criteria <- recode(enable2$criteria,
-                           #'adult_lit_rate_percent' = 'Literacy',
                            'life_exp_birth_yr_2019' = 'Life expectancy',
                            'HDI_2019' =  'Human Development Index',
                            'Regulatory_quality_2020' = 'Regulatory quality',
                            'Governance_effectiveness_2020' = 'Governance effectiveness',
                            'Control_of_corruption_2020' = 'Control of corruption')
-# 'protein_consumption_kg.capita.yr' = 'Protein consumption from fish')
 enable2$criteria <- str_wrap(enable2$criteria, width = 13)
 write.csv(enable2, 'data/scores/enable2.csv', row.names = F)
 
 # pop-ups
 
-my_popups <- st_drop_geometry(wwf) %>% 
-  #pivot_longer(cols = mangrove:seaweed, names_to = 'blueforest', values_to = 'val') %>% 
-  #filter(val == 1) %>% 
+my_popups <- st_drop_geometry(wwf) %>%
   mutate(mangrove = ifelse(mangrove == 1, 'Mangroves', NA),
          seagrass = ifelse(seagrass == 1, 'Seagrass', NA), 
          saltmarsh = ifelse(saltmarsh == 1, 'Saltmarsh', NA), 
@@ -247,13 +238,15 @@ my_popups <- st_drop_geometry(wwf) %>%
   mutate(popup = paste0("<span style='font-size: 100%'><strong>",wwf_office,"</strong></span><br/>",
                         "<strong>", "Site: ", "</strong>", site, 
                         "<br/>", 
-                        "<strong>", "Blue Forest focus: ", "</strong>", blueforest))
+                        "<strong>", "Blue Forest focus: ", "</strong>", blueforest,
+                        "<br/>", 
+                        "<br/>", 
+                        "To find out more about this project, please contact Monique van Es, manager of Programme Development for Oceans Practice (WWF) at",
+                        "<strong>", " mvanes@wwfint.org.", "</strong>"))
 write.csv(my_popups, 'data/scores/mypopups.csv', row.names = F)
 
 inproj <- st_read('data/invest-proj.gpkg')
-my_popups2 <- st_drop_geometry(inproj) %>% 
-  #pivot_longer(cols = mangrove:seaweed, names_to = 'blueforest', values_to = 'val') %>% 
-  #filter(val == 1) %>% 
+my_popups2 <- st_drop_geometry(inproj) %>%
   mutate(mangrove = ifelse(mangrove == 1, 'Mangroves', NA),
          seagrass = ifelse(seagrass == 1, 'Seagrass', NA), 
          saltmarsh = ifelse(saltmarsh == 1, 'Saltmarsh', NA), 
@@ -264,10 +257,14 @@ my_popups2 <- st_drop_geometry(inproj) %>%
                         "<br/>", 
                         "<strong>", "Blue Forest focus: ", "</strong>", blueforest,
                         "<br/>", 
-                        "<strong>", "Investment stage: ", "</strong>", Investment_readiness_stage))
+                        "<strong>", "Investment stage: ", "</strong>", Investment_readiness_stage,
+                        "<br/>", 
+                        "<br/>", 
+                        "To find out more about this project, please contact Monique van Es, manager of Programme Development for Oceans Practice (WWF) at",
+                        "<strong>", " mvanes@wwfint.org.", "</strong>"))
 write.csv(my_popups2, 'data/scores/mypopups2.csv', row.names = F)
 
-# helptext fpr instructions
+# helptext for instructions
 
 helptext <- data.frame(
   step = c(1,2,3,4,5,6,7),

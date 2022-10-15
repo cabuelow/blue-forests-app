@@ -1,34 +1,31 @@
-### Blue Forest App
+### Code for the Blue Forest Data Explorer
 
-Web application to inform blue forest conservation.
+This repository contains code for the Blue Forest Data Explorer, a web-application designed to help identify potential opportunities for blue forest conservation. Explore the web app [here](https://global-wetlands.shinyapps.io/blue-forests-app/).
 
-Prototype [here](https://global-wetlands.shinyapps.io/blue-forests-app/)
+[Chris Brown](https://github.com/cbrown5) and [Kai Ching Cheong](https://github.com/kitecheong) are contributors to this code-base.
+Aesthetics were inspired by code provided [here](https://github.com/molly-williams/deltaSLR_map).
 
-#### TODO
+#### Upcoming data updates 
 
-- [ ] tidy code!
-- [ ] set up adoption use: https://appsilon.com/monitoring-r-shiny-user-adoption/
+- [ ] Modelled estimates of macroalgal extent
+- [ ] Remote-sensing of mangrove extent for the year 2020
 
-#### From 1st end-user consulation - ideas
+#### Code script description
 
-- [ ] Filter by project size (i.e., small vs large)
+- ##### ui.R
+  Sets up the user-interface. 
+  
+- ##### server.R
+  Uses inputs to the user-interface to create and display maps and other plots in the app.
+  
+- ##### helpers
+  Scripts in the 'helpers' folder are as follows:
+  1. pre-wrangling.R: prepare data for displaying in the web-application.
+  2. load-data.R: load wrangled data.
+  3. paramatersUI.R: module parameters relevant to the user-interface.
+  4. parametersServer.R: module parameters relevant to the app server.
+  5. forest-modules.R: modules for replicating tabpanels for each blue forest.
+  6. summarise-use.R: download shinyapp.io useage stats, summarise, and plot.
 
-- [ ] Allow jurisdictional boundaries to be turned on, e.g., country-borders
 
-- [ ] Allow to zoom to specific regions, e.g., SWIO, or have different pages for different regions?
 
-- [ ] Link to NDC database - which countries have BF NDC's?
-
-- [ ] Point people to where they can get more info about a project - i.e., contact a project manager
-
-- [ ] Enabling conditions page so can see indicators
-
-- [ ] screenshot tool for printing dashboards etc, also data export?
-
-#### Data/Analysis updates 
-
-- [ ] Use Duarte 2022 seaweed distribution (will involve reprocessing all seaweed layers to this distribution, including threats :( )
-- [ ] Get updated TNC mang fisheries enhancement layer when ready
-- [ ] Get final seaweed farming layer when published
-- [ ] Get final Eger kelp data when published
-- [ ] Cyclone tracks - buffer by gale force wind radius

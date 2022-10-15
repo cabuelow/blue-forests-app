@@ -1,5 +1,3 @@
-# code adapted from: https://github.com/molly-williams/deltaSLR_map
-
 # server
 
 library(shiny)
@@ -81,9 +79,8 @@ function(input, output, session) {
         hideGroup("Business model maturity")
     }) # end render leaflet
     
-    #outputOptions(output, "mangrove_map", suspendWhenHidden = FALSE)
     outputOptions(output, "mangrove_map", suspendWhenHidden = FALSE, priority = 2)
-  
+
     # reactive if-elses to choose the right data depending on whether enabling constraint is on or off
     
     dat <- eventReactive(input$mapit2,{
@@ -101,7 +98,7 @@ function(input, output, session) {
         ppal <- "#FFFFFF"
       }
       combo <- list(unitdat = unitdat, scoredat = scoredat, indscoredat = indscoredat, natcondat = natcondat, ppal = ppal)
-    }) #%>% bindCache(input$profile2)
+    })
     
     # reactive to capture changes in top sites
     
@@ -189,10 +186,10 @@ function(input, output, session) {
         leafletProxy("mangrove_map") %>%
           flyToBounds(bounds[1], bounds[2], bounds[3], bounds[4])
       }
-      #note popups block shape_click events
     }) # end observe
     
     # use reactive values to store the id from observing the shape click (below)
+    
     rvf <- reactiveVal()
     
     # observe shape-click event
@@ -214,7 +211,7 @@ function(input, output, session) {
       }else{
         NULL
       }
-    }, spacing = c("xs"), width = "500px") %>% bindCache(rvf())# end render
+    }, spacing = c("xs"), width = "500px") %>% bindCache(rvf()) # end render
     
     output$myDf_outputf2 <- renderTable({
       if(!is.null(rvf())){
@@ -286,7 +283,6 @@ function(input, output, session) {
       }
     }) # end render
 
-  #forestServer("mangroves", "mangrove", criteria_mang_kelp_s)
   forestServer("seagrass", "seagrass", criteria_others_s, tab_seag_1_s, tab_2_s, tab_3_s, tab_4_s, tab_5_s, tab_6_s, tab_7_s)
   forestServer("saltmarsh", "saltmarsh", criteria_others_s, tab_salt_1_s,  tab_2_s, tab_3_s, tab_4_s, tab_5_s, tab_6_s, tab_7_s)
   forestServer("kelp", "kelp", criteria_kelp_s, tab_kelp_1_s,  tab_2_s, tab_3_s, tab_4_s, tab_5_s, tab_6_s, tab_7_s)

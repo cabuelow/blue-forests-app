@@ -29,6 +29,7 @@ ggplot(df2) +
   geom_point() +
   ylab('Number of cumulative connections') +
   xlab('Date') +
+  #geom_vline(xintercept = as.POSIXct('2022-10-05 14:05:00')) +
   theme_classic()
 ggsave(paste0('use-data/plots/cumulative-connections_', month(df2[1,1], label = T),'-', day(df2[1,1]), '-', year(df2[1,1]), 
               '_' , month(df2[nrow(df2),1], label = T),'-', day(df2[nrow(df2),1]), '-', year(df2[nrow(df2),1]), '.png'),

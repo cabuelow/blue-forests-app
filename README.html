@@ -365,79 +365,46 @@ pre code {
 </div>
 
 
-<div id="blue-forest-app" class="section level3">
-<h3>Blue Forest App</h3>
-<p>Web application to inform blue forest conservation.</p>
-<div id="todo-for-first-end-user-consultation" class="section level4">
-<h4>TODO for first end-user consultation</h4>
-<ol style="list-style-type: decimal">
-<li><ul class="task-list">
-<li><input type="checkbox" disabled></input>
-Fix glitches<ul class="task-list">
-<li><input type="checkbox" disabled></input>
-Map projection - Try with different polygon layer, same issues?</li>
-<li><input type="checkbox" disabled></input>
-Timing out issue – increase server ‘instance’ period, greater than 15
-minutes</li>
-<li><input type="checkbox" disabled></input>
-Double clicking on radio buttons</li>
-</ul></li>
-</ul></li>
-<li><ul class="task-list">
-<li><input type="checkbox" disabled></input>
-On-click pop-ups</li>
-</ul></li>
-<li><ul class="task-list">
-<li><input type="checkbox" disabled></input>
-Allow to switch on or off enabling constraint layer</li>
-</ul></li>
-<li><ul class="task-list">
-<li><input type="checkbox" disabled></input>
-Incorporate data gap-filling information as layers to switch on/off</li>
-</ul></li>
-<li><ul class="task-list">
-<li><input type="checkbox" disabled></input>
-Have WWF projects and investment feasibility as a switch on or off in
-every tab</li>
-</ul></li>
-<li><ul class="task-list">
-<li><input type="checkbox" disabled></input>
-Remove area suitable for seaweed farming, TNC fisheries layer, and Eger
-data for now.</li>
-</ul></li>
-<li><ul class="task-list">
-<li><input type="checkbox" disabled></input>
-Ideally, select different combinations of ecosystems and criteria, and
-get top locations</li>
-</ul></li>
-<li><ul class="task-list">
-<li><input type="checkbox" disabled></input>
-Update final master dataframe from remote server</li>
-</ul></li>
-</ol>
-</div>
-<div id="decisions-decisions" class="section level4">
-<h4>Decisions decisions</h4>
+<div id="code-for-the-blue-forest-data-explorer" class="section level3">
+<h3>Code for the Blue Forest Data Explorer</h3>
+<p>This repository contains code for the Blue Forest Data Explorer, a
+web-application designed to help identify potential opportunities for
+blue forest conservation. Explore the web app <a href="https://global-wetlands.shinyapps.io/blue-forests-app/">here</a>.</p>
+<p><a href="https://github.com/cbrown5">Chris Brown</a> and <a href="https://github.com/kitecheong">Kai Ching Cheong</a> are
+contributors to this code-base. Aesthetics were inspired by code
+provided <a href="https://github.com/molly-williams/deltaSLR_map">here</a>.</p>
+<div id="upcoming-data-updates" class="section level4">
+<h4>Upcoming data updates</h4>
 <ul class="task-list">
 <li><input type="checkbox" disabled></input>
-Map individual layers at fine-scale resolution, but hotspots at coarse
-scale?</li>
+Modelled estimates of macroalgal extent</li>
+<li><input type="checkbox" disabled></input>
+Remote-sensing of mangrove extent for the year 2020</li>
 </ul>
 </div>
-<div id="dataanalysis-updates" class="section level4">
-<h4>Data/Analysis updates</h4>
-<ul class="task-list">
-<li><input type="checkbox" disabled></input>
-Use Duarte 2022 seaweed distribution (will involve reprocessing all
-seaweed layers to this distribution, including threats :( )</li>
-<li><input type="checkbox" disabled></input>
-Get updated TNC mang fisheries enhancement layer when ready</li>
-<li><input type="checkbox" disabled></input>
-Get final seaweed farming layer when published</li>
-<li><input type="checkbox" disabled></input>
-Get final Eger kelp data when published</li>
-<li><input type="checkbox" disabled></input>
-Cyclone tracks - buffer by gale force wind radius</li>
+<div id="code-script-description" class="section level4">
+<h4>Code script description</h4>
+<ul>
+<li><h5 id="ui.r">ui.R</h5>
+<p>Sets up the user-interface.</p></li>
+<li><h5 id="server.r">server.R</h5>
+<p>Uses inputs to the user-interface to create and display maps and
+other plots in the app.</p></li>
+<li><h5 id="helpers">helpers</h5>
+<p>Scripts in the ‘helpers’ folder are as follows:</p>
+<ol style="list-style-type: decimal">
+<li>pre-wrangling.R: prepare data for displaying in the
+web-application.</li>
+<li>load-data.R: load wrangled data.</li>
+<li>paramatersUI.R: module parameters relevant to the
+user-interface.</li>
+<li>parametersServer.R: module parameters relevant to the app
+server.</li>
+<li>forest-modules.R: modules for replicating tabpanels for each blue
+forest.</li>
+<li>summarise-use.R: download shinyapp.io useage stats, summarise, and
+plot.</li>
+</ol></li>
 </ul>
 </div>
 </div>

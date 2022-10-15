@@ -1,8 +1,6 @@
-#modules for the single forest page 
+# modules for the single forest page 
 
 forestUI <- function(id, criteria_choices, help_tab) {
-  #criteria_choices: Named list of criteria for this forest
-  # mangrove and kelp have different ones 
   ns <- NS(id)
   div(class="outer",
       tags$head(
@@ -48,23 +46,13 @@ forestUI <- function(id, criteria_choices, help_tab) {
                              }")),
                     
                     div(id = ns('dashboard'),
-                    #actionButton(ns("help3"), "Dashboard", icon = icon("question")),
-                    #tags$b("Blue forest area"),
                     tags$em("Coastal management unit dashboard (click on a unit & move this box to fit your screen)"),
                     
                     tags$br(),
                     
                     tableOutput(ns('myDf_outputf')),
                     
-                    #tags$br(),
-                    
-                    #tags$b("Percent of blue forests protected"),
-                    
                     tableOutput(ns('myDf_outputf2')),
-                    
-                    #tags$br(),
-                    
-                    #tags$b("Percent of blue forests protected"),
                     
                     plotOutput(ns('indplot'), height = '200px', width = '500px'),
                     
@@ -86,30 +74,19 @@ forestUI <- function(id, criteria_choices, help_tab) {
                     bottom = "auto",
                     width = 300, 
                     height = "auto",
-                    
-                   # tags$br(),
-      
                     tags$em("Allow a moment for layers to load"),
-                    
-                    #tags$br(),
                     actionButton(ns("help"), "Click here to tour the page", icon = icon("lightbulb", lib = "font-awesome")),
-                    #tags$em("Select from steps 1-3. Then click 'Map management units'."),
-              
                     checkboxGroupInput(ns("criteria"), 
                                  label=h5(tags$b("1. Select criteria to map:")), 
                                  choices = criteria_choices,
                                  selected = 1,
                                  inline = TRUE),
-                   #actionButton(ns("help"), "Criteria", icon = icon("question")),
-                   # tags$br(),
-                    
                    div(id = ns('myslider'), h5(tags$b("2. Set threshold to find management units in top percent of selected criteria:"))),
                    
                     sliderInput(ns("perc"), label = h5(tags$b("")), 
                                 min = 0, max = 100, 
                                 value = 100,
                                 step = 5),
-                    #tags$br(),
                     
                    div(id = ns('myenabling'),
                     h5(tags$b("3. Turn on enabling condition constraint layer?"))),
@@ -119,8 +96,6 @@ forestUI <- function(id, criteria_choices, help_tab) {
                     ),
                    
                     actionButton(ns('mapit2'), 'Map management units'),
-                    #tags$br(),
-                    
                    div(id = ns('mycountry'), h5(tags$b("4. Zoom to a country or territory:"))),
                    
                     selectInput(ns("country"), label = h5(tags$b("")), 
@@ -132,8 +107,6 @@ forestUI <- function(id, criteria_choices, help_tab) {
 
 
 forestServer <- function(id, forest_type, criteria_choices, help_1, help_2, help_3, help_4, help_5, help_6, help_7) {
-  #forest_type is the name of the columns in 
-  # the scores dataframe for each forest type
   ns <- NS(id)
   moduleServer(
     id,
@@ -221,8 +194,6 @@ forestServer <- function(id, forest_type, criteria_choices, help_1, help_2, help
           hideGroup('WWF Blue Forest projects') %>% 
           hideGroup("Business model maturity")
       }) # end render leaflet
-      
-      #outputOptions(output, "forest_map", suspendWhenHidden = FALSE)
       outputOptions(output, "forest_map", suspendWhenHidden = FALSE, priority = 1)
       
       
@@ -243,7 +214,7 @@ forestServer <- function(id, forest_type, criteria_choices, help_1, help_2, help
          ppal <- "#FFFFFF"
         }
         combo <- list(unitdat = unitdat, scoredat = scoredat, indscoredat = indscoredat, natcondat = natcondat, ppal = ppal)
-      }) #%>% bindCache(input$profile2)
+      })
       
       # reactive to capture changes in top sites
       
@@ -262,7 +233,7 @@ forestServer <- function(id, forest_type, criteria_choices, help_1, help_2, help
         if(length(which(sapply(tmp,is.null))) != 0){tmp <- tmp[-which(sapply(tmp, is.null))]}
         if(length(input$criteria) > 1){multunits <- Reduce(intersect, lapply(tmp, function(x){x$unit_ID}))}else{multunits <- NULL}
         combo2 <- list(newsc = tmp, multunits = multunits)
-      }) #%>% bindCache(dat(), input$criteria, input$perc) # end reactive
+      })
       
       # update basemap based on enabling constraint
       
@@ -331,9 +302,7 @@ forestServer <- function(id, forest_type, criteria_choices, help_1, help_2, help
           leafletProxy(ns("forest_map")) %>%
             flyToBounds(bounds[1], bounds[2], bounds[3], bounds[4])
         }
-        #note popups block shape_click events
       }) # end observe
-      
       
       # use reactive values to store the id from observing the shape click (below)
       rvf <- reactiveVal()
