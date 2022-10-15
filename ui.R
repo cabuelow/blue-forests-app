@@ -138,10 +138,13 @@ navbarPage(
            
            box(title = h5('Issues or questions?', style = 'font-size:18px;'),
                width = 12,
-               
                tags$div('Please contact Christina Buelow at',
                         tags$b('c.buelow@griffith.edu.au,'),
-                        'or Chris Brown at', tags$b('chris.brown@griffith.edu.au.')))
+                        'or Chris Brown at', tags$b('chris.brown@griffith.edu.au.'))),
+          
+          box(title = h5('Get the code', style = 'font-size:18px;'),
+              width = 12,
+              tags$div('R code to reproduce the web-app is available', tags$a('here.', href="https://github.com/cabuelow/blue-forests-app")))
                
   ), # end instructions tabpanel
                  
