@@ -14,10 +14,10 @@ library(rintrojs)
 
 # load and wrangle all required components for app
 
-source("helpers/load-data.R")
-source("helpers/parametersUI.R")
-source("helpers/parametersServer.R")
-source("helpers/forest-modules.R")
+source("load-data.R")
+source("parametersUI.R")
+source("parametersServer.R")
+source("forest-modules.R")
 
 # navigation panel
 

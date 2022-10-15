@@ -12,20 +12,28 @@ Aesthetics were inspired by code provided [here](https://github.com/molly-willia
 
 #### Code script description
 
+- ##### load-data.R
+  Loads data.
+
 - ##### ui.R
   Sets up the user-interface. 
   
 - ##### server.R
   Uses inputs to the user-interface to create and display maps and other plots in the app.
   
+- ##### paramatersUI.R
+  Module parameters relevant to the user-interface.
+  
+- ##### paramatersServer.R
+  Module parameters relevant to the user-interface.
+
+- ##### forest-modules.R
+  Modules for replicating tabpanels for each blue forest.
+  
 - ##### helpers
   Scripts in the 'helpers' folder are as follows:
   1. pre-wrangling.R: prepare data for displaying in the web-application.
-  2. load-data.R: load wrangled data.
-  3. paramatersUI.R: module parameters relevant to the user-interface.
-  4. parametersServer.R: module parameters relevant to the app server.
-  5. forest-modules.R: modules for replicating tabpanels for each blue forest.
-  6. summarise-use.R: download shinyapp.io useage stats, summarise, and plot.
+  2. summarise-use.R: download shinyapp.io useage stats, summarise, and plot.
 
 
 
