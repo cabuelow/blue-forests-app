@@ -9,6 +9,9 @@ Aesthetics were inspired by code provided [here](https://github.com/molly-willia
 
 - [ ] Modelled estimates of macroalgal extent
 - [ ] Remote-sensing of mangrove extent for the year 2020
+- [ ] Drivers of saltmarsh loss and gain
+- [ ] Coastal human footprint stressors
+- [ ] Seagrass meadow structure, biomass, and production (Strydom, 2022)
 
 #### Code script description
 
