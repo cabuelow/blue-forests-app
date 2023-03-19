@@ -10,7 +10,7 @@ tab_seag_1_s <- "Select the criteria you want.<br/></strong>1. Extent:</strong> 
   <br/></strong>2. Threat:</strong> Composed of several indicators including probability of decline, cyclone risk, and cumulative climate, land and marine-based impacts.
   <br/></strong>3. Carbon:</strong> Average above and below-ground soil carbon storage per unit area.
    <br/></strong>4. Biodiversity:</strong> Richness of species affiliated with seagrass.
-   <br/></strong>5. Coastal Community:</strong> Proportion of population living within 10km of the coastline"
+   <br/></strong>5. Coastal Community:</strong> Proportion of population living within 10m elevation above sea level"
 tab_salt_1_s <- "Select the criteria you want.<br/></strong>1. Extent:</strong> Total area of saltmarsh (standardised by management unit size).
   <br/></strong>2. Threat:</strong> Composed of several indicators including cyclone risk and cumulative climate, land and marine-based impacts.
   <br/></strong>3. Carbon:</strong> Average soil carbon storage per unit area.
@@ -19,7 +19,7 @@ tab_salt_1_s <- "Select the criteria you want.<br/></strong>1. Extent:</strong> 
 tab_kelp_1_s <- "Select the criteria you want.<br/></strong>1. Extent:</strong> Total area of kelp biome (standardised by management unit size).
   <br/></strong>2. Threat:</strong> Composed of several indicators including rates of loss, cyclone risk, and cumulative climate, land and marine-based impacts.
    <br/></strong>3. Biodiversity:</strong> Richness of species affiliated with kelp.
-   <br/></strong>4. Coastal Community:</strong> Proportion of population living within 10km of the coastline."
+   <br/></strong>4. Coastal Community:</strong> Proportion of population living within 10m elevation above sea level."
 tab_2_s <- "Set a threshold to map the top percentage of coastal management units for the criteria you selected above."
 tab_3_s <-  "If you want, exclude countries that have high socio-economic and political capacity to enable blue forest conservation
             by turning on the enabling condition constraint layer."
