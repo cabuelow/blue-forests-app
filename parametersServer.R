@@ -15,7 +15,7 @@ tab_salt_1_s <- "Select the criteria you want.<br/></strong>1. Extent:</strong> 
   <br/></strong>2. Threat:</strong> Composed of several indicators including cyclone risk and cumulative climate, land and marine-based impacts.
   <br/></strong>3. Carbon:</strong> Average soil carbon storage per unit area.
    <br/></strong>4. Biodiversity:</strong> Richness of species affiliated with mangroves.
-   <br/></strong>5. Coastal Community:</strong> Proportion of population living within 10km of the coastline."
+   <br/></strong>5. Coastal Community:</strong> Proportion of population living within 10m elevation above sea level."
 tab_kelp_1_s <- "Select the criteria you want.<br/></strong>1. Extent:</strong> Total area of kelp biome (standardised by management unit size).
   <br/></strong>2. Threat:</strong> Composed of several indicators including rates of loss, cyclone risk, and cumulative climate, land and marine-based impacts.
    <br/></strong>3. Biodiversity:</strong> Richness of species affiliated with kelp.
