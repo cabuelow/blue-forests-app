@@ -82,7 +82,7 @@ navbarPage(
 '),
                tags$div(tags$b('4. Biodiversity:'), 'Richness of species affiliated with each forest type. 
 '),
-               tags$div(tags$b('5. Coastal Communities:'), 'Proportion of population living within 10km of the coastline. 
+               tags$div(tags$b('5. Coastal Communities:'), 'Proportion of population living within 10m elevation above sea level. 
 '),
                tags$div(tags$b('6. Coastal Protection:'), 'Average number of people protected by mangroves per 20km of coastline.
 ')),
