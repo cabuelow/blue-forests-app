@@ -50,3 +50,30 @@ write.csv(df, paste0('use-data/raw/metrics_raw_', month(df2[1,1], label = T),'-'
 write.csv(df2, paste0('use-data/wrangled/metrics_', month(df2[1,1], label = T),'-', day(df2[1,1]), '-', year(df2[1,1]), 
                      '_' , month(df2[nrow(df2),1], label = T),'-', day(df2[nrow(df2),1]), '-', year(df2[nrow(df2),1]), '.csv'),
           row.names = F)
+
+# read in all historical connections and plot
+
+fils <- list.files('use-data/raw/', full.names = T)
+dat <- lapply(fils, read.csv)
+dat <- do.call(rbind, dat) 
+
+# get rid of overlapping date/times
+
+dat2 <- data.frame(date = as.numeric(dat$connect_procs),
+                  connections = as.numeric(dat$timestamp)) %>% 
+  mutate(date = as_datetime(date)) %>% 
+  distinct(date, connections) %>% 
+  mutate(n_count=cumsum(connections))
+
+# plot
+
+ggplot(dat2) +
+  aes(x = date, y = n_count) +
+  geom_point() +
+  ylab('Number of cumulative connections') +
+  xlab('Date') +
+  #geom_vline(xintercept = as.POSIXct('2022-10-05 14:05:00')) +
+  theme_classic()
+
+ggsave(paste0('use-data/plots/cumulative-connections_all.png'),
+       width = 6, height = 4)
