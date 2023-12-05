@@ -1,6 +1,6 @@
 ### Code for the Blue Forest Data Explorer
 
-This repository contains code for the Blue Forest Data Explorer, a web-application designed to help identify potential opportunities for blue forest conservation. Explore the web app [here](https://global-wetlands.shinyapps.io/blue-forests-app/).
+This repository contains code for the Blue Forest Data Explorer, a web-application designed to help identify potential opportunities for blue forest conservation. Explore the web app [here](https://cbuelow.shinyapps.io/blue-forests-application/).
 
 [Chris Brown](https://github.com/cbrown5) and [Kai Ching Cheong](https://github.com/kitecheong) are contributors to this code-base.
 Aesthetics were inspired by code provided [here](https://github.com/molly-williams/deltaSLR_map).
